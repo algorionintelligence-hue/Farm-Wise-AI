@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class UColors{
 
   //is class ka object nhi banasakhty
-  //memory pr load na ho isliye singleton class baanye hai 
+  //memory pr load na ho isliye singleton class baanye hai
   UColors._();
 
 
