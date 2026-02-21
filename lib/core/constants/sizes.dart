@@ -59,4 +59,8 @@ class USizes{
 
   static const double brandCardWidth = 170.0; // 170
   static const double brandCardHeight = 70.0; // 70
+
+  // Planta specific
+  static const double scaffoldTopRadius = 28.0;
+  static const double logoIconSize = 22.0;
 }

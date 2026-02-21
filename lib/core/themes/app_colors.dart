@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 class UColors{
-
   //is class ka object nhi banasakhty
   //memory pr load na ho isliye singleton class baanye hai
   UColors._();
-
+  static const Color primary = Color(0xFF152B36);
+  static const Color plantaGreen = Color(0xFF5CB85C);
+  static const Color plantaGreenDark = Color(0xFF4CAF50);
 
   // Primary Color
-  static const Color primary = Color(0xFF0857A0);
-
+  static const Color primary1 = Color(0xFF0857A0);
+  static const Color inputBg = Color(0xFFF7F7F7);
+  static const Color error = Color(0xFFD32F2F);
+  static const Color linkColor = Color(0xFF5CB85C);
   // Text colors
   static const Color textPrimary = Color(0xFF333333);
   static const Color textSecondary = Color(0xFF6C757D);
@@ -28,7 +31,6 @@ class UColors{
   static const Color borderSecondary = Color(0xFFE6E6E6);
 
   // Error and validation colors
-  static const Color error = Color(0xFFD32F2F);
   static const Color success = Color(0xFF388E3C);
   static const Color warning = Color(0xFFF57C00);
   static const Color info = Color(0xFF1976D2);
