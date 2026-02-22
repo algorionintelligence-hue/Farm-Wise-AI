@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/sizes.dart';
-import 'app_colors.dart';
+import '../themes/app_colors.dart';
 
 class PlantaTextField extends StatelessWidget {
   const PlantaTextField({
@@ -37,12 +37,12 @@ class PlantaTextField extends StatelessWidget {
         Text(
           labelText,
           style: const TextStyle(
-            fontSize: USizes.fontSizeSm,
-            fontWeight: FontWeight.w600,
-            color: UColors.textPrimary,
+            fontSize: Size.fontSizeSm,
+            fontWeight: FontWeight.w800,
+            color: UColors.colorPrimary,
           ),
         ),
-        const SizedBox(height: USizes.sm),
+        const SizedBox(height: Size.sm),
 
         // Input Field
         TextFormField(
@@ -52,41 +52,41 @@ class PlantaTextField extends StatelessWidget {
           onChanged: onChanged,
           validator: validator,
           style: const TextStyle(
-            fontSize: USizes.fontSizeSm,
+            fontSize: Size.fontSizeSm,
             color: UColors.textPrimary,
           ),
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: const TextStyle(
-              fontSize: USizes.fontSizeSm,
+              fontSize: Size.fontSizeSm,
               color: UColors.darkGrey,
             ),
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: UColors.inputBg,
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: USizes.md,
-              vertical: USizes.md,
+              horizontal: Size.md,
+              vertical: Size.md,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(USizes.inputFieldRadius),
+              borderRadius: BorderRadius.circular(Size.inputFieldRadius),
               borderSide: const BorderSide(color: UColors.borderPrimary),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(USizes.inputFieldRadius),
+              borderRadius: BorderRadius.circular(Size.inputFieldRadius),
               borderSide: const BorderSide(color: UColors.borderPrimary),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(USizes.inputFieldRadius),
+              borderRadius: BorderRadius.circular(Size.inputFieldRadius),
               borderSide:
               const BorderSide(color: UColors.plantaGreen, width: 1.5),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(USizes.inputFieldRadius),
+              borderRadius: BorderRadius.circular(Size.inputFieldRadius),
               borderSide: const BorderSide(color: UColors.error),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(USizes.inputFieldRadius),
+              borderRadius: BorderRadius.circular(Size.inputFieldRadius),
               borderSide: const BorderSide(color: UColors.error, width: 1.5),
             ),
           ),

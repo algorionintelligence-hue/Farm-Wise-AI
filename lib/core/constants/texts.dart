@@ -5,7 +5,7 @@ class UTexts {
   static const String appName = 'Farm-Wise-AI';
 
   // Login
-  static const String loginTitle = 'log in';
+  static const String loginTitle = 'Log in';
   static const String loginSubTitle =
       'Keep your plants alive by watering, providing sunlight\nand checking for pests.';
   static const String emailLabel = 'Your email address';

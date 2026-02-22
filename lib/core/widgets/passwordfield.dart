@@ -1,10 +1,10 @@
-import 'package:farm_wise_ai/core/themes/textfield.dart';
+import 'package:farm_wise_ai/core/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/sizes.dart';
 import '../providers/auth_providers.dart';
-import 'app_colors.dart';
+import '../themes/app_colors.dart';
 
 class PlantaPasswordField extends ConsumerWidget {
   const PlantaPasswordField({
@@ -35,8 +35,8 @@ class PlantaPasswordField extends ConsumerWidget {
           isVisible
               ? Icons.visibility_outlined
               : Icons.visibility_off_outlined,
-          size: USizes.iconSm,
-          color: UColors.darkGrey,
+          size: Size.iconSm,
+          color: UColors.colorPrimary,
         ),
         onPressed: () {
           ref.read(passwordVisibilityProvider.notifier).state = !isVisible;

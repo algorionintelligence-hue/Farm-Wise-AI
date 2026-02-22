@@ -5,6 +5,7 @@ class UColors{
   //memory pr load na ho isliye singleton class baanye hai
   UColors._();
   static const Color primary = Color(0xFF152B36);
+  static const Color colorPrimary = Color(0xFF384A24);
   static const Color plantaGreen = Color(0xFF5CB85C);
   static const Color plantaGreenDark = Color(0xFF4CAF50);
 

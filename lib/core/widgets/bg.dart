@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/sizes.dart';
-import 'app_colors.dart';
+import '../themes/app_colors.dart';
 
 
 class PlantaScaffold extends StatelessWidget {
@@ -13,7 +13,7 @@ class PlantaScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UColors.plantaGreen,
+      backgroundColor: UColors.colorPrimary,
       body: Column(
         children: [
           SafeArea(
@@ -23,6 +23,13 @@ class PlantaScaffold extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const BackButton(color: Colors.white),
+                  SizedBox(
+                    height: 50,
+                    child: Image.asset(
+                      'lib/core/assets/images/logo_without_bg.png', // your logo path
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                   // PlantaLogo(),
                 ],
               ),
@@ -33,8 +40,8 @@ class PlantaScaffold extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: UColors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(USizes.scaffoldTopRadius),
-                  topRight: Radius.circular(USizes.scaffoldTopRadius),
+                  topLeft: Radius.circular(Size.scaffoldTopRadius),
+                  topRight: Radius.circular(Size.scaffoldTopRadius),
                 ),
               ),
               child: Padding(

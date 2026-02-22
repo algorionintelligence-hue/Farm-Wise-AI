@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/device_helper.dart';
 import '../constants/sizes.dart';
-import 'app_colors.dart';
+import '../themes/app_colors.dart';
 
 class PlantaPrimaryButton extends StatelessWidget {
   const PlantaPrimaryButton({
@@ -20,16 +20,18 @@ class PlantaPrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: UDeviceHelper.getScreenWidth(context),
-      height: USizes.buttonHeight,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: UColors.plantaGreen,
+          backgroundColor: UColors.colorPrimary,
           disabledBackgroundColor: UColors.buttonDisabled,
           foregroundColor: UColors.white,
+          padding: EdgeInsets.symmetric(
+            vertical: 13,
+          ),
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(USizes.buttonRadius),
+            borderRadius: BorderRadius.circular(Size.buttonRadius),
           ),
         ),
         child: isLoading
@@ -44,7 +46,7 @@ class PlantaPrimaryButton extends StatelessWidget {
             : Text(
           label,
           style: const TextStyle(
-            fontSize: USizes.fontSizeMd,
+            fontSize: Size.fontSizeMd,
             fontWeight: FontWeight.w600,
             color: UColors.white,
             letterSpacing: 0.3,
@@ -70,11 +72,11 @@ class PlantaOrDivider extends StatelessWidget {
           child: Divider(color: UColors.borderPrimary, thickness: 1),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: USizes.md),
+          padding: const EdgeInsets.symmetric(horizontal: Size.md),
           child: Text(
             text,
             style: TextStyle(
-              fontSize: USizes.fontSizeSm,
+              fontSize: Size.fontSizeSm,
               color: UColors.textSecondary,
             ),
           ),
@@ -109,25 +111,32 @@ class PlantaSocialButton extends StatelessWidget {
       height: 50,
       child: OutlinedButton.icon(
         onPressed: onPressed,
-        icon: icon,
-        label: Text(
-          label,
-          style: const TextStyle(
-            fontSize: USizes.fontSizeSm,
-            fontWeight: FontWeight.w500,
-            color: UColors.textPrimary,
+        icon: SizedBox(
+          width: Size.iconMd,
+          height: Size.iconMd,
+          child: icon,
+        ),
+        label: Padding(
+          padding: const EdgeInsets.only(left: 12), // space between icon and text
+          child: Text(
+            label,
+            style: const TextStyle(
+              fontSize: Size.fontSizeSm,
+              fontWeight: FontWeight.w500,
+              color: UColors.textPrimary,
+            ),
           ),
         ),
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: UColors.borderPrimary),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(USizes.borderRadiusLg),
+            borderRadius: BorderRadius.circular(Size.buttonRadius),
           ),
+          padding: const EdgeInsets.symmetric(horizontal: 16), // optional internal padding
         ),
       ),
     );
-  }
-}
+  }}
 
 // ═════════════════════════════════════════════════════════════
 // VSpace / HSpace utilities

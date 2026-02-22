@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/sizes.dart';
 import '../constants/texts.dart';
-import 'app_colors.dart';
+import '../themes/app_colors.dart';
 
 class PlantaLogo extends StatelessWidget {
   const PlantaLogo({super.key});
@@ -19,13 +19,13 @@ class PlantaLogo extends StatelessWidget {
         const Icon(
           Icons.eco_rounded,
           color: UColors.white,
-          size: USizes.logoIconSize,
+          size: Size.logoIconSize,
         ),
-        const SizedBox(width: USizes.xs),
+        const SizedBox(width: Size.xs),
         Text(
           UTexts.appName,
           style: const TextStyle(
-            fontSize: USizes.fontSizeLg,
+            fontSize: Size.fontSizeLg,
             fontWeight: FontWeight.w700,
             color: UColors.white,
             fontStyle: FontStyle.italic,

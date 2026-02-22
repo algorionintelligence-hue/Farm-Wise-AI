@@ -1,4 +1,4 @@
-class USizes{
+class Size{
 // Padding and margin sizes
   static const double xs = 4.0; // extra small
   static const double sm = 8.0; // small
@@ -16,10 +16,11 @@ class USizes{
   static const double fontSizeSm = 14.0; // small
   static const double fontSizeMd = 16.0; // medium
   static const double fontSizeLg = 18.0; // large
+  static const double fontSizeHeadings = 25.0; // large
 
   // Button sizes
   static const double buttonHeight = 18.0;
-  static const double buttonRadius = 12.0;
+  static const double buttonRadius = 20.0;
   static const double buttonWidth = 120.0;
   static const double searchBarHeight = 50.0;
 
@@ -40,7 +41,7 @@ class USizes{
   static const double productImageRadius = 16.0;
 
   // Input field
-  static const double inputFieldRadius = 12.0;
+  static const double inputFieldRadius = 25.0;
   static const double spaceBtwInputFields = 16.0;
 
   // Card sizes
