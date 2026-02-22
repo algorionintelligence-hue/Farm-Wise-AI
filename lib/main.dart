@@ -3,7 +3,6 @@ import 'package:farm_wise_ai/features/auth/view/loginScreen.dart';
 import 'package:farm_wise_ai/features/auth/view/signUpScreen.dart';
 import 'package:farm_wise_ai/features/entry_point/view/splashScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {

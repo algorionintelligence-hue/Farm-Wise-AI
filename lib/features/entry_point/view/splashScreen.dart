@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:farm_wise_ai/features/auth/view/loginScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -35,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Image.asset(
           'lib/core/assets/images/app_logo.png',
-          width: 150.w,
+          width: 150,
         ),
       ),
     );
