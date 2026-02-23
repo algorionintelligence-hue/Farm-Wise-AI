@@ -31,7 +31,7 @@ class PlantaPrimaryButton extends StatelessWidget {
           ),
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Size.buttonRadius),
+            borderRadius: BorderRadius.circular(sizes.buttonRadius),
           ),
         ),
         child: isLoading
@@ -46,7 +46,7 @@ class PlantaPrimaryButton extends StatelessWidget {
             : Text(
           label,
           style: const TextStyle(
-            fontSize: Size.fontSizeMd,
+            fontSize: sizes.fontSizeMd,
             fontWeight: FontWeight.w600,
             color: UColors.white,
             letterSpacing: 0.3,
@@ -72,11 +72,11 @@ class PlantaOrDivider extends StatelessWidget {
           child: Divider(color: UColors.borderPrimary, thickness: 1),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Size.md),
+          padding: const EdgeInsets.symmetric(horizontal: sizes.md),
           child: Text(
             text,
             style: TextStyle(
-              fontSize: Size.fontSizeSm,
+              fontSize: sizes.fontSizeSm,
               color: UColors.textSecondary,
             ),
           ),
@@ -112,8 +112,8 @@ class PlantaSocialButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: onPressed,
         icon: SizedBox(
-          width: Size.iconMd,
-          height: Size.iconMd,
+          width: sizes.iconMd,
+          height: sizes.iconMd,
           child: icon,
         ),
         label: Padding(
@@ -121,7 +121,7 @@ class PlantaSocialButton extends StatelessWidget {
           child: Text(
             label,
             style: const TextStyle(
-              fontSize: Size.fontSizeSm,
+              fontSize: sizes.fontSizeSm,
               fontWeight: FontWeight.w500,
               color: UColors.textPrimary,
             ),
@@ -130,7 +130,7 @@ class PlantaSocialButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: UColors.borderPrimary),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Size.buttonRadius),
+            borderRadius: BorderRadius.circular(sizes.buttonRadius),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16), // optional internal padding
         ),

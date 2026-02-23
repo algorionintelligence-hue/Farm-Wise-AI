@@ -40,21 +40,21 @@ class SignUpScreen extends ConsumerWidget {
                     Text(
                       UTexts.signupTitle,
                       style: TextStyle(
-                        fontSize: Size.fontSizeHeadings,
+                        fontSize: sizes.fontSizeHeadings,
                         fontWeight: FontWeight.bold,
                         color: UColors.colorPrimary,
                       ),
                     ),
-                    const VSpace(Size.sm),
+                    const VSpace(sizes.sm),
                     Text(
                       UTexts.signupSubTitle,
                       style: TextStyle(
-                        fontSize: Size.fontSizeSm,
+                        fontSize: sizes.fontSizeSm,
                         color: UColors.textSecondary,
                         height: 1.5,
                       ),
                     ),
-                    const VSpace(Size.defaultSpace),
+                    const VSpace(sizes.defaultSpace),
 
                     // ── First + Last Name (Row) ──
                     Row(
@@ -68,7 +68,7 @@ class SignUpScreen extends ConsumerWidget {
                             v == null || v.isEmpty ? 'Required' : null,
                           ),
                         ),
-                        const HSpace(Size.spaceBtwItems),
+                        const HSpace(sizes.spaceBtwItems),
                         Expanded(
                           child: PlantaTextField(
                             labelText: UTexts.lastName,
@@ -80,7 +80,7 @@ class SignUpScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const VSpace(Size.spaceBtwInputFields),
+                    const VSpace(sizes.spaceBtwInputFields),
 
                     // ── Email ──
                     PlantaTextField(
@@ -93,7 +93,7 @@ class SignUpScreen extends ConsumerWidget {
                           ? 'Enter valid email'
                           : null,
                     ),
-                    const VSpace(Size.spaceBtwInputFields),
+                    const VSpace(sizes.spaceBtwInputFields),
 
                     // ── Phone ──
                     PlantaTextField(
@@ -104,7 +104,7 @@ class SignUpScreen extends ConsumerWidget {
                       validator: (v) =>
                       v == null || v.length < 10 ? 'Enter valid phone' : null,
                     ),
-                    const VSpace(Size.spaceBtwInputFields),
+                    const VSpace(sizes.spaceBtwInputFields),
 
                     // ── Password ──
                     PlantaPasswordField(
@@ -112,7 +112,7 @@ class SignUpScreen extends ConsumerWidget {
                       validator: (v) =>
                       v == null || v.length < 6 ? 'Min 6 characters' : null,
                     ),
-                    const VSpace(Size.defaultSpace),
+                    const VSpace(sizes.defaultSpace),
 
                     // ── Terms & Privacy ──
                     Row(
@@ -126,18 +126,18 @@ class SignUpScreen extends ConsumerWidget {
                             activeColor: UColors.plantaGreen,
                             shape: RoundedRectangleBorder(
                               borderRadius:
-                              BorderRadius.circular(Size.borderRadiusSm),
+                              BorderRadius.circular(sizes.borderRadiusSm),
                             ),
                             onChanged: (val) {},
                           ),
                         ),
-                        const HSpace(Size.sm),
+                        const HSpace(sizes.sm),
                         Expanded(
                           child: RichText(
                             text: const TextSpan(
                               text: '${UTexts.iAgreeTo} ',
                               style: TextStyle(
-                                fontSize: Size.fontSizeSm,
+                                fontSize: sizes.fontSizeSm,
                                 color: UColors.textSecondary,
                               ),
                               children: [
@@ -162,7 +162,7 @@ class SignUpScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const VSpace(Size.defaultSpace),
+                    const VSpace(sizes.defaultSpace),
 
                     // ── Create Account Button ──
                     PlantaPrimaryButton(
@@ -185,7 +185,7 @@ class SignUpScreen extends ConsumerWidget {
                         }
                       },
                     ),
-                    const VSpace(Size.spaceBtwItems),
+                    const VSpace(sizes.spaceBtwItems),
 
                     // ── Already have account? ──
                     Center(
@@ -197,7 +197,7 @@ class SignUpScreen extends ConsumerWidget {
                           text: TextSpan(
                             text: UTexts.alreadyHaveAccount,
                             style: TextStyle(
-                              fontSize: Size.fontSizeSm,
+                              fontSize: sizes.fontSizeSm,
                               color: UColors.textSecondary,
                             ),
                             children: const [
@@ -213,7 +213,7 @@ class SignUpScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    const VSpace(Size.defaultSpace),
+                    const VSpace(sizes.defaultSpace),
 
 
                   ],

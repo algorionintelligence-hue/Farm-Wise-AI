@@ -5,6 +5,8 @@ import 'package:farm_wise_ai/features/entry_point/view/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'features/farm_registration/view/FarmRegistrationScreen.dart';
+
 void main() {
   runApp(
     ProviderScope(
@@ -23,7 +25,7 @@ class FarmWiseAiApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Farm Wise AI',
           theme: AppTheme.light,
-          home: SplashScreen(),
+          home: FarmRegistrationScreen(),
         );
   }
 }
