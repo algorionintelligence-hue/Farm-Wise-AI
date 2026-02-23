@@ -1,36 +1,22 @@
-import 'package:farm_wise_ai/features/auth/view/loginScreen.dart';
-import 'package:farm_wise_ai/features/auth/view/signUpScreen.dart';
-import 'package:flutter/material.dart';
+// lib/features/auth/repository/auth_repository.dart
 
-
-class AuthRepository extends StatefulWidget {
-  const AuthRepository({super.key});
-
-  @override
-  State<AuthRepository> createState() => _AuthPageState();
-}
-
-class _AuthPageState extends State<AuthRepository> {
-  bool showLogin = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return showLogin
-        ? LoginScreen()
-        : SignUpScreen();
+class AuthRepository {
+  // Login Logic
+  Future<bool> login(String email, String password) async {
+    // Yahan actual API call hogi (e.g. Firebase ya Node.js)
+    await Future.delayed(const Duration(seconds: 2)); // Simulating network
+    return true; // Agar success ho
   }
 
-  void navigateToLogin(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) =>  LoginScreen()),
-    );
-  }
-
-  void navigateToSignup(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) =>  SignUpScreen()),
-    );
+  // SignUp Logic
+  Future<bool> signUp({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phone,
+    required String password,
+  }) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return true;
   }
 }

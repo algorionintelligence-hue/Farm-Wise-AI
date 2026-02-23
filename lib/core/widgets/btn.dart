@@ -31,7 +31,7 @@ class PlantaPrimaryButton extends StatelessWidget {
           ),
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Size.buttonRadius),
+            borderRadius: BorderRadius.circular(USizes.buttonRadius),
           ),
         ),
         child: isLoading
@@ -46,7 +46,7 @@ class PlantaPrimaryButton extends StatelessWidget {
             : Text(
           label,
           style: const TextStyle(
-            fontSize: Size.fontSizeMd,
+            fontSize: USizes.fontSizeMd,
             fontWeight: FontWeight.w600,
             color: UColors.white,
             letterSpacing: 0.3,
@@ -72,11 +72,11 @@ class PlantaOrDivider extends StatelessWidget {
           child: Divider(color: UColors.borderPrimary, thickness: 1),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Size.md),
+          padding: const EdgeInsets.symmetric(horizontal: USizes.md),
           child: Text(
             text,
             style: TextStyle(
-              fontSize: Size.fontSizeSm,
+              fontSize: USizes.fontSizeSm,
               color: UColors.textSecondary,
             ),
           ),
@@ -89,54 +89,7 @@ class PlantaOrDivider extends StatelessWidget {
   }
 }
 
-// ═════════════════════════════════════════════════════════════
-// 7. PlantaSocialButton — Google / Facebook
-// ═════════════════════════════════════════════════════════════
-class PlantaSocialButton extends StatelessWidget {
-  const PlantaSocialButton({
-    super.key,
-    required this.label,
-    required this.icon,
-    required this.onPressed,
-  });
 
-  final String label;
-  final Widget icon;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: UDeviceHelper.getScreenWidth(context),
-      height: 50,
-      child: OutlinedButton.icon(
-        onPressed: onPressed,
-        icon: SizedBox(
-          width: Size.iconMd,
-          height: Size.iconMd,
-          child: icon,
-        ),
-        label: Padding(
-          padding: const EdgeInsets.only(left: 12), // space between icon and text
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: Size.fontSizeSm,
-              fontWeight: FontWeight.w500,
-              color: UColors.textPrimary,
-            ),
-          ),
-        ),
-        style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: UColors.borderPrimary),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Size.buttonRadius),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 16), // optional internal padding
-        ),
-      ),
-    );
-  }}
 
 // ═════════════════════════════════════════════════════════════
 // VSpace / HSpace utilities

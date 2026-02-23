@@ -13,6 +13,7 @@ import '../../../core/widgets/bg.dart';
 
 import '../../../core/widgets/btn.dart';
 import '../../../core/widgets/passwordfield.dart';
+import '../../../core/widgets/social_btn.dart';
 import '../../../core/widgets/textfield.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -38,24 +39,24 @@ class LoginScreen extends ConsumerWidget {
               Text(
                 UTexts.loginTitle,
                 style: TextStyle(
-                  fontSize: Size.fontSizeHeadings,
+                  fontSize: USizes.fontSizeHeadings,
                   fontWeight: FontWeight.bold,
                   color: UColors.colorPrimary,
                 ),
               ),
-              const VSpace(Size.sm),
-        
+              const VSpace(USizes.sm),
+
               // ── Sub Title ──
               Text(
                 UTexts.loginSubTitle,
                 style: TextStyle(
-                  fontSize: Size.fontSizeSm,
+                  fontSize: USizes.fontSizeSm,
                   color: UColors.textSecondary,
                   height: 1.5,
                 ),
               ),
-              const VSpace(Size.defaultSpace),
-        
+              const VSpace(USizes.defaultSpace),
+
               // ── Email Field ──
               PlantaTextField(
                 labelText: UTexts.emailLabel,
@@ -65,8 +66,8 @@ class LoginScreen extends ConsumerWidget {
                 validator: (v) =>
                 v == null || !v.contains('@') ? 'Enter valid email' : null,
               ),
-              const VSpace(Size.spaceBtwInputFields),
-        
+              const VSpace(USizes.spaceBtwInputFields),
+
               // ── Password Field ──
               PlantaPasswordField(
                 labelText: UTexts.passwordLabel,
@@ -75,8 +76,8 @@ class LoginScreen extends ConsumerWidget {
                 validator: (v) =>
                 v == null || v.length < 6 ? 'Min 6 characters' : null,
               ),
-              const VSpace(Size.spaceBtwSections),
-        
+              const VSpace(USizes.spaceBtwSections),
+
               // ── Continue Button ──
               PlantaPrimaryButton(
                 label: UTexts.continueBtn,
@@ -93,21 +94,23 @@ class LoginScreen extends ConsumerWidget {
                     );
                   }
                 },
-        
+
               ),
-              const VSpace(Size.spaceBtwSections),
-        
+              const VSpace(USizes.spaceBtwSections),
+
               // ── Don't have an account? Sign up ──
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    // Navigator.push to SignUpScreen
-                  },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpScreen()),
+                    );                  },
                   child: RichText(
                     text: TextSpan(
                       text: UTexts.noAccount,
                       style: TextStyle(
-                        fontSize: Size.fontSizeSm,
+                        fontSize: USizes.fontSizeSm,
                         color: UColors.textSecondary,
                       ),
                       children: [
@@ -123,16 +126,16 @@ class LoginScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              const VSpace(Size.spaceBtwSections),
-        
+              const VSpace(USizes.spaceBtwSections),
+
               // ── Or Sign up with ──
               const PlantaOrDivider(text: UTexts.orSignWith),
-              const VSpace(Size.spaceBtwSections),
+              const VSpace(USizes.spaceBtwSections),
               PlantaSocialButton(
                 label: "Sign up with Google",
                 icon: Image.asset(
                   'lib/core/assets/images/google_icon.png',
-                  height: Size.iconMd
+                  height: USizes.iconMd
                 ),
                 onPressed: () {
                   },
