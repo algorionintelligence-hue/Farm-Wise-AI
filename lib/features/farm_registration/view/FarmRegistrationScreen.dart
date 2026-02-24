@@ -98,46 +98,78 @@ class FarmRegistrationScreen extends ConsumerWidget {
 
               // Add Breed Button (only visible if animalCount > 0)
               if (viewModel.farm.animalCount > 0)
-                AddBtn(
-                  onPressed: viewModel.addBreedField,
+
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: AddBtn(
+                    onPressed: viewModel.addBreedField,
+                  ),
                 ),
-              const SizedBox(height: 8),
+
+              if (viewModel.farm.animalCount > 0)
+                SizedBox(height: sizes.spaceBtwInputFields),
 
               // Dynamic Breed Fields
+
               ...List.generate(viewModel.breedFields.length, (index) {
                 final breedField = viewModel.breedFields[index];
-                return Row(
+                return Column(
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: PlantaTextField(
-                        labelText: "Breed Name",
-                        controller: breedField.nameController,
-                        onChanged: (v) => viewModel.updateBreed(
-                            index, v, breedField.quantityController.text),
-                        hintText: 'Normande',
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      flex: 1,
-                      child: PlantaTextField(
-                        labelText: "Quantity",
-                        controller: breedField.quantityController,
-                        keyboardType: TextInputType.number,
-                        onChanged: (v) => viewModel.updateBreed(
-                            index, breedField.nameController.text, v),
-                        hintText: 'Quantity eg: 12',
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () => viewModel.removeBreed(index),
-                    )
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: PlantaTextField(
+                            labelText: "Breed Name",
+                            controller: breedField.nameController,
+                            hintText: 'Normande',
+                            onChanged: (v) => viewModel.updateBreed(
+                              index,
+                              v,
+                              breedField.quantityController.text,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          flex: 1,
+                          child: PlantaTextField(
+                            labelText: "Quantity",
+                            controller: breedField.quantityController,
+                            keyboardType: TextInputType.number,
+                            hintText: '5',
+                            onChanged: (v) => viewModel.updateBreed(
+                              index,
+                              breedField.nameController.text,
+                              v,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Text(
+                              "0%",
+                              style: TextStyle(
+                                color: UColors.colorPrimary,
+                                fontSize: sizes.fontSizeSm,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () => viewModel.removeBreed(index),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),                    SizedBox(height: sizes.spaceBtwInputFields),
                   ],
+
                 );
               }),
-              const SizedBox(height: sizes.spaceBtwInputFields),
 
               // Currency Dropdown
               DropDown(
@@ -153,6 +185,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
               DatePickerButton(
                 selectedDate: viewModel.farm.registrationDate,
                 onDateSelected: viewModel.updateDate,
+                labelText: 'Starting Date',
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
 

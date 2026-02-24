@@ -1,4 +1,5 @@
 import 'package:farm_wise_ai/core/constants/sizes.dart';
+import 'package:farm_wise_ai/core/themes/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddBtn extends StatelessWidget {
@@ -8,13 +9,11 @@ class AddBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  CupertinoButton(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      color: CupertinoColors.activeBlue,
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      color: UColors.colorPrimary,
       borderRadius: BorderRadius.circular(sizes.buttonRadius),
-      onPressed: () {
-        // Add your onPressed logic here
-     onPressed;
-      },
+      onPressed:
+     onPressed,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: const [

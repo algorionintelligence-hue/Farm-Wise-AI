@@ -35,25 +35,64 @@ class DropDown extends StatelessWidget {
         const SizedBox(height: sizes.sm),
         DropdownButtonFormField<String>(
           value: value,
-          hint: Text(hint),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 12,
-              horizontal: 16,
+
+          icon: const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: UColors.colorPrimary,
+          ),
+
+          style: const TextStyle(
+            fontSize: sizes.fontSizeSm,
+            fontWeight: FontWeight.normal,
+            color: UColors.textPrimary,
+          ),
+
+          hint: Text(
+            hint,
+            style: const TextStyle(
+              fontSize: sizes.fontSizeSm,
+              fontWeight: FontWeight.normal,
+              color: UColors.darkGrey,
             ),
           ),
-          items: items.map((item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
-          }).toList(),
+
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: UColors.inputBg,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: sizes.md,
+              vertical: sizes.md,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
+              borderSide: const BorderSide(color: UColors.borderPrimary),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
+              borderSide: const BorderSide(color: UColors.borderPrimary),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
+              borderSide:
+              const BorderSide(color: UColors.plantaGreen, width: 1.5),
+            ),
+          ),
+
+          items: items
+              .map((item) => DropdownMenuItem<String>(
+            value: item,
+            child: Text(
+              item,
+              style: const TextStyle(
+                fontSize: sizes.fontSizeSm,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ))
+              .toList(),
+
           onChanged: onChanged,
-        ),
-      ],
+        ),      ],
     );
   }
 }
