@@ -1,10 +1,12 @@
 import 'package:farm_wise_ai/core/themes/app_theme.dart';
 import 'package:farm_wise_ai/features/auth/view/loginScreen.dart';
 import 'package:farm_wise_ai/features/auth/view/signUpScreen.dart';
+import 'package:farm_wise_ai/features/dashboard/view/dashboard_screen.dart';
 import 'package:farm_wise_ai/features/entry_point/view/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'features/bottom_navigation_bar/view/bottomNavigation.dart';
 import 'features/farm_registration/view/FarmRegistrationScreen.dart';
 
 void main() {
@@ -25,7 +27,7 @@ class FarmWiseAiApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Farm Wise AI',
           theme: AppTheme.light,
-          home: FarmRegistrationScreen(),
+          home: SplashScreen(),
         );
   }
 }
