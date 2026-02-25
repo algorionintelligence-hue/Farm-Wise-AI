@@ -3,6 +3,8 @@ import 'package:farm_wise_ai/features/entry_point/view/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'features/farm_registration/view/FarmRegistrationScreen.dart';
+
 void main() {
   runApp(
     ProviderScope(

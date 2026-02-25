@@ -34,4 +34,18 @@ class UTexts {
   static const String orSignupWith = 'Or Sign up With';
   static const String alreadyHaveAccount = 'Already have an account?';
   static const String logIn = ' Log in';
+
+
+  //Farm registration
+  static const String farmRegistrationFormTitle = "Register Your Farm";
+  static const String farmRegistrationFormSubTitle =
+      'Tell us about your farm so we can help you track your animals, milk, and business easily..';
+  static const String farmName = 'Farm Name';
+  static const String location = 'Location';
+  static const String businessType = 'Business Type';
+  static const String breedMax = 'Breed Max';
+  static const String currency = 'Currency';
+  static const String monthStartDate = 'Month Start Day';
+  static const String register = 'Register';
+
 }

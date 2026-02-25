@@ -10,7 +10,7 @@ class PlantaPasswordField extends ConsumerWidget {
   const PlantaPasswordField({
     super.key,
     this.labelText = 'Choose your password',
-    this.hintText = 'Uppercase, lowercase, number & symbol', // Updated Hint
+    this.hintText = 'Min 6 characters',
     this.controller,
     this.validator,
   });
@@ -35,7 +35,7 @@ class PlantaPasswordField extends ConsumerWidget {
           isVisible
               ? Icons.visibility_outlined
               : Icons.visibility_off_outlined,
-          size: USizes.iconSm,
+          size: Size.iconSm,
           color: UColors.colorPrimary,
         ),
         onPressed: () {

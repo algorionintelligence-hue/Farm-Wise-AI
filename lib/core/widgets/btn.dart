@@ -31,7 +31,7 @@ class PlantaPrimaryButton extends StatelessWidget {
           ),
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(USizes.buttonRadius),
+            borderRadius: BorderRadius.circular(sizes.buttonRadius),
           ),
         ),
         child: isLoading
@@ -46,7 +46,7 @@ class PlantaPrimaryButton extends StatelessWidget {
             : Text(
           label,
           style: const TextStyle(
-            fontSize: USizes.fontSizeMd,
+            fontSize: sizes.fontSizeMd,
             fontWeight: FontWeight.w600,
             color: UColors.white,
             letterSpacing: 0.3,
@@ -72,11 +72,11 @@ class PlantaOrDivider extends StatelessWidget {
           child: Divider(color: UColors.borderPrimary, thickness: 1),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: USizes.md),
+          padding: const EdgeInsets.symmetric(horizontal: sizes.md),
           child: Text(
             text,
             style: TextStyle(
-              fontSize: USizes.fontSizeSm,
+              fontSize: sizes.fontSizeSm,
               color: UColors.textSecondary,
             ),
           ),
@@ -88,7 +88,6 @@ class PlantaOrDivider extends StatelessWidget {
     );
   }
 }
-
 
 
 // ═════════════════════════════════════════════════════════════

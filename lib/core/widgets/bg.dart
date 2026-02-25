@@ -40,8 +40,8 @@ class PlantaScaffold extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: UColors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(USizes.scaffoldTopRadius),
-                  topRight: Radius.circular(USizes.scaffoldTopRadius),
+                  topLeft: Radius.circular(Size.scaffoldTopRadius),
+                  topRight: Radius.circular(Size.scaffoldTopRadius),
                 ),
               ),
               child: Padding(

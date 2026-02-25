@@ -19,13 +19,13 @@ class PlantaLogo extends StatelessWidget {
         const Icon(
           Icons.eco_rounded,
           color: UColors.white,
-          size: USizes.logoIconSize,
+          size: sizes.logoIconSize,
         ),
-        const SizedBox(width: USizes.xs),
+        const SizedBox(width: sizes.xs),
         Text(
           UTexts.appName,
           style: const TextStyle(
-            fontSize: USizes.fontSizeLg,
+            fontSize: sizes.fontSizeLg,
             fontWeight: FontWeight.w700,
             color: UColors.white,
             fontStyle: FontStyle.italic,
