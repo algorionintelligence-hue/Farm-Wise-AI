@@ -35,7 +35,7 @@ class PlantaPasswordField extends ConsumerWidget {
           isVisible
               ? Icons.visibility_outlined
               : Icons.visibility_off_outlined,
-          size: Size.iconSm,
+          size: sizes.iconSm,
           color: UColors.colorPrimary,
         ),
         onPressed: () {

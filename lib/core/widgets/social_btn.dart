@@ -27,8 +27,8 @@ class PlantaSocialButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: onPressed,
         icon: SizedBox(
-          width: USizes.iconMd,
-          height: USizes.iconMd,
+          width: sizes.iconMd,
+          height: sizes.iconMd,
           child: icon,
         ),
         label: Padding(
@@ -36,7 +36,7 @@ class PlantaSocialButton extends StatelessWidget {
           child: Text(
             label,
             style:  TextStyle(
-              fontSize: USizes.fontSizeSm,
+              fontSize: sizes.fontSizeSm,
               fontWeight: FontWeight.w500,
               color: UColors.textPrimary,
             ),
@@ -45,7 +45,7 @@ class PlantaSocialButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: UColors.borderPrimary),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(USizes.buttonRadius),
+            borderRadius: BorderRadius.circular(sizes.buttonRadius),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16), // optional internal padding
         ),
