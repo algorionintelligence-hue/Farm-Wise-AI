@@ -28,7 +28,7 @@ class LoginScreen extends ConsumerWidget {
     final isLoading = ref.watch(loginLoadingProvider);
 
     return PlantaScaffold(
-      showBackButton: true,
+      showBackButton: Navigator.canPop(context),
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -72,8 +72,11 @@ class LoginScreen extends ConsumerWidget {
                 labelText: UTexts.passwordLabel,
                 hintText: UTexts.passwordHint,
                 controller: _passwordController,
-                validator: (v) =>
-                v == null || v.length < 6 ? 'Min 6 characters' : null,
+                validator: (v) {
+                  if (v == null || v.isEmpty) return 'Password is required';
+                  if (v.length < 6) return 'Min 6 characters';
+                  return null;
+                },
               ),
               const VSpace(sizes.spaceBtwSections),
         

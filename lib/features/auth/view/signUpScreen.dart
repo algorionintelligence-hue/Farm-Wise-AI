@@ -14,224 +14,223 @@ import '../../../core/widgets/textfield.dart';
 import 'loginScreen.dart';
 import 'otp/otp.dart';
 
-class SignUpScreen extends ConsumerWidget {
-  SignUpScreen({super.key});
+  class SignUpScreen extends ConsumerWidget {
+    SignUpScreen({super.key});
 
-  final _formKey = GlobalKey<FormState>();
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+    final _firstNameController = TextEditingController();
+    final _lastNameController = TextEditingController();
+    final _emailController = TextEditingController();
+    final _phoneController = TextEditingController();
+    final _passwordController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.watch(signupLoadingProvider);
+    @override
+    Widget build(BuildContext context, WidgetRef ref) {
+      final isLoading = ref.watch(signupLoadingProvider);
+      final termsAccepted = ref.watch(termsAcceptedProvider);
 
-    return PlantaScaffold(
-      showBackButton: true,
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ── Title ──
-              Text(
-                UTexts.signupTitle,
-                style: TextStyle(
-                  fontSize: sizes.fontSizeHeadings,
-                  fontWeight: FontWeight.bold,
-                  color: UColors.colorPrimary,
-                ),
-              ),
-              const VSpace(sizes.sm),
-              Text(
-                UTexts.signupSubTitle,
-                style: TextStyle(
-                  fontSize: sizes.fontSizeSm,
-                  color: UColors.textSecondary,
-                  height: 1.5,
-                ),
-              ),
-              const VSpace(sizes.defaultSpace),
-
-              // ── First + Last Name (Row) ──
-              Row(
-                children: [
-                  Expanded(
-                    child: PlantaTextField(
-                      labelText: UTexts.firstName,
-                      hintText: 'John',
-                      controller: _firstNameController,
-                      validator: (v) =>
-                          v == null || v.isEmpty ? 'Required' : null,
-                    ),
+      return PlantaScaffold(
+        showBackButton: Navigator.canPop(context),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ── Title ──
+                Text(
+                  UTexts.signupTitle,
+                  style: TextStyle(
+                    fontSize: sizes.fontSizeHeadings,
+                    fontWeight: FontWeight.bold,
+                    color: UColors.colorPrimary,
                   ),
-                  const HSpace(sizes.spaceBtwItems),
-                  Expanded(
-                    child: PlantaTextField(
-                      labelText: UTexts.lastName,
-                      hintText: 'Doe',
-                      controller: _lastNameController,
-                      validator: (v) =>
-                          v == null || v.isEmpty ? 'Required' : null,
-                    ),
+                ),
+                const VSpace(sizes.sm),
+                Text(
+                  UTexts.signupSubTitle,
+                  style: TextStyle(
+                    fontSize: sizes.fontSizeSm,
+                    color: UColors.textSecondary,
+                    height: 1.5,
                   ),
-                ],
-              ),
-              const VSpace(sizes.spaceBtwInputFields),
+                ),
+                const VSpace(sizes.defaultSpace),
 
-              // ── Email ──
-              PlantaTextField(
-                labelText: UTexts.emailLabel,
-                hintText: UTexts.emailHint,
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                validator: (v) =>
-                    v == null || !v.contains('@') ? 'Enter valid email' : null,
-              ),
-              const VSpace(sizes.spaceBtwInputFields),
-
-              // ── Phone ──
-              PlantaTextField(
-                labelText: UTexts.phoneNumber,
-                hintText: '+92 300 0000000',
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                validator: (v) =>
-                    v == null || v.length < 10 ? 'Enter valid phone' : null,
-              ),
-              const VSpace(sizes.spaceBtwInputFields),
-
-              // ── Password ──
-              PlantaPasswordField(
-                controller: _passwordController,
-                validator: (v) => validatePassword(v),
-              ),
-              const VSpace(sizes.defaultSpace),
-
-              // ── Terms & Privacy ──
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: Checkbox(
-                      value: false,
-                      activeColor: UColors.plantaGreen,
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(sizes.borderRadiusSm),
+                // ── First + Last Name (Row) ──
+                Row(
+                  children: [
+                    Expanded(
+                      child: PlantaTextField(
+                        labelText: UTexts.firstName,
+                        hintText: 'John',
+                        controller: _firstNameController,
+                        validator: (v) =>
+                            v == null || v.isEmpty ? 'Required' : null,
                       ),
-                      onChanged: (val) {},
                     ),
-                  ),
-                  const HSpace(sizes.sm),
-                  Expanded(
+                    const HSpace(sizes.spaceBtwItems),
+                    Expanded(
+                      child: PlantaTextField(
+                        labelText: UTexts.lastName,
+                        hintText: 'Doe',
+                        controller: _lastNameController,
+                        validator: (v) =>
+                            v == null || v.isEmpty ? 'Required' : null,
+                      ),
+                    ),
+                  ],
+                ),
+                const VSpace(sizes.spaceBtwInputFields),
+
+                // ── Email ──
+                PlantaTextField(
+                  labelText: UTexts.emailLabel,
+                  hintText: UTexts.emailHint,
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (v) =>
+                      v == null || !v.contains('@') ? 'Enter valid email' : null,
+                ),
+                const VSpace(sizes.spaceBtwInputFields),
+
+                // ── Phone ──
+                PlantaTextField(
+                  labelText: UTexts.phoneNumber,
+                  hintText: '+92 300 0000000',
+                  controller: _phoneController,
+                  keyboardType: TextInputType.phone,
+                  validator: (v) =>
+                      v == null || v.length < 10 ? 'Enter valid phone' : null,
+                ),
+                const VSpace(sizes.spaceBtwInputFields),
+
+                // ── Password ──
+                PlantaPasswordField(
+                  controller: _passwordController,
+                  validator: (v) => validatePassword(v),
+                ),
+                const VSpace(sizes.defaultSpace),
+
+                // ── Terms & Privacy ──
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: Checkbox(
+                        value: termsAccepted,  // ✅ driven by state
+                        activeColor: UColors.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(sizes.borderRadiusSm),
+                        ),
+                        onChanged: (val) {
+                          ref.read(termsAcceptedProvider.notifier).state = val ?? false;  // ✅ updates state
+                        },
+                      ),
+                    ),
+                    const HSpace(sizes.sm),
+                    Expanded(
+                      child: RichText(
+                        text: const TextSpan(
+                          text: '${UTexts.iAgreeTo} ',
+                          style: TextStyle(
+                            fontSize: sizes.fontSizeSm,
+                            color: UColors.textSecondary,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: UTexts.privacyPolicy,
+                              style: TextStyle(
+                                color: UColors.linkColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            TextSpan(text: ' ${UTexts.and} '),
+                            TextSpan(
+                              text: UTexts.termsOfUse,
+                              style: TextStyle(
+                                color: UColors.linkColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const VSpace(sizes.defaultSpace),
+
+                // ── Create Account Button ──
+                PlantaPrimaryButton(
+                  label: UTexts.createAccount,
+                  isLoading: isLoading,
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      final success =
+                          await ref.read(authViewModelProvider).signUp(
+                                fName: _firstNameController.text.trim(),
+                                lName: _lastNameController.text.trim(),
+                                email: _emailController.text.trim(),
+                                phone: _phoneController.text.trim(),
+                                password: _passwordController.text.trim(),
+                              );
+
+                      if (success && context.mounted) {
+                        // Navigator.pushReplacementNamed(context, '/login');
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => FarmRegistrationScreen()),
+                        );
+                        // Navigator.pushReplacementNamed(context, '/login');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                OtpScreen(email: _emailController.text.trim()),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                ),
+                const VSpace(sizes.spaceBtwItems),
+
+                // ── Already have account? ──
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      // Navigator.pop to LoginScreen
+                      Navigator.pop(context);
+                    },
                     child: RichText(
-                      text: const TextSpan(
-                        text: '${UTexts.iAgreeTo} ',
+                      text: TextSpan(
+                        text: UTexts.alreadyHaveAccount,
                         style: TextStyle(
                           fontSize: sizes.fontSizeSm,
                           color: UColors.textSecondary,
                         ),
-                        children: [
+                        children: const [
                           TextSpan(
-                            text: UTexts.privacyPolicy,
+                            text: UTexts.logIn,
                             style: TextStyle(
                               color: UColors.linkColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          TextSpan(text: ' ${UTexts.and} '),
-                          TextSpan(
-                            text: UTexts.termsOfUse,
-                            style: TextStyle(
-                              color: UColors.linkColor,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ],
-              ),
-              const VSpace(sizes.defaultSpace),
-
-              // ── Create Account Button ──
-              PlantaPrimaryButton(
-                label: UTexts.createAccount,
-                isLoading: isLoading,
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    final success =
-                        await ref.read(authViewModelProvider).signUp(
-                              fName: _firstNameController.text.trim(),
-                              lName: _lastNameController.text.trim(),
-                              email: _emailController.text.trim(),
-                              phone: _phoneController.text.trim(),
-                              password: _passwordController.text.trim(),
-                            );
-
-                    if (success && context.mounted) {
-                      // Navigator.pushReplacementNamed(context, '/login');
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => FarmRegistrationScreen()),
-                      );
-                      // Navigator.pushReplacementNamed(context, '/login');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              OtpScreen(email: _emailController.text.trim()),
-                        ),
-                      );
-                    }
-                  }
-                },
-              ),
-              const VSpace(sizes.spaceBtwItems),
-
-              // ── Already have account? ──
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    // Navigator.pop to LoginScreen
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => LoginScreen()),
-                    );
-                  },
-                  child: RichText(
-                    text: TextSpan(
-                      text: UTexts.alreadyHaveAccount,
-                      style: TextStyle(
-                        fontSize: sizes.fontSizeSm,
-                        color: UColors.textSecondary,
-                      ),
-                      children: const [
-                        TextSpan(
-                          text: UTexts.logIn,
-                          style: TextStyle(
-                            color: UColors.linkColor,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
-              ),
-              const VSpace(sizes.defaultSpace),
-            ],
+                const VSpace(sizes.defaultSpace),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
-}

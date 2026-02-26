@@ -10,6 +10,7 @@ import '../../features/auth/viewmodel/viewmodel.dart';
 
 // Repository Provider
 final authRepositoryProvider = Provider((ref) => AuthRepository());
+final termsAcceptedProvider = StateProvider<bool>((ref) => false);
 
 // ViewModel Provider
 final authViewModelProvider = Provider((ref) => AuthViewModel(ref));
