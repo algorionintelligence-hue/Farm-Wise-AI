@@ -14,7 +14,6 @@ import '../../../core/widgets/textfield.dart';
 import 'loginScreen.dart';
 import 'otp/otp.dart';
 
-
 class SignUpScreen extends ConsumerWidget {
   SignUpScreen({super.key});
 
@@ -66,7 +65,7 @@ class SignUpScreen extends ConsumerWidget {
                       hintText: 'John',
                       controller: _firstNameController,
                       validator: (v) =>
-                      v == null || v.isEmpty ? 'Required' : null,
+                          v == null || v.isEmpty ? 'Required' : null,
                     ),
                   ),
                   const HSpace(sizes.spaceBtwItems),
@@ -76,7 +75,7 @@ class SignUpScreen extends ConsumerWidget {
                       hintText: 'Doe',
                       controller: _lastNameController,
                       validator: (v) =>
-                      v == null || v.isEmpty ? 'Required' : null,
+                          v == null || v.isEmpty ? 'Required' : null,
                     ),
                   ),
                 ],
@@ -90,7 +89,7 @@ class SignUpScreen extends ConsumerWidget {
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 validator: (v) =>
-                v == null || !v.contains('@') ? 'Enter valid email' : null,
+                    v == null || !v.contains('@') ? 'Enter valid email' : null,
               ),
               const VSpace(sizes.spaceBtwInputFields),
 
@@ -101,7 +100,7 @@ class SignUpScreen extends ConsumerWidget {
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 validator: (v) =>
-                v == null || v.length < 10 ? 'Enter valid phone' : null,
+                    v == null || v.length < 10 ? 'Enter valid phone' : null,
               ),
               const VSpace(sizes.spaceBtwInputFields),
 
@@ -124,7 +123,7 @@ class SignUpScreen extends ConsumerWidget {
                       activeColor: UColors.plantaGreen,
                       shape: RoundedRectangleBorder(
                         borderRadius:
-                        BorderRadius.circular(sizes.borderRadiusSm),
+                            BorderRadius.circular(sizes.borderRadiusSm),
                       ),
                       onChanged: (val) {},
                     ),
@@ -168,30 +167,30 @@ class SignUpScreen extends ConsumerWidget {
                 isLoading: isLoading,
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    final success = await ref.read(authViewModelProvider).signUp(
-                      fName: _firstNameController.text.trim(),
-                      lName: _lastNameController.text.trim(),
-                      email: _emailController.text.trim(),
-                      phone: _phoneController.text.trim(),
-                      password: _passwordController.text.trim(),
-                    );
+                    final success =
+                        await ref.read(authViewModelProvider).signUp(
+                              fName: _firstNameController.text.trim(),
+                              lName: _lastNameController.text.trim(),
+                              email: _emailController.text.trim(),
+                              phone: _phoneController.text.trim(),
+                              password: _passwordController.text.trim(),
+                            );
 
                     if (success && context.mounted) {
-<<<<<<< HEAD
-                     // Navigator.pushReplacementNamed(context, '/login');
+                      // Navigator.pushReplacementNamed(context, '/login');
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (_) => FarmRegistrationScreen()),
+                        MaterialPageRoute(
+                            builder: (_) => FarmRegistrationScreen()),
                       );
-=======
                       // Navigator.pushReplacementNamed(context, '/login');
                       Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => OtpScreen(email: _emailController.text.trim()),
-        ),
-      );
->>>>>>> 1571271 (Added OTP feature and updated auth flow)
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              OtpScreen(email: _emailController.text.trim()),
+                        ),
+                      );
                     }
                   }
                 },
@@ -224,14 +223,11 @@ class SignUpScreen extends ConsumerWidget {
                           ),
                         ),
                       ],
-
                     ),
                   ),
                 ),
               ),
               const VSpace(sizes.defaultSpace),
-            
-
             ],
           ),
         ),
