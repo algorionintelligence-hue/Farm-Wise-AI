@@ -12,6 +12,7 @@ import '../../../core/widgets/btn.dart';
 import '../../../core/widgets/passwordfield.dart';
 import '../../../core/widgets/textfield.dart';
 import 'loginScreen.dart';
+import 'otp/otp.dart';
 
 
 class SignUpScreen extends ConsumerWidget {
@@ -176,11 +177,21 @@ class SignUpScreen extends ConsumerWidget {
                     );
 
                     if (success && context.mounted) {
+<<<<<<< HEAD
                      // Navigator.pushReplacementNamed(context, '/login');
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (_) => FarmRegistrationScreen()),
                       );
+=======
+                      // Navigator.pushReplacementNamed(context, '/login');
+                      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => OtpScreen(email: _emailController.text.trim()),
+        ),
+      );
+>>>>>>> 1571271 (Added OTP feature and updated auth flow)
                     }
                   }
                 },
@@ -213,6 +224,7 @@ class SignUpScreen extends ConsumerWidget {
                           ),
                         ),
                       ],
+
                     ),
                   ),
                 ),
