@@ -27,7 +27,7 @@ class FarmWiseAiApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Farm Wise AI',
           theme: AppTheme.light,
-          home: SplashScreen(),
+          home: BottomNavigation(),
         );
   }
 }

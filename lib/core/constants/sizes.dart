@@ -64,4 +64,9 @@ class sizes{
   // Planta specific
   static const double scaffoldTopRadius = 28.0;
   static const double logoIconSize = 22.0;
+
+
+  //Circular Avatar
+  static const double circularImageRadius = 19.0;
+  static const double circularImageIcon = 27.0;
 }
