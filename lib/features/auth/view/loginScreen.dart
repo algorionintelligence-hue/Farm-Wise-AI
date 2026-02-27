@@ -27,7 +27,7 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = ref.watch(loginLoadingProvider);
 
-    return PlantaScaffold(
+    return AppScaffold(
       showBackButton: Navigator.canPop(context),
       child: SingleChildScrollView(
         child: Form(
@@ -57,7 +57,7 @@ class LoginScreen extends ConsumerWidget {
               const VSpace(sizes.defaultSpace),
         
               // ── Email Field ──
-              PlantaTextField(
+              FTextField(
                 labelText: UTexts.emailLabel,
                 hintText: UTexts.emailHint,
                 controller: _emailController,
@@ -68,7 +68,7 @@ class LoginScreen extends ConsumerWidget {
               const VSpace(sizes.spaceBtwInputFields),
         
               // ── Password Field ──
-              PlantaPasswordField(
+              PasswordField(
                 labelText: UTexts.passwordLabel,
                 hintText: UTexts.passwordHint,
                 controller: _passwordController,
@@ -81,7 +81,7 @@ class LoginScreen extends ConsumerWidget {
               const VSpace(sizes.spaceBtwSections),
         
               // ── Continue Button ──
-              PlantaPrimaryButton(
+              PrimaryButton(
                 label: UTexts.continueBtn,
                 isLoading: isLoading,
                 onPressed: () async {
@@ -130,9 +130,9 @@ class LoginScreen extends ConsumerWidget {
               const VSpace(sizes.spaceBtwSections),
         
               // ── Or Sign up with ──
-              const PlantaOrDivider(text: UTexts.orSignWith),
+              const OrDivider(text: UTexts.orSignWith),
               const VSpace(sizes.spaceBtwSections),
-              PlantaSocialButton(
+              SocialButton(
                 label: "Sign up with Google",
                 icon: Image.asset(
                   'lib/core/assets/images/google_icon.png',

@@ -6,8 +6,8 @@ import '../constants/sizes.dart';
 import '../providers/auth_providers.dart';
 import '../themes/app_colors.dart';
 
-class PlantaPasswordField extends ConsumerWidget {
-  const PlantaPasswordField({
+class PasswordField extends ConsumerWidget {
+  const PasswordField({
     super.key,
     this.labelText = 'Choose your password',
     this.hintText = 'Min 6 characters',
@@ -24,23 +24,26 @@ class PlantaPasswordField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isVisible = ref.watch(passwordVisibilityProvider);
 
-    return PlantaTextField(
-      labelText: labelText,
-      hintText: hintText,
+    return TextFormField(
       controller: controller,
       obscureText: !isVisible,
       validator: validator,
-      suffixIcon: IconButton(
-        icon: Icon(
-          isVisible
-              ? Icons.visibility_outlined
-              : Icons.visibility_off_outlined,
-          size: sizes.iconSm,
-          color: UColors.colorPrimary,
+      decoration: InputDecoration(
+        labelText: labelText,
+        hintText: hintText,
+        suffixIcon: IconButton(
+          icon: Icon(
+            isVisible
+                ? Icons.visibility_outlined
+                : Icons.visibility_off_outlined,
+            size: sizes.iconSm,
+            color: UColors.colorPrimary,
+          ),
+          onPressed: () {
+            ref.read(passwordVisibilityProvider.notifier).state =
+            !isVisible;
+          },
         ),
-        onPressed: () {
-          ref.read(passwordVisibilityProvider.notifier).state = !isVisible;
-        },
       ),
     );
   }

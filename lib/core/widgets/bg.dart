@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import '../constants/sizes.dart';
 import '../themes/app_colors.dart';
 
-
-class PlantaScaffold extends StatelessWidget {
+class AppScaffold extends StatelessWidget {
   final Widget child;
-  const PlantaScaffold({super.key, required this.child, required bool showBackButton});
+  const AppScaffold(
+      {super.key, required this.child, required bool showBackButton});
 
   @override
   Widget build(BuildContext context) {

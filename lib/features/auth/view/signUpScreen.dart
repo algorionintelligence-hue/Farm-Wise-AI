@@ -29,7 +29,7 @@ import 'otp/otp.dart';
       final isLoading = ref.watch(signupLoadingProvider);
       final termsAccepted = ref.watch(termsAcceptedProvider);
 
-      return PlantaScaffold(
+      return AppScaffold(
         showBackButton: Navigator.canPop(context),
         child: SingleChildScrollView(
           child: Form(
@@ -61,7 +61,7 @@ import 'otp/otp.dart';
                 Row(
                   children: [
                     Expanded(
-                      child: PlantaTextField(
+                      child: FTextField(
                         labelText: UTexts.firstName,
                         hintText: 'John',
                         controller: _firstNameController,
@@ -71,7 +71,7 @@ import 'otp/otp.dart';
                     ),
                     const HSpace(sizes.spaceBtwItems),
                     Expanded(
-                      child: PlantaTextField(
+                      child: FTextField(
                         labelText: UTexts.lastName,
                         hintText: 'Doe',
                         controller: _lastNameController,
@@ -84,7 +84,7 @@ import 'otp/otp.dart';
                 const VSpace(sizes.spaceBtwInputFields),
 
                 // ── Email ──
-                PlantaTextField(
+                FTextField(
                   labelText: UTexts.emailLabel,
                   hintText: UTexts.emailHint,
                   controller: _emailController,
@@ -95,7 +95,7 @@ import 'otp/otp.dart';
                 const VSpace(sizes.spaceBtwInputFields),
 
                 // ── Phone ──
-                PlantaTextField(
+                FTextField(
                   labelText: UTexts.phoneNumber,
                   hintText: '+92 300 0000000',
                   controller: _phoneController,
@@ -106,7 +106,7 @@ import 'otp/otp.dart';
                 const VSpace(sizes.spaceBtwInputFields),
 
                 // ── Password ──
-                PlantaPasswordField(
+                PasswordField(
                   controller: _passwordController,
                   validator: (v) => validatePassword(v),
                 ),
@@ -164,7 +164,7 @@ import 'otp/otp.dart';
                 const VSpace(sizes.defaultSpace),
 
                 // ── Create Account Button ──
-                PlantaPrimaryButton(
+                PrimaryButton(
                   label: UTexts.createAccount,
                   isLoading: isLoading,
                   onPressed: () async {

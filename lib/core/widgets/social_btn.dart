@@ -7,8 +7,8 @@ import '../constants/device_helper.dart';
 import '../constants/sizes.dart';
 import '../themes/app_colors.dart';
 
-class PlantaSocialButton extends StatelessWidget {
-  const PlantaSocialButton({
+class SocialButton extends StatelessWidget {
+  const SocialButton({
     super.key,
     required this.label,
     required this.icon,
