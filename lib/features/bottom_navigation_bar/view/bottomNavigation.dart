@@ -1,6 +1,7 @@
 import 'package:farm_wise_ai/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/constants/sizes.dart';
 import '../viewmodel/bottom_nav_viewmodel.dart';
 
 class BottomNavigation extends ConsumerWidget {
@@ -9,7 +10,6 @@ class BottomNavigation extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedIndex = ref.watch(navIndexProvider);
-    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: UColors.lightGrey,
@@ -42,97 +42,175 @@ class BottomNavigation extends ConsumerWidget {
               children: [
 
                 /// Dashboard
-                IconButton(
-                  icon: Icon(
-                    Icons.dashboard_outlined,
-                    color: selectedIndex == 0
-                        ? UColors.colorPrimary
-                        : Colors.grey,
-                  ),
-                  onPressed: () {
-                    ref.read(navIndexProvider.notifier).state = 0;
-                  },
+                Column(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.home_filled,
+                        color: selectedIndex == 0
+                            ? UColors.colorPrimary
+                            : Colors.grey,
+                      ),
+                      onPressed: () {
+                        ref.read(navIndexProvider.notifier).state = 0;
+                      },
+                    ),
+                    Text(
+                      "Dashboard",
+                      style: TextStyle(
+                        color: selectedIndex == 0
+                            ? UColors.colorPrimary
+                            : Colors.grey,
+                        fontSize: sizes.fontSizeVerySm, // small size
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
                 ),
 
                 /// Trophy
-                IconButton(
-                  icon: Icon(
-                    Icons.emoji_events_outlined,
-                    color: selectedIndex == 1
-                        ? UColors.colorPrimary
-                        : Colors.grey,
-                  ),
-                  onPressed: () {
-                    ref.read(navIndexProvider.notifier).state = 1;
-                  },
+                Column(
+                  children: [
+                    IconButton(
+                      icon: Image.asset(
+                        'lib/core/assets/icons/inventory.png',
+                        width: 24,
+                        height: 24,
+                        color: selectedIndex == 1
+                            ? UColors.colorPrimary
+                            : Colors.grey,
+                      ),
+                      onPressed: () {
+                        ref.read(navIndexProvider.notifier).state = 1;
+                      },
+                    ),
+                    Text(
+                      "Inventory",
+                      style: TextStyle(
+                        color: selectedIndex == 1
+                            ? UColors.colorPrimary
+                            : Colors.grey,
+                        fontSize: sizes.fontSizeVerySm, // small size
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
                 ),
 
                 const SizedBox(width: 60),
 
                 /// Music
-                IconButton(
-                  icon: Icon(
-                    Icons.music_note_outlined,
-                    color: selectedIndex == 3
-                        ? UColors.colorPrimary
-                        : Colors.grey,
-                  ),
-                  onPressed: () {
-                    ref.read(navIndexProvider.notifier).state = 3;
-                  },
+                Column(
+                  children: [
+                    IconButton(
+                      icon: Image.asset(
+                        'lib/core/assets/icons/cash.png',
+                        width: 24,
+                        height: 24,
+                        color: selectedIndex == 3
+                            ? UColors.colorPrimary
+                            : Colors.grey,
+                      ),
+                      onPressed: () {
+                        ref.read(navIndexProvider.notifier).state = 3;
+                      },
+                    ),
+                    Text(
+                      "Cash",
+                      style: TextStyle(
+                        color: selectedIndex == 3
+                            ? UColors.colorPrimary
+                            : Colors.grey,
+                        fontSize: sizes.fontSizeVerySm, // small size
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
                 ),
 
-                /// Profile
-                IconButton(
-                  icon: Icon(
-                    Icons.person_outline,
-                    color: selectedIndex == 4
-                        ? UColors.colorPrimary
-                        : Colors.grey,
-                  ),
-                  onPressed: () {
-                    ref.read(navIndexProvider.notifier).state = 4;
-                  },
+                Column(
+                  children: [
+                    IconButton(
+                      icon: Image.asset(
+                        'lib/core/assets/icons/breeding.png',
+                        width: 24,
+                        height: 24,
+                        color: selectedIndex == 4
+                            ? UColors.colorPrimary
+                            : Colors.grey, // works only if icon is monochrome
+                      ),
+                      onPressed: () {
+                        ref.read(navIndexProvider.notifier).state = 4;
+                      },
+                    ),
+                    Text(
+                      "Breeding",
+                      style: TextStyle(
+                        color: selectedIndex == 4
+                            ? UColors.colorPrimary
+                            : Colors.grey,
+                        fontSize: sizes.fontSizeVerySm, // small size
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
                 ),
               ],
             ),
 
             /// CENTER FLOATING BUTTON
+            /// CENTER FLOATING BUTTON
             Positioned(
-              top: -25,
-              child: GestureDetector(
-                onTap: () {
-                  ref.read(navIndexProvider.notifier).state = 2;
-                },
-                child: Container(
-                  width: 65,
-                  height: 65,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: selectedIndex == 2
-                        ? const LinearGradient(
-                      colors: [Color(0xFF384A24), Color(0xFF5CB85C)],
-                    )
-                        : const LinearGradient(
-                      colors: [UColors.colorPrimary, UColors.colorPrimary],
+              top: -40,
+              child: Container(
+                width: 85, // slightly bigger than button
+                height: 85,
+                decoration: BoxDecoration(
+                  color: UColors.screenBackground, // white ring around button
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: UColors.colorPrimary,
-                        blurRadius: 15,
-                        offset: const Offset(0, 8),
+                  ],
+                ),
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(navIndexProvider.notifier).state = 2;
+                    },
+                    child: Container(
+                      width: 65,
+                      height: 65,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: selectedIndex == 2
+                            ? const LinearGradient(
+                          colors: [Color(0xFF384A24), Color(0xFF5CB85C)],
+                        )
+                            : const LinearGradient(
+                          colors: [UColors.colorPrimary, UColors.gradientBarGreen2],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: UColors.colorPrimary,
+                            blurRadius: 15,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.home,
-                    color: Colors.white,
-                    size: 32,
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ),          ],
         ),
       ),    );
   }

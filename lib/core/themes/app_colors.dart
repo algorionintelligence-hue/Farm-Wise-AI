@@ -53,4 +53,16 @@ class UColors{
   static const Color textDark = Color(0xFF2E384D);
   static const Color textLight = Color(0xFF8798AD);
 
+  //gradient bar colors
+  static const Color gradientBarGreen1 = Color(0xFF429B4A);
+  static const Color gradientBarGreen2 = Color(0xFF2E7D32);
+  static const Color gradientBarBlue1 = Color(0xFF33A3D3);
+  static const Color gradientBarBlue2 = Color(0xFF1E88E5);
+  static const Color gradientBarPurple1 = Color(0xFF889AD3);
+  static const Color gradientBarPurple2 = Color(0xFF5C6BC0);
+  static const Color gradientOrange1 = Color(0xFFCB4A2D);
+  static const Color gradientOrange2 = Color(0xFFD35D37);
+  static const Color gradientDarkBlue1 = Color(0xFF375998);
+  static const Color gradientDarkBlue2 = Color(0xFF4867A8);
+
 }

@@ -2,7 +2,9 @@ class sizes{
 // Padding and margin sizes
   static const double xs = 4.0; // extra small
   static const double sm = 8.0; // small
+  static const double smmd = 11.0; // small
   static const double md = 16.0; // medium
+  static const double mdLg = 18.0; // medium
   static const double lg = 24.0; //large
   static const double xl = 32.0; //extra large
 
@@ -13,10 +15,12 @@ class sizes{
   static const double iconLg = 32.0; // large
 
   // Font sizes
+  static const double fontSizeVerySm = 11.0; // small
   static const double fontSizeSm = 14.0; // small
   static const double fontSizeMd = 16.0; // medium
   static const double fontSizeLg = 18.0; // large
   static const double fontSizeHeadings = 25.0; // large
+  static const double fontSizeHeadingsLg = 30.0; // large
 
   // Button sizes
   static const double buttonHeight = 18.0;
