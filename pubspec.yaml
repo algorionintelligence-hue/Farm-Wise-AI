@@ -42,6 +42,7 @@ dependencies:
   json_annotation: ^4.9.0
   flutter_secure_storage: ^9.2.2
   cached_network_image: ^3.3.1
+  fl_chart: ^0.66.0
   lottie:
 
 dev_dependencies:
