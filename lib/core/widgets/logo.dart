@@ -7,8 +7,8 @@ import '../constants/sizes.dart';
 import '../constants/texts.dart';
 import '../themes/app_colors.dart';
 
-class PlantaLogo extends StatelessWidget {
-  const PlantaLogo({super.key});
+class Logo extends StatelessWidget {
+  const Logo({super.key});
 
   @override
   Widget build(BuildContext context) {

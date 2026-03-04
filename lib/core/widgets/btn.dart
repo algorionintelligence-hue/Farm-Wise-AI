@@ -4,8 +4,8 @@ import '../constants/device_helper.dart';
 import '../constants/sizes.dart';
 import '../themes/app_colors.dart';
 
-class PlantaPrimaryButton extends StatelessWidget {
-  const PlantaPrimaryButton({
+class PrimaryButton extends StatelessWidget {
+  const PrimaryButton({
     super.key,
     required this.label,
     required this.onPressed,
@@ -58,10 +58,10 @@ class PlantaPrimaryButton extends StatelessWidget {
 }
 
 // ═════════════════════════════════════════════════════════════
-// 6. PlantaOrDivider
+// 6. Divider
 // ═════════════════════════════════════════════════════════════
-class PlantaOrDivider extends StatelessWidget {
-  const PlantaOrDivider({super.key, required this.text});
+class OrDivider extends StatelessWidget {
+  const OrDivider({super.key, required this.text});
   final String text;
 
   @override

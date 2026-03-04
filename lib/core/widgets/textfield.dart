@@ -1,13 +1,13 @@
 // ═════════════════════════════════════════════════════════════
-// 3. PlantaTextField
+// 3. TextField
 // ═════════════════════════════════════════════════════════════
 import 'package:flutter/material.dart';
 
 import '../constants/sizes.dart';
 import '../themes/app_colors.dart';
 
-class PlantaTextField extends StatelessWidget {
-  const PlantaTextField({
+class FTextField extends StatelessWidget {
+  const FTextField({
     super.key,
     required this.labelText,
     required this.hintText,

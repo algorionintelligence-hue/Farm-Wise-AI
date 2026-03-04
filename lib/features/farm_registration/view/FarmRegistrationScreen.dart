@@ -26,7 +26,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(farmRegistrationProvider);
 
-    return PlantaScaffold(
+    return AppScaffold(
       showBackButton: true,
       child: SingleChildScrollView(
         child: Form(
@@ -56,7 +56,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
               const SizedBox(height: sizes.defaultSpace),
 
               // Farm Name
-              PlantaTextField(
+              FTextField(
                 labelText: UTexts.farmName,
                 hintText: "Hannan",
                 controller: viewModel.farmNameController,
@@ -86,7 +86,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
               const SizedBox(height: sizes.spaceBtwInputFields),
 
               // Total Animals
-              PlantaTextField(
+              FTextField(
                 labelText: UTexts.breedMax,
                 hintText: "Enter no of animals you have eg: 100",
                 controller: viewModel.animalCountController,
@@ -121,7 +121,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
                       children: [
                         Expanded(
                           flex: 2,
-                          child: PlantaTextField(
+                          child: FTextField(
                             labelText: "Breed Name",
                             controller: breedField.nameController,
                             hintText: 'Normande',
@@ -135,7 +135,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           flex: 1,
-                          child: PlantaTextField(
+                          child: FTextField(
                             labelText: "Quantity",
                             controller: breedField.quantityController,
                             keyboardType: TextInputType.number,
@@ -191,7 +191,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
               const SizedBox(height: sizes.spaceBtwInputFields),
 
               // Submit Button
-              PlantaPrimaryButton(
+              PrimaryButton(
                 label: UTexts.continueBtn,
                 onPressed: () {
                   if (viewModel.validateForm(_formKey)) {
