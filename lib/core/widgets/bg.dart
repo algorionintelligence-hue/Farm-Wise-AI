@@ -7,8 +7,13 @@ import '../themes/app_colors.dart';
 
 class AppScaffold extends StatelessWidget {
   final Widget child;
-  const AppScaffold(
-      {super.key, required this.child, required bool showBackButton});
+  final bool showBackButton;
+
+  const AppScaffold({
+    super.key,
+    required this.child,
+    this.showBackButton = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +24,27 @@ class AppScaffold extends StatelessWidget {
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child:
+
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end, // ✅ pushes logo to right
                 children: [
-                  const BackButton(color: Colors.white),
+                  if (showBackButton)
+                    BackButton(
+                      color: Colors.white,
+                      onPressed: () => Navigator.pop(context),
+                    )
+                  else
+                    const SizedBox(width: 48),
+                  const Spacer(), // pushes logo to the right
                   SizedBox(
                     height: 50,
                     child: Image.asset(
-                      'lib/core/assets/images/logo_without_bg.png', // your logo path
+                      'lib/core/assets/images/logo_without_bg.png',
                       fit: BoxFit.contain,
                     ),
                   ),
-                  // PlantaLogo(),
                 ],
               ),
             ),

@@ -24,26 +24,23 @@ class PasswordField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isVisible = ref.watch(passwordVisibilityProvider);
 
-    return TextFormField(
+    return FTextField(
+      labelText: labelText,
+      hintText: hintText,
       controller: controller,
       obscureText: !isVisible,
       validator: validator,
-      decoration: InputDecoration(
-        labelText: labelText,
-        hintText: hintText,
-        suffixIcon: IconButton(
-          icon: Icon(
-            isVisible
-                ? Icons.visibility_outlined
-                : Icons.visibility_off_outlined,
-            size: sizes.iconSm,
-            color: UColors.colorPrimary,
-          ),
-          onPressed: () {
-            ref.read(passwordVisibilityProvider.notifier).state =
-            !isVisible;
-          },
+      suffixIcon: IconButton(
+        icon: Icon(
+          isVisible
+              ? Icons.visibility_outlined
+              : Icons.visibility_off_outlined,
+          size: sizes.iconSm,
+          color: UColors.colorPrimary,
         ),
+        onPressed: () {
+          ref.read(passwordVisibilityProvider.notifier).state = !isVisible;
+        },
       ),
     );
   }

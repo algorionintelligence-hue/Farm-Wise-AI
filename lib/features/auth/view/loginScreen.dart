@@ -28,7 +28,7 @@ class LoginScreen extends ConsumerWidget {
     final isLoading = ref.watch(loginLoadingProvider);
 
     return AppScaffold(
-      showBackButton: Navigator.canPop(context),
+
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,

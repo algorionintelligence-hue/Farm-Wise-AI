@@ -3,16 +3,22 @@ import 'package:flutter/services.dart';
 
 import '../../../../../core/themes/app_colors.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../../../../../core/themes/app_colors.dart';
+
 class OtpInputBox extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final bool hasError;
+  final ValueChanged<String>? onChanged; // ✅ add this
 
   const OtpInputBox({
     super.key,
     required this.controller,
     required this.focusNode,
     this.hasError = false,
+    this.onChanged, // ✅ add this
   });
 
   @override
@@ -24,7 +30,6 @@ class OtpInputBox extends StatelessWidget {
         color: UColors.inputBg,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          // Error ho to red, focus ho to green, warna grey
           color: hasError
               ? UColors.error
               : focusNode.hasFocus
@@ -39,16 +44,16 @@ class OtpInputBox extends StatelessWidget {
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
         maxLength: 1,
+        onChanged: onChanged, // ✅ wire it up
         style: const TextStyle(
           fontSize: 22,
           fontWeight: FontWeight.bold,
           color: UColors.textPrimary,
         ),
         decoration: const InputDecoration(
-          counterText: '',  // "0/1" text hide karo
+          counterText: '',
           border: InputBorder.none,
         ),
-        // Sirf numbers allow karo
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       ),
     );

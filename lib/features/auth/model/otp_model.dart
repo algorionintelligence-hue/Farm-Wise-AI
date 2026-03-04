@@ -1,31 +1,31 @@
-// ============================================================
-// MODEL — OTP ka data yahan store hoga
-// ============================================================
 class OtpModel {
-  final String otp;       // User ka daala hua OTP
-  final bool isLoading;   // API call chal rahi hai?
-  final String? errorMessage; // Koi error aayi?
-  final bool isSuccess;   // OTP sahi tha?
+  final String otp;
+  final bool isLoading;
+  final bool isSuccess;
+  final String? errorMessage;
+  final int resendCountdown; // ✅ add this
 
   const OtpModel({
     this.otp = '',
     this.isLoading = false,
-    this.errorMessage,
     this.isSuccess = false,
+    this.errorMessage,
+    this.resendCountdown = 10, // ✅ starts at 10
   });
 
-  // copyWith: sirf woh field badlo jo chahiye, baaki same rahein
   OtpModel copyWith({
     String? otp,
     bool? isLoading,
-    String? errorMessage,
     bool? isSuccess,
+    String? errorMessage,
+    int? resendCountdown,
   }) {
     return OtpModel(
       otp: otp ?? this.otp,
       isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,   // null bhi ho sakta hai (error clear)
       isSuccess: isSuccess ?? this.isSuccess,
+      errorMessage: errorMessage ?? this.errorMessage,
+      resendCountdown: resendCountdown ?? this.resendCountdown, // ✅
     );
   }
 }

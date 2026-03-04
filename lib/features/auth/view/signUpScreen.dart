@@ -203,8 +203,14 @@ import 'otp/otp.dart';
                 Center(
                   child: GestureDetector(
                     onTap: () {
-                      // Navigator.pop to LoginScreen
-                      Navigator.pop(context);
+                      if (Navigator.canPop(context)) {
+                        Navigator.pop(context);  // if login is in stack, just go back
+                      } else {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => LoginScreen()),
+                        );  // if no back stack, replace with login
+                      }
                     },
                     child: RichText(
                       text: TextSpan(
