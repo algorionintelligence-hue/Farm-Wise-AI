@@ -73,7 +73,7 @@ class HerdDashboardScreen extends ConsumerWidget {
 
           const SizedBox(height: 12),
 
-          // ── Profit Card (Full width, highlighted) ─
+          // ── Profit Card  ─
           _ProfitCard(profit: profit),
 
           const SizedBox(height: 12),

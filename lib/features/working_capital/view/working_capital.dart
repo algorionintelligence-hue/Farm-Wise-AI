@@ -47,7 +47,7 @@ class _WorkingCapitalScreenState
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      showBackButton: Navigator.canPop(context),
+      showBackButton: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

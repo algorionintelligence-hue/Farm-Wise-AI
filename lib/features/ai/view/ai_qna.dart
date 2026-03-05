@@ -124,7 +124,7 @@ class _AiQnaScreenState extends ConsumerState<AiQnaScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
 
     return AppScaffold(
-      showBackButton: Navigator.canPop(context),
+      showBackButton: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

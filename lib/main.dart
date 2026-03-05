@@ -30,9 +30,9 @@ class FarmWiseAiApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Farm Wise AI',
           theme: AppTheme.light,
-          home: FarmRegistrationScreen(),
-
-          // home: const WorkingCapitalScreen(),
+          // home: FarmRegistrationScreen(),
+          // home: HerdStepperScreen(),
+          home: CostInputsScreen(),
           // home: SplashScreen(),
         );
   }

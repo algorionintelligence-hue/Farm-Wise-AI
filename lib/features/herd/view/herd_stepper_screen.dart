@@ -19,7 +19,9 @@ class HerdStepperScreen extends ConsumerWidget {
     final vm = ref.watch(herdProvider.notifier);
 
     return AppScaffold(
-      showBackButton: Navigator.canPop(context),
+      showBackButton: true,
+      // headerTitle: "Animal Registration",
+      // headerSubtitle: "Register your herd animals",
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

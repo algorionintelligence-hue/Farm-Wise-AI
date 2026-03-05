@@ -23,12 +23,12 @@ class AppScaffold extends StatelessWidget {
         children: [
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(left: 16 , right: 16),
               child:
 
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.end, // ✅ pushes logo to right
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   if (showBackButton)
                     BackButton(
