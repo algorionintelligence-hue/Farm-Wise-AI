@@ -12,6 +12,7 @@ class sizes{
   static const double iconXs = 12.0; // extra small
   static const double iconSm = 16.0; // small
   static const double iconMd = 24.0; // medium
+  static const double iconMdLg = 28.0; // medium
   static const double iconLg = 32.0; // large
 
   // Font sizes

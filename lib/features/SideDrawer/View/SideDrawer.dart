@@ -35,7 +35,11 @@ class SideDrawer extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: sizes.md),
               children: [
                  _DrawerItem(
-                  icon: Icons.chat_bubble_outline,
+            icon: Image.asset(
+            "lib/core/assets/icons/scenario.png",
+              width: sizes.iconMdLg,
+              height: sizes.iconMdLg,),
+
                   label: Constants.SCENARIO_SIMULATOR,
                   isSelected: selectedItem == Constants.SCENARIO_SIMULATOR,
                   hasNotification: true,
@@ -51,7 +55,9 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Icons.show_chart,
+                  icon: Image.asset("lib/core/assets/icons/chatbot.png",
+                    width: sizes.iconMdLg,
+                    height: sizes.iconMdLg,),
                   label: Constants.AI_QA_CHAT,
                   isSelected: selectedItem == Constants.AI_QA_CHAT,
                   hasNotification: true,
@@ -67,7 +73,9 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Icons.list,
+                  icon: Image.asset("lib/core/assets/icons/pdf.png",
+                    width: sizes.iconMdLg,
+                    height: sizes.iconMdLg,),
                   label: Constants.REPORT_PDF_EXPORT,
                   isSelected: selectedItem == Constants.REPORT_PDF_EXPORT,
                   onTap: () {
@@ -82,7 +90,10 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Icons.timeline,
+                  icon: Image.asset("lib/core/assets/icons/working_capital.png",
+                    width: sizes.iconMdLg,
+                    height: sizes.iconMdLg,),
+
                   label: Constants.WORKING_CAPITAL,
                   isSelected: selectedItem == Constants.WORKING_CAPITAL,
                   onTap: () {
@@ -97,7 +108,10 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Icons.exit_to_app,
+                    icon: Image.asset("lib/core/assets/icons/logout.png",
+                      width: sizes.iconMdLg,
+                      height: sizes.iconMdLg,),
+
                   label: Constants.LOGOUT,
                   isSelected: selectedItem == Constants.LOGOUT,
                   onTap: () {
@@ -174,7 +188,7 @@ class SideDrawer extends ConsumerWidget {
 }
 
 class _DrawerItem extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;   // changed
   final String label;
   final bool isSelected;
   final bool hasNotification;
@@ -193,25 +207,24 @@ class _DrawerItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: sizes.sm, vertical: 2),
       decoration: BoxDecoration(
-        color: isSelected ? UColors.colorPrimaryLight : Colors.transparent, // Light purple bg for selected
+        color: isSelected ? UColors.colorPrimaryLight : Colors.transparent,
         borderRadius: BorderRadius.circular(sizes.borderRadiusSm),
       ),
       child: ListTile(
         onTap: onTap,
         leading: Stack(
           children: [
-            Icon(
-              icon,
-              color: isSelected ?  UColors.colorPrimary : UColors.darkGrey,
-              size: sizes.iconMd,
-            ),
+            icon, // directly use widget
             if (hasNotification)
               Positioned(
                 right: 0,
                 top: 0,
                 child: Container(
                   padding: const EdgeInsets.all(3),
-                  decoration: const BoxDecoration(color: UColors.colorPrimary, shape: BoxShape.circle),
+                  decoration: const BoxDecoration(
+                    color: UColors.colorPrimary,
+                    shape: BoxShape.circle,
+                  ),
                 ),
               ),
           ],
@@ -219,13 +232,13 @@ class _DrawerItem extends StatelessWidget {
         title: Text(
           label,
           style: TextStyle(
-            color: isSelected ?  UColors.colorPrimary : UColors.black,
+            color: isSelected ? UColors.colorPrimary : UColors.black,
             fontSize: sizes.fontSizeMd,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
           ),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: sizes.lg),
-        visualDensity: const VisualDensity(vertical: -2), // Makes the list more compact
+        visualDensity: const VisualDensity(vertical: -2),
       ),
     );
   }
