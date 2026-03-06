@@ -160,18 +160,20 @@ class AdvancedForecastCard extends ConsumerWidget {
       ),
     );
   }
-
   Widget _buildMonthBarGroup(ForecastData data) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            _gradientBar(data.h1, [UColors.gradientBarGreen1, UColors.gradientBarGreen2]),
-            _gradientBar(data.h2, [UColors.gradientBarBlue1, UColors.gradientBarBlue2]),
-            _gradientBar(data.h3, [UColors.gradientBarPurple1, UColors.gradientBarPurple2]),
-          ],
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _gradientBar(data.h1, [UColors.gradientBarGreen1, UColors.gradientBarGreen2]),
+              _gradientBar(data.h2, [UColors.gradientBarBlue1, UColors.gradientBarBlue2]),
+              _gradientBar(data.h3, [UColors.gradientBarPurple1, UColors.gradientBarPurple2]),
+            ],
+          ),
         ),
         const SizedBox(height: sizes.sm),
         Text(

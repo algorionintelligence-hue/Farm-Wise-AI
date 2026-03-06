@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'features/ai/view/ai_qna.dart';
+import 'features/bottom_navigation_bar/view/bottomNavigation.dart';
 import 'features/cost/view/cost.dart';
 import 'features/farm_registration/view/FarmRegistrationScreen.dart';
 import 'features/herd/view/herd_stepper_screen.dart';
@@ -32,7 +33,7 @@ class FarmWiseAiApp extends StatelessWidget {
           theme: AppTheme.light,
           // home: FarmRegistrationScreen(),
           // home: HerdStepperScreen(),
-          home: CostInputsScreen(),
+          home: BottomNavigation(),
           // home: SplashScreen(),
         );
   }
