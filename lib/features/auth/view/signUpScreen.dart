@@ -2,17 +2,17 @@ import 'package:farm_wise_ai/features/farm_registration/view/FarmRegistrationScr
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/constants/sizes.dart';
-import '../../../core/constants/texts.dart';
+import '../../../core/Utils/sizes.dart';
+import '../../../core/Utils/utils.dart';
 import '../../../core/providers/auth_providers.dart';
 import '../../../core/themes/app_colors.dart';
-import '../../../core/utils/utils.dart';
-import '../../../core/widgets/bg.dart';
-import '../../../core/widgets/btn.dart';
-import '../../../core/widgets/passwordfield.dart';
-import '../../../core/widgets/textfield.dart';
-import 'loginScreen.dart';
-import 'otp/otp.dart';
+import '../../../core/utils/Constants.dart';
+import '../../../core/widgets/AppScaffoldBgBasic.dart';
+import '../../../core/widgets/PrimaryButton.dart';
+import '../../../core/widgets/PasswordField.dart';
+import '../../../core/widgets/FTextField.dart';
+import 'LoginScreen.dart';
+import 'otp/OtpScreen.dart';
 
   class SignUpScreen extends ConsumerWidget {
     SignUpScreen({super.key});
@@ -29,7 +29,7 @@ import 'otp/otp.dart';
       final isLoading = ref.watch(signupLoadingProvider);
       final termsAccepted = ref.watch(termsAcceptedProvider);
 
-      return AppScaffold(
+      return AppScaffoldBgBasic(
         showBackButton: Navigator.canPop(context),
         child: SingleChildScrollView(
           child: Form(
@@ -39,7 +39,7 @@ import 'otp/otp.dart';
               children: [
                 // ── Title ──
                 Text(
-                  UTexts.signupTitle,
+                  Constants.signupTitle,
                   style: TextStyle(
                     fontSize: sizes.fontSizeHeadings,
                     fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ import 'otp/otp.dart';
                 ),
                 const VSpace(sizes.sm),
                 Text(
-                  UTexts.signupSubTitle,
+                  Constants.signupSubTitle,
                   style: TextStyle(
                     fontSize: sizes.fontSizeSm,
                     color: UColors.textSecondary,
@@ -62,7 +62,7 @@ import 'otp/otp.dart';
                   children: [
                     Expanded(
                       child: FTextField(
-                        labelText: UTexts.firstName,
+                        labelText: Constants.firstName,
                         hintText: 'John',
                         controller: _firstNameController,
                         validator: (v) =>
@@ -72,7 +72,7 @@ import 'otp/otp.dart';
                     const HSpace(sizes.spaceBtwItems),
                     Expanded(
                       child: FTextField(
-                        labelText: UTexts.lastName,
+                        labelText: Constants.lastName,
                         hintText: 'Doe',
                         controller: _lastNameController,
                         validator: (v) =>
@@ -85,8 +85,8 @@ import 'otp/otp.dart';
 
                 // ── Email ──
                 FTextField(
-                  labelText: UTexts.emailLabel,
-                  hintText: UTexts.emailHint,
+                  labelText: Constants.emailLabel,
+                  hintText: Constants.emailHint,
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   validator: (v) =>
@@ -96,7 +96,7 @@ import 'otp/otp.dart';
 
                 // ── Phone ──
                 FTextField(
-                  labelText: UTexts.phoneNumber,
+                  labelText: Constants.phoneNumber,
                   hintText: '+92 300 0000000',
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
@@ -134,22 +134,22 @@ import 'otp/otp.dart';
                     Expanded(
                       child: RichText(
                         text: const TextSpan(
-                          text: '${UTexts.iAgreeTo} ',
+                          text: '${Constants.iAgreeTo} ',
                           style: TextStyle(
                             fontSize: sizes.fontSizeSm,
                             color: UColors.textSecondary,
                           ),
                           children: [
                             TextSpan(
-                              text: UTexts.privacyPolicy,
+                              text: Constants.privacyPolicy,
                               style: TextStyle(
                                 color: UColors.linkColor,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            TextSpan(text: ' ${UTexts.and} '),
+                            TextSpan(text: ' ${Constants.and} '),
                             TextSpan(
-                              text: UTexts.termsOfUse,
+                              text: Constants.termsOfUse,
                               style: TextStyle(
                                 color: UColors.linkColor,
                                 fontWeight: FontWeight.w600,
@@ -165,7 +165,7 @@ import 'otp/otp.dart';
 
                 // ── Create Account Button ──
                 PrimaryButton(
-                  label: UTexts.createAccount,
+                  label: Constants.createAccount,
                   isLoading: isLoading,
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
@@ -214,14 +214,14 @@ import 'otp/otp.dart';
                     },
                     child: RichText(
                       text: TextSpan(
-                        text: UTexts.alreadyHaveAccount,
+                        text: Constants.alreadyHaveAccount,
                         style: TextStyle(
                           fontSize: sizes.fontSizeSm,
                           color: UColors.textSecondary,
                         ),
                         children: const [
                           TextSpan(
-                            text: UTexts.logIn,
+                            text: Constants.logIn,
                             style: TextStyle(
                               color: UColors.linkColor,
                               fontWeight: FontWeight.w700,

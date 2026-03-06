@@ -1,15 +1,15 @@
-import 'package:farm_wise_ai/core/constants/sizes.dart';
-import 'package:farm_wise_ai/core/widgets/add_btn.dart';
-import 'package:farm_wise_ai/core/widgets/date_picker_btn.dart';
-import 'package:farm_wise_ai/core/widgets/dropdown.dart';
+import 'package:farm_wise_ai/core/widgets/AddBtn.dart';
+import 'package:farm_wise_ai/core/widgets/DatePickerField.dart';
+import 'package:farm_wise_ai/core/widgets/DropDownField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/constants/texts.dart';
+import '../../../core/Utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
-import '../../../core/widgets/bg.dart';
-import '../../../core/widgets/btn.dart';
-import '../../../core/widgets/textfield.dart';
+import '../../../core/utils/Constants.dart';
+import '../../../core/widgets/AppScaffoldBgBasic.dart';
+import '../../../core/widgets/PrimaryButton.dart';
+import '../../../core/widgets/FTextField.dart';
 import '../view_model/farm_registration_form_viewmodel.dart';
 
 
@@ -26,7 +26,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(farmRegistrationProvider);
 
-    return AppScaffold(
+    return AppScaffoldBgBasic(
       showBackButton: true,
       child: SingleChildScrollView(
         child: Form(
@@ -36,7 +36,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
             children: [
               // Title
               Text(
-                UTexts.farmRegistrationFormTitle,
+                Constants.farmRegistrationFormTitle,
                 style: TextStyle(
                   fontSize: sizes.fontSizeHeadings,
                   fontWeight: FontWeight.bold,
@@ -46,7 +46,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
               const SizedBox(height: sizes.sm),
               // Sub Title
               Text(
-                UTexts.farmRegistrationFormSubTitle,
+                Constants.farmRegistrationFormSubTitle,
                 style: TextStyle(
                   fontSize: sizes.fontSizeSm,
                   color: UColors.textSecondary,
@@ -57,7 +57,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
 
               // Farm Name
               FTextField(
-                labelText: UTexts.farmName,
+                labelText: Constants.farmName,
                 hintText: "Hannan",
                 controller: viewModel.farmNameController,
                 onChanged: viewModel.updateFarmName,
@@ -67,7 +67,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
 
               // Location Dropdown
               DropDown(
-                labelText: UTexts.location,
+                labelText: Constants.location,
                 hint: "Select your Location",
                 items: locations,
                 value: viewModel.farm.location.isEmpty ? null : viewModel.farm.location,
@@ -77,7 +77,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
 
               // Business Type Dropdown
               DropDown(
-                labelText: UTexts.businessType,
+                labelText: Constants.businessType,
                 hint: "Select your Business Type",
                 items: businessTypes,
                 value: viewModel.farm.businessType.isEmpty ? null : viewModel.farm.businessType,
@@ -87,7 +87,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
 
               // Total Animals
               FTextField(
-                labelText: UTexts.breedMax,
+                labelText: Constants.breedMax,
                 hintText: "Enter no of animals you have eg: 100",
                 controller: viewModel.animalCountController,
                 keyboardType: TextInputType.number,
@@ -174,7 +174,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
 
               // Currency Dropdown
               DropDown(
-                labelText: UTexts.currency,
+                labelText: Constants.currency,
                 hint: "Select your Currency",
                 items: currencies,
                 value: viewModel.farm.currency.isEmpty ? null : viewModel.farm.currency,
@@ -183,7 +183,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
               const SizedBox(height: sizes.spaceBtwInputFields),
 
               // Registration Date Picker
-              DatePickerButton(
+              DatePickerField(
                 selectedDate: viewModel.farm.registrationDate,
                 onDateSelected: viewModel.updateDate,
                 labelText: 'Starting Date',
@@ -192,7 +192,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
 
               // Submit Button
               PrimaryButton(
-                label: UTexts.continueBtn,
+                label: Constants.continueBtn,
                 onPressed: () {
                   if (viewModel.validateForm(_formKey)) {
                     viewModel.submitForm();

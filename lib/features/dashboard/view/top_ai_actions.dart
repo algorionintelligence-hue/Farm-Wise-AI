@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/sizes.dart';
+import '../../../core/Utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
 
 class AiActionsCard extends StatelessWidget {
-  // We use a List of Maps to avoid needing a separate Model Class
+  // We use a List of Maps to avoid needing a separate model Class
   final List<Map<String, dynamic>> actions;
 
   const AiActionsCard({

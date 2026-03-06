@@ -6,6 +6,7 @@ class UColors{
   UColors._();
   static const Color primary = Color(0xFF152B36);
   static const Color colorPrimary = Color(0xFF384A24);
+  static const Color colorPrimaryLight = Color(0x2C384A24);
   static const Color plantaGreen = Color(0xFF5CB85C);
   static const Color plantaGreenDark = Color(0xFF4CAF50);
 

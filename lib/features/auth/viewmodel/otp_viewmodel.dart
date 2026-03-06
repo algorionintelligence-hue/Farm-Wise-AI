@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../model/otp_model.dart';
+import '../model/OtpModel.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/otp_model.dart';
+import '../model/OtpModel.dart';
 
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/otp_model.dart';
+import '../model/OtpModel.dart';
 
 class OtpViewModel extends StateNotifier<OtpModel> {
   OtpViewModel() : super(const OtpModel()) {
