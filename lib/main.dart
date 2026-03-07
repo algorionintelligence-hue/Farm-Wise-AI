@@ -17,11 +17,11 @@ class FarmWiseAiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Farm Wise AI',
-          theme: AppTheme.light,
-           home: BottomNavigation(),
-        );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Farm Wise AI',
+      theme: AppTheme.light,
+      home: const BottomNavigation(),
+    );
   }
 }
