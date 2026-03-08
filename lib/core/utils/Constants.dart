@@ -9,10 +9,11 @@ class Constants {
   static const String loginSubTitle =
       'Keep your plants alive by watering, providing sunlight\nand checking for pests.';
   static const String emailLabel = 'Your email address';
-  static const String emailHint = 'Support@planta@gmail.com';
+  static const String emailHint = 'example@gmail.com';
   static const String passwordLabel = 'Choose your password';
-  static const String passwordHint = 'Min 6 characters';
+  static const String passwordHint = '******';
   static const String continueBtn = 'Continue';
+  static const String RegisterBtn = 'Register Farm';
   static const String noAccount = "Don't have an account?";
   static const String signUp = ' Sign up';
   static const String orSignWith = 'Or Sign up with';

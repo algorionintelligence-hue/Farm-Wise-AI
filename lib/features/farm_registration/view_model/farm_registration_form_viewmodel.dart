@@ -98,7 +98,7 @@ class FarmRegistrationViewModel extends ChangeNotifier {
   }
 
   void submitForm() {
-    debugPrint('Farm Data: ${farm.toJson()}');
+
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:farm_wise_ai/features/auth/view/otp/widgets/otp_btn.dart' hide PrimaryButton;
 import 'package:farm_wise_ai/features/auth/view/otp/widgets/otp_input.dart';
 import 'package:farm_wise_ai/features/bottom_navigation_bar/view/BottomNavigation.dart';
+import 'package:farm_wise_ai/features/farm_registration/view/FarmRegistrationScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,7 +55,7 @@ class OtpScreen extends ConsumerWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const BottomNavigation(), // apna class name yahan
+                    builder: (_) =>  FarmRegistrationScreen(), // apna class name yahan
                   ),
                       (route) => false, // back press pe login pe wapas na jaye
                 );

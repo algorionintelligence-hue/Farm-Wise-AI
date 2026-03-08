@@ -92,7 +92,7 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Image.asset("lib/core/assets/icons/budget.png",
+                  icon: Image.asset("lib/core/assets/icons/cost.png",
                     width: sizes.iconMdLg,
                     height: sizes.iconMdLg,),
 
@@ -171,17 +171,16 @@ class SideDrawer extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CircleAvatar(
-            radius: 40,
-            backgroundColor: UColors.white,
-            child: CircleAvatar(
-              radius: 37,
-              backgroundImage: NetworkImage('https://i.imgur.com/8Km9tLL.png'), // Placeholder for user image
+          Container(
+            width: 80,
+            height: 80,
+            child: Image.asset(
+              "lib/core/assets/images/logo_without_bg.png",
+              fit: BoxFit.contain,
             ),
           ),
-          const SizedBox(height: sizes.sm),
           const Text(
-            'Mubashira',
+            'Ali Ahmed',
             style: TextStyle(
               color: UColors.textWhite,
               fontSize: sizes.fontSizeLg,
@@ -191,7 +190,7 @@ class SideDrawer extends ConsumerWidget {
           Row(
             children: [
               Text(
-                'Rendom Farm',
+                'Cattle Farm',
                 style: TextStyle(
                   color: UColors.textWhite.withOpacity(0.8),
                   fontSize: sizes.fontSizeLg,

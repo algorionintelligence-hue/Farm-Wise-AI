@@ -1,6 +1,7 @@
 import 'package:farm_wise_ai/core/widgets/AddBtn.dart';
 import 'package:farm_wise_ai/core/widgets/DatePickerField.dart';
 import 'package:farm_wise_ai/core/widgets/DropDownField.dart';
+import 'package:farm_wise_ai/features/bottom_navigation_bar/view/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,13 +13,16 @@ import '../../../core/widgets/PrimaryButton.dart';
 import '../../../core/widgets/FTextField.dart';
 import '../view_model/farm_registration_form_viewmodel.dart';
 
-
 class FarmRegistrationScreen extends ConsumerWidget {
-
   FarmRegistrationScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
-  final List<String> businessTypes = ["Dairy", "Breeding", "Mixed", "Fattening"];
+  final List<String> businessTypes = [
+    "Dairy",
+    "Breeding",
+    "Mixed",
+    "Fattening"
+  ];
   final List<String> locations = ["Karachi", "Lahore", "Islamabad"]; // example
   final List<String> currencies = ["PKR", "USD", "EUR"];
 
@@ -58,10 +62,10 @@ class FarmRegistrationScreen extends ConsumerWidget {
               // Farm Name
               FTextField(
                 labelText: Constants.farmName,
-                hintText: "Hannan",
+                hintText: "Cattle farm",
                 controller: viewModel.farmNameController,
                 onChanged: viewModel.updateFarmName,
-                validator: (v) => v == null || v.isEmpty ? 'Enter your Farm Name' : null,
+                // validator: (v) => v == null || v.isEmpty ? 'Enter your Farm Name' : null,
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
 
@@ -70,7 +74,9 @@ class FarmRegistrationScreen extends ConsumerWidget {
                 labelText: Constants.location,
                 hint: "Select your Location",
                 items: locations,
-                value: viewModel.farm.location.isEmpty ? null : viewModel.farm.location,
+                value: viewModel.farm.location.isEmpty
+                    ? null
+                    : viewModel.farm.location,
                 onChanged: (value) => viewModel.updateLocation(value ?? ''),
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
@@ -80,7 +86,9 @@ class FarmRegistrationScreen extends ConsumerWidget {
                 labelText: Constants.businessType,
                 hint: "Select your Business Type",
                 items: businessTypes,
-                value: viewModel.farm.businessType.isEmpty ? null : viewModel.farm.businessType,
+                value: viewModel.farm.businessType.isEmpty
+                    ? null
+                    : viewModel.farm.businessType,
                 onChanged: (value) => viewModel.updateBusinessType(value ?? ''),
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
@@ -92,14 +100,13 @@ class FarmRegistrationScreen extends ConsumerWidget {
                 controller: viewModel.animalCountController,
                 keyboardType: TextInputType.number,
                 onChanged: viewModel.updateAnimalCount,
-                validator: (v) =>
-                v == null || v.isEmpty ? 'Enter no of animals you have in your farm' : null,
+                //  validator: (v) =>
+                //   v == null || v.isEmpty ? 'Enter no of animals you have in your farm' : null,
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
 
               // Add Breed Button (only visible if animalCount > 0)
               if (viewModel.farm.animalCount > 0)
-
                 Align(
                   alignment: Alignment.centerRight,
                   child: AddBtn(
@@ -166,9 +173,9 @@ class FarmRegistrationScreen extends ConsumerWidget {
                           ],
                         ),
                       ],
-                    ),                    SizedBox(height: sizes.spaceBtwInputFields),
+                    ),
+                    SizedBox(height: sizes.spaceBtwInputFields),
                   ],
-
                 );
               }),
 
@@ -177,7 +184,9 @@ class FarmRegistrationScreen extends ConsumerWidget {
                 labelText: Constants.currency,
                 hint: "Select your Currency",
                 items: currencies,
-                value: viewModel.farm.currency.isEmpty ? null : viewModel.farm.currency,
+                value: viewModel.farm.currency.isEmpty
+                    ? null
+                    : viewModel.farm.currency,
                 onChanged: (value) => viewModel.updateCurrency(value ?? ''),
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
@@ -188,17 +197,25 @@ class FarmRegistrationScreen extends ConsumerWidget {
                 onDateSelected: viewModel.updateDate,
                 labelText: 'Starting Date',
               ),
-              const SizedBox(height: sizes.spaceBtwInputFields),
+              const SizedBox(height: sizes.spaceBtwSections),
 
               // Submit Button
               PrimaryButton(
-                label: Constants.continueBtn,
-                onPressed: () {
-                  if (viewModel.validateForm(_formKey)) {
-                    viewModel.submitForm();
-                  }
-                },
-              ),
+                  label: Constants.RegisterBtn,
+                  onPressed: () {
+                    // if (viewModel.validateForm(_formKey)) {
+                    //   viewModel.submitForm();
+                    Navigator.pop(context); // dialog band karo
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            BottomNavigation
+                              (), // apna class name yahan
+                      ),
+                      (route) => false, // back press pe login pe wapas na jaye
+                    );
+                  }),
               const SizedBox(height: sizes.spaceBtwSections),
             ],
           ),
