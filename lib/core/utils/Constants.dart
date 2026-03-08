@@ -52,7 +52,8 @@ class Constants {
   static const String SCENARIO_SIMULATOR = 'Scenario Simulator';
   static const String AI_QA_CHAT = 'AI Q&A Chat';
   static const String REPORT_PDF_EXPORT = 'Report & PDF Export';
-  static const String WORKING_CAPITAL = 'Working Capital';
+  static const String REVENUE_INPUT = 'Revenue Input';
+  static const String COST_INPUT = 'Cost Input';
   static const String LOGOUT = 'Logout';
 
 }

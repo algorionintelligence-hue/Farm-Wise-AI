@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/herd.dart';
 
-class HerdViewModel extends StateNotifier<HerdInputModel?> {
-  HerdViewModel() : super(null);
+class HerdViewModel extends StateNotifier<HerdInputModel> {
+  // ✅ Fix: null ki jagah empty model se start karo
+  HerdViewModel() : super(HerdInputModel());
 
-  // ❌ currentStep yahan se hata do — provider mein hai ab
-  // ❌ nextStep(), backStep(), progress() bhi hata do
-
-  // baqi sab controllers waise hi rehte hain...
   final animalIdController = TextEditingController();
   final weightController = TextEditingController();
   final avgMilkController = TextEditingController();
@@ -65,10 +62,31 @@ class HerdViewModel extends StateNotifier<HerdInputModel?> {
       expectedSaleAnimals: int.tryParse(expectedSaleController.text) ?? 0,
     );
   }
+
+  // ✅ Fix: copyWith se naya object — Riverpod rebuild karega
   void refreshDates() {
-    state = state; // dates update hone par UI refresh
+    state = state.copyWith(
+      serviceDate: serviceDate,
+      pdDate: pdDate,
+      calvingDate: calvingDate,
+    );
+  }
+
+  @override
+  void dispose() {
+    animalIdController.dispose();
+    weightController.dispose();
+    avgMilkController.dispose();
+    milkPriceController.dispose();
+    milkSoldController.dispose();
+    feedCostController.dispose();
+    medicalCostController.dispose();
+    laborCostController.dispose();
+    expectedSaleController.dispose();
+    super.dispose();
   }
 }
+
 final herdProvider =
-StateNotifierProvider<HerdViewModel, HerdInputModel?>(
+StateNotifierProvider<HerdViewModel, HerdInputModel>(
         (ref) => HerdViewModel());

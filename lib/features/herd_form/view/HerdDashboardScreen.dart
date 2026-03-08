@@ -23,84 +23,86 @@ class HerdDashboardScreen extends ConsumerWidget {
 
     return AppScaffoldBgBasic(
       showBackButton: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ── Header Title ──────────────────────────
-          const Text(
-            "Farm Dashboard",
-            style: TextStyle(
-              fontSize: sizes.fontSizeLg,
-              fontWeight: FontWeight.w800,
-              color: UColors.colorPrimary,
-            ),
-          ),
-          const SizedBox(height: 4),
-          const Text(
-            "Monthly overview of your herd_form",
-            style: TextStyle(
-              fontSize: sizes.fontSizeSm,
-              color: UColors.textSecondary,
-            ),
-          ),
-
-          const SizedBox(height: 28),
-
-          // ── Summary Cards Row ─────────────────────
-          Row(
-            children: [
-              Expanded(
-                child: _SummaryCard(
-                  icon: Icons.trending_up_rounded,
-                  label: "Revenue",
-                  value: "Rs. ${revenue.toStringAsFixed(0)}",
-                  iconColor: UColors.success,
-                  bgColor: const Color(0xFFEDF7ED),
-                ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ── Header Title ──────────────────────────
+            const Text(
+              "Farm Dashboard",
+              style: TextStyle(
+                fontSize: sizes.fontSizeLg,
+                fontWeight: FontWeight.w800,
+                color: UColors.colorPrimary,
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _SummaryCard(
-                  icon: Icons.trending_down_rounded,
-                  label: "Cost",
-                  value: "Rs. ${cost.toStringAsFixed(0)}",
-                  iconColor: UColors.error,
-                  bgColor: const Color(0xFFFDEDED),
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 12),
-
-          // ── Profit Card  ─
-          _ProfitCard(profit: profit),
-
-          const SizedBox(height: 12),
-
-          // ── Expected Calves ───────────────────────
-          _InfoCard(
-            icon: Icons.pets_rounded,
-            label: "Expected Calves (next 6 months)",
-            value: calves.toString(),
-          ),
-
-          const SizedBox(height: 28),
-
-          // ── Section Title ─────────────────────────
-          const Text(
-            "Monthly Breakdown",
-            style: TextStyle(
-              fontSize: sizes.fontSizeMd,
-              fontWeight: FontWeight.w700,
-              color: UColors.colorPrimary,
             ),
-          ),
-          const SizedBox(height: 12),
-
-          // ── Bar Chart Visual ──────────────────────
-          _BarChart(revenue: revenue, cost: cost, profit: profit),
-        ],
+            const SizedBox(height: 4),
+            const Text(
+              "Monthly overview of your herd_form",
+              style: TextStyle(
+                fontSize: sizes.fontSizeSm,
+                color: UColors.textSecondary,
+              ),
+            ),
+        
+            const SizedBox(height: 28),
+        
+            // ── Summary Cards Row ─────────────────────
+            Row(
+              children: [
+                Expanded(
+                  child: _SummaryCard(
+                    icon: Icons.trending_up_rounded,
+                    label: "Revenue",
+                    value: "Rs. ${revenue.toStringAsFixed(0)}",
+                    iconColor: UColors.success,
+                    bgColor: const Color(0xFFEDF7ED),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _SummaryCard(
+                    icon: Icons.trending_down_rounded,
+                    label: "Cost",
+                    value: "Rs. ${cost.toStringAsFixed(0)}",
+                    iconColor: UColors.error,
+                    bgColor: const Color(0xFFFDEDED),
+                  ),
+                ),
+              ],
+            ),
+        
+            const SizedBox(height: 12),
+        
+            // ── Profit Card  ─
+            _ProfitCard(profit: profit),
+        
+            const SizedBox(height: 12),
+        
+            // ── Expected Calves ───────────────────────
+            _InfoCard(
+              icon: Icons.pets_rounded,
+              label: "Expected Calves (next 6 months)",
+              value: calves.toString(),
+            ),
+        
+            const SizedBox(height: 28),
+        
+            // ── Section Title ─────────────────────────
+            const Text(
+              "Monthly Breakdown",
+              style: TextStyle(
+                fontSize: sizes.fontSizeMd,
+                fontWeight: FontWeight.w700,
+                color: UColors.colorPrimary,
+              ),
+            ),
+            const SizedBox(height: 12),
+        
+            // ── Bar Chart Visual ──────────────────────
+            _BarChart(revenue: revenue, cost: cost, profit: profit),
+          ],
+        ),
       ),
     );
   }

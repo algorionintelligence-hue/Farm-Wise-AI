@@ -1,6 +1,8 @@
 import 'package:farm_wise_ai/core/utils/Constants.dart';
 import 'package:farm_wise_ai/features/auth/repository/auth_repository.dart';
 import 'package:farm_wise_ai/features/auth/view/signUpScreen.dart';
+import 'package:farm_wise_ai/features/bottom_navigation_bar/view/BottomNavigation.dart';
+import 'package:farm_wise_ai/features/dashboard/view/DashboardScreen.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -91,7 +93,7 @@ class LoginScreen extends ConsumerWidget {
                     // TODO: navigate or auth
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => SignUpScreen()),
+                      MaterialPageRoute(builder: (_) =>BottomNavigation()),
                     );
                   }
                 },

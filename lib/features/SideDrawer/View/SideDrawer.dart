@@ -1,6 +1,8 @@
 import 'package:farm_wise_ai/features/ai/view/AiQnaScreen.dart';
 import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
+import 'package:farm_wise_ai/features/cost_form/view/CostInputsScreen.dart';
 import 'package:farm_wise_ai/features/report_&_pdf_export/view/ReportPdfExportScreen.dart';
+import 'package:farm_wise_ai/features/revenue_form/view/RevenueInputsScreen.dart';
 import 'package:farm_wise_ai/features/working_capital/view/WorkingCapitalScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -90,19 +92,37 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Image.asset("lib/core/assets/icons/working_capital.png",
+                  icon: Image.asset("lib/core/assets/icons/budget.png",
                     width: sizes.iconMdLg,
                     height: sizes.iconMdLg,),
 
-                  label: Constants.WORKING_CAPITAL,
-                  isSelected: selectedItem == Constants.WORKING_CAPITAL,
+                  label: Constants.COST_INPUT,
+                  isSelected: selectedItem == Constants.COST_INPUT,
                   onTap: () {
                     Navigator.pop(context); // close drawer
 
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const WorkingCapitalScreen(),
+                        builder: (context) => const CostInputsScreen(),
+                      ),
+                    );
+                  },
+                ),
+                _DrawerItem(
+                  icon: Image.asset("lib/core/assets/icons/revenue.png",
+                    width: sizes.iconMdLg,
+                    height: sizes.iconMdLg,),
+
+                  label: Constants.REVENUE_INPUT,
+                  isSelected: selectedItem == Constants.REVENUE_INPUT,
+                  onTap: () {
+                    Navigator.pop(context); // close drawer
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RevenueInputsScreen(),
                       ),
                     );
                   },
