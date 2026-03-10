@@ -1,17 +1,15 @@
-import 'package:farm_wise_ai/features/ai/widgets/InputBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/Utils/sizes.dart';
 import '../../../core/providers/auth_providers.dart';
 import '../../../core/themes/app_colors.dart';
+import '../../../core/utils/sizes.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
+import '../../../l10n/app_localizations.dart';
 import '../model/message_model.dart';
+import '../widgets/InputBar.dart';
 import '../widgets/MessageBubble.dart';
 
-
-
-// ── Template Questions ─────────────────────────
 class _TemplateQuestion {
   final String label;
   final String question;
@@ -24,61 +22,6 @@ class _TemplateQuestion {
   });
 }
 
-const _templates = [
-  _TemplateQuestion(
-    label: "Profitable?",
-    question: "Am I profitable this month?",
-    icon: Icons.trending_up_rounded,
-  ),
-  _TemplateQuestion(
-    label: "Money flow",
-    question: "Where is my money going?",
-    icon: Icons.account_balance_wallet_rounded,
-  ),
-  _TemplateQuestion(
-    label: "Pregnancy rate",
-    question:
-    "If I improve pregnancy rate from 60% to 75% what happens?",
-    icon: Icons.favorite_rounded,
-  ),
-  _TemplateQuestion(
-    label: "Cost per animal",
-    question: "What is my cost_form per animal?",
-    icon: Icons.pets_rounded,
-  ),
-  _TemplateQuestion(
-    label: "Cash in 3 months",
-    question: "How much cash will I have after 3 months?",
-    icon: Icons.savings_rounded,
-  ),
-  _TemplateQuestion(
-    label: "Top 10 costly",
-    question: "Which 10 animals are costing me the most?",
-    icon: Icons.bar_chart_rounded,
-  ),
-  _TemplateQuestion(
-    label: "Feed price +15%",
-    question:
-    "If feed price increases 15% what should I change first?",
-    icon: Icons.grass_rounded,
-  ),
-  _TemplateQuestion(
-    label: "Repeat breeding",
-    question: "What is the financial loss of repeat breeding?",
-    icon: Icons.loop_rounded,
-  ),
-  _TemplateQuestion(
-    label: "Sell male calves",
-    question:
-    "When should I sell male calves for best cashflow?",
-    icon: Icons.sell_rounded,
-  ),
-];
-
-// ═══════════════════════════════════════════════
-// AI Q&A Screen
-// ═══════════════════════════════════════════════
-
 class AiQnaScreen extends ConsumerStatefulWidget {
   const AiQnaScreen({super.key});
 
@@ -90,6 +33,54 @@ class _AiQnaScreenState extends ConsumerState<AiQnaScreen> {
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
   bool _showTemplates = true;
+
+  List<_TemplateQuestion> _templates(AppLocalizations l10n) => [
+        _TemplateQuestion(
+          label: l10n.templateProfitableLabel,
+          question: l10n.templateProfitableQuestion,
+          icon: Icons.trending_up_rounded,
+        ),
+        _TemplateQuestion(
+          label: l10n.templateMoneyFlowLabel,
+          question: l10n.templateMoneyFlowQuestion,
+          icon: Icons.account_balance_wallet_rounded,
+        ),
+        _TemplateQuestion(
+          label: l10n.templatePregnancyRateLabel,
+          question: l10n.templatePregnancyRateQuestion,
+          icon: Icons.favorite_rounded,
+        ),
+        _TemplateQuestion(
+          label: l10n.templateCostPerAnimalLabel,
+          question: l10n.templateCostPerAnimalQuestion,
+          icon: Icons.pets_rounded,
+        ),
+        _TemplateQuestion(
+          label: l10n.templateCashIn3MonthsLabel,
+          question: l10n.templateCashIn3MonthsQuestion,
+          icon: Icons.savings_rounded,
+        ),
+        _TemplateQuestion(
+          label: l10n.templateTop10CostlyLabel,
+          question: l10n.templateTop10CostlyQuestion,
+          icon: Icons.bar_chart_rounded,
+        ),
+        _TemplateQuestion(
+          label: l10n.templateFeedPriceUpLabel,
+          question: l10n.templateFeedPriceUpQuestion,
+          icon: Icons.grass_rounded,
+        ),
+        _TemplateQuestion(
+          label: l10n.templateRepeatBreedingLabel,
+          question: l10n.templateRepeatBreedingQuestion,
+          icon: Icons.loop_rounded,
+        ),
+        _TemplateQuestion(
+          label: l10n.templateSellMaleCalvesLabel,
+          question: l10n.templateSellMaleCalvesQuestion,
+          icon: Icons.sell_rounded,
+        ),
+      ];
 
   void _send(String text) {
     if (text.trim().isEmpty) return;
@@ -119,8 +110,9 @@ class _AiQnaScreenState extends ConsumerState<AiQnaScreen> {
   @override
   Widget build(BuildContext context) {
     final messages = ref.watch(chatProvider);
+    final l10n = AppLocalizations.of(context)!;
+    final templates = _templates(l10n);
 
-    // Auto scroll when new message arrives
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
 
     return AppScaffoldBgBasic(
@@ -128,56 +120,49 @@ class _AiQnaScreenState extends ConsumerState<AiQnaScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Header ──
-          const Text(
-            "AI Farm Advisor",
-            style: TextStyle(
+          Text(
+            l10n.aiFarmAdvisor,
+            style: const TextStyle(
               fontSize: sizes.fontSizeHeadings,
               fontWeight: FontWeight.bold,
               color: UColors.colorPrimary,
             ),
           ),
           const SizedBox(height: sizes.sm),
-          const Text(
-            "Ask anything about your farm's finances & herd_form",
-            style: TextStyle(
+          Text(
+            l10n.askFarmFinance,
+            style: const TextStyle(
               fontSize: sizes.fontSizeSm,
               color: UColors.textSecondary,
               height: 1.5,
             ),
           ),
           const SizedBox(height: sizes.md),
-
-          // ── Chat Area ──
           Expanded(
             child: messages.isEmpty
                 ? _EmptyState(
-              showTemplates: _showTemplates,
-              onTemplateSelected: _send,
-            )
+                    templates: templates,
+                    onTemplateSelected: _send,
+                  )
                 : Column(
-              children: [
-                // Messages
-                Expanded(
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.only(bottom: sizes.sm),
-                    itemCount: messages.length,
-                    itemBuilder: (context, i) =>
-                        MessageBubble(message: messages[i]),
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          padding: const EdgeInsets.only(bottom: sizes.sm),
+                          itemCount: messages.length,
+                          itemBuilder: (context, i) => MessageBubble(message: messages[i]),
+                        ),
+                      ),
+                      if (!_showTemplates)
+                        _TemplateChips(
+                          templates: templates,
+                          onSelected: _send,
+                        ),
+                    ],
                   ),
-                ),
-
-                // Template chips (after first message)
-                if (!_showTemplates)
-                  _TemplateChips(onSelected: _send),
-              ],
-            ),
           ),
-
           const SizedBox(height: sizes.sm),
-
-          // ── Input Bar ──
           InputBar(
             controller: _controller,
             onSend: _send,
@@ -189,24 +174,21 @@ class _AiQnaScreenState extends ConsumerState<AiQnaScreen> {
   }
 }
 
-// ═══════════════════════════════════════════════
-// Empty State with Templates
-// ═══════════════════════════════════════════════
-
 class _EmptyState extends StatelessWidget {
-  final bool showTemplates;
+  final List<_TemplateQuestion> templates;
   final void Function(String) onTemplateSelected;
 
   const _EmptyState({
-    required this.showTemplates,
+    required this.templates,
     required this.onTemplateSelected,
   });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Column(
       children: [
-        // AI Avatar
         Container(
           width: 64,
           height: 64,
@@ -222,30 +204,27 @@ class _EmptyState extends StatelessWidget {
             ],
           ),
           child: const Center(
-            child: Icon(Icons.auto_awesome_rounded,
-                color: Colors.white, size: 28),
+            child: Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 28),
           ),
         ),
         const SizedBox(height: sizes.md),
-        const Text(
-          "Ask me anything!",
-          style: TextStyle(
+        Text(
+          l10n.askMeAnything,
+          style: const TextStyle(
             fontSize: sizes.fontSizeLg,
             fontWeight: FontWeight.w800,
             color: UColors.colorPrimary,
           ),
         ),
         const SizedBox(height: sizes.xs),
-        const Text(
-          "Tap a question below or type your own",
-          style: TextStyle(
+        Text(
+          l10n.tapQuestionOrType,
+          style: const TextStyle(
             fontSize: sizes.fontSizeSm,
             color: UColors.textSecondary,
           ),
         ),
         const SizedBox(height: sizes.lg),
-
-        // Template Grid
         Expanded(
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -254,18 +233,16 @@ class _EmptyState extends StatelessWidget {
               mainAxisSpacing: sizes.sm,
               childAspectRatio: 2.4,
             ),
-            itemCount: _templates.length,
+            itemCount: templates.length,
             itemBuilder: (context, i) {
-              final t = _templates[i];
+              final t = templates[i];
               return GestureDetector(
                 onTap: () => onTemplateSelected(t.question),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: sizes.sm, vertical: sizes.sm),
+                  padding: const EdgeInsets.symmetric(horizontal: sizes.sm, vertical: sizes.sm),
                   decoration: BoxDecoration(
                     color: UColors.light,
-                    borderRadius:
-                    BorderRadius.circular(sizes.cardRadiusMd),
+                    borderRadius: BorderRadius.circular(sizes.cardRadiusMd),
                     border: Border.all(color: UColors.borderPrimary),
                   ),
                   child: Row(
@@ -276,9 +253,7 @@ class _EmptyState extends StatelessWidget {
                           color: UColors.colorPrimary.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: Icon(t.icon,
-                            size: sizes.iconXs,
-                            color: UColors.colorPrimary),
+                        child: Icon(t.icon, size: sizes.iconXs, color: UColors.colorPrimary),
                       ),
                       const SizedBox(width: sizes.xs),
                       Expanded(
@@ -305,14 +280,11 @@ class _EmptyState extends StatelessWidget {
   }
 }
 
-// ═══════════════════════════════════════════════
-// Template Chips (shown after chatting starts)
-// ═══════════════════════════════════════════════
-
 class _TemplateChips extends StatelessWidget {
+  final List<_TemplateQuestion> templates;
   final void Function(String) onSelected;
 
-  const _TemplateChips({required this.onSelected});
+  const _TemplateChips({required this.templates, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -321,26 +293,23 @@ class _TemplateChips extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: sizes.xs),
-        itemCount: _templates.length,
+        itemCount: templates.length,
         separatorBuilder: (_, __) => const SizedBox(width: sizes.xs),
         itemBuilder: (context, i) {
-          final t = _templates[i];
+          final t = templates[i];
           return GestureDetector(
             onTap: () => onSelected(t.question),
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: sizes.sm, vertical: sizes.xs),
+              padding: const EdgeInsets.symmetric(horizontal: sizes.sm, vertical: sizes.xs),
               decoration: BoxDecoration(
                 color: UColors.colorPrimary.withOpacity(0.08),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                    color: UColors.colorPrimary.withOpacity(0.25)),
+                border: Border.all(color: UColors.colorPrimary.withOpacity(0.25)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(t.icon,
-                      size: 12, color: UColors.colorPrimary),
+                  Icon(t.icon, size: 12, color: UColors.colorPrimary),
                   const SizedBox(width: 4),
                   Text(
                     t.label,
@@ -359,8 +328,3 @@ class _TemplateChips extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

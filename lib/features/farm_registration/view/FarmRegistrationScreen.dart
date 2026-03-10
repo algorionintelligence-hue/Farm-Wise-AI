@@ -5,30 +5,31 @@ import 'package:farm_wise_ai/features/bottom_navigation_bar/view/BottomNavigatio
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/Utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
-import '../../../core/utils/Constants.dart';
+import '../../../core/utils/sizes.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
-import '../../../core/widgets/PrimaryButton.dart';
 import '../../../core/widgets/FTextField.dart';
+import '../../../core/widgets/PrimaryButton.dart';
+import '../../../l10n/app_localizations.dart';
 import '../view_model/farm_registration_form_viewmodel.dart';
 
 class FarmRegistrationScreen extends ConsumerWidget {
   FarmRegistrationScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
-  final List<String> businessTypes = [
-    "Dairy",
-    "Breeding",
-    "Mixed",
-    "Fattening"
-  ];
-  final List<String> locations = ["Karachi", "Lahore", "Islamabad"]; // example
-  final List<String> currencies = ["PKR", "USD", "EUR"];
+  final List<String> locations = ['Karachi', 'Lahore', 'Islamabad'];
+  final List<String> currencies = ['PKR', 'USD', 'EUR'];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(farmRegistrationProvider);
+    final l10n = AppLocalizations.of(context)!;
+    final businessTypes = [
+      l10n.dairy,
+      l10n.breeding,
+      l10n.mixed,
+      l10n.fattening,
+    ];
 
     return AppScaffoldBgBasic(
       showBackButton: true,
@@ -38,87 +39,62 @@ class FarmRegistrationScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Title
               Text(
-                Constants.farmRegistrationFormTitle,
-                style: TextStyle(
+                l10n.farmRegistrationTitle,
+                style: const TextStyle(
                   fontSize: sizes.fontSizeHeadings,
                   fontWeight: FontWeight.bold,
                   color: UColors.colorPrimary,
                 ),
               ),
               const SizedBox(height: sizes.sm),
-              // Sub Title
               Text(
-                Constants.farmRegistrationFormSubTitle,
-                style: TextStyle(
+                l10n.farmRegistrationSubtitle,
+                style: const TextStyle(
                   fontSize: sizes.fontSizeSm,
                   color: UColors.textSecondary,
                   height: 1.5,
                 ),
               ),
               const SizedBox(height: sizes.defaultSpace),
-
-              // Farm Name
               FTextField(
-                labelText: Constants.farmName,
-                hintText: "Cattle farm",
+                labelText: l10n.farmName,
+                hintText: l10n.farmNameHint,
                 controller: viewModel.farmNameController,
                 onChanged: viewModel.updateFarmName,
-                // validator: (v) => v == null || v.isEmpty ? 'Enter your Farm Name' : null,
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
-
-              // Location Dropdown
               DropDown(
-                labelText: Constants.location,
-                hint: "Select your Location",
+                labelText: l10n.location,
+                hint: l10n.selectLocation,
                 items: locations,
-                value: viewModel.farm.location.isEmpty
-                    ? null
-                    : viewModel.farm.location,
+                value: viewModel.farm.location.isEmpty ? null : viewModel.farm.location,
                 onChanged: (value) => viewModel.updateLocation(value ?? ''),
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
-
-              // Business Type Dropdown
               DropDown(
-                labelText: Constants.businessType,
-                hint: "Select your Business Type",
+                labelText: l10n.businessType,
+                hint: l10n.selectBusinessType,
                 items: businessTypes,
-                value: viewModel.farm.businessType.isEmpty
-                    ? null
-                    : viewModel.farm.businessType,
+                value: viewModel.farm.businessType.isEmpty ? null : viewModel.farm.businessType,
                 onChanged: (value) => viewModel.updateBusinessType(value ?? ''),
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
-
-              // Total Animals
               FTextField(
-                labelText: Constants.breedMax,
-                hintText: "Enter no of animals you have eg: 100",
+                labelText: l10n.totalAnimals,
+                hintText: l10n.totalAnimalsHint,
                 controller: viewModel.animalCountController,
                 keyboardType: TextInputType.number,
                 onChanged: viewModel.updateAnimalCount,
-                //  validator: (v) =>
-                //   v == null || v.isEmpty ? 'Enter no of animals you have in your farm' : null,
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
-
-              // Add Breed Button (only visible if animalCount > 0)
               if (viewModel.farm.animalCount > 0)
                 Align(
                   alignment: Alignment.centerRight,
-                  child: AddBtn(
-                    onPressed: viewModel.addBreedField,
-                  ),
+                  child: AddBtn(onPressed: viewModel.addBreedField),
                 ),
-
               if (viewModel.farm.animalCount > 0)
-                SizedBox(height: sizes.spaceBtwInputFields),
-
-              // Dynamic Breed Fields
-
+                const SizedBox(height: sizes.spaceBtwInputFields),
               ...List.generate(viewModel.breedFields.length, (index) {
                 final breedField = viewModel.breedFields[index];
                 return Column(
@@ -129,7 +105,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
                         Expanded(
                           flex: 2,
                           child: FTextField(
-                            labelText: "Breed Name",
+                            labelText: l10n.breedName,
                             controller: breedField.nameController,
                             hintText: 'Normande',
                             onChanged: (v) => viewModel.updateBreed(
@@ -143,7 +119,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
                         Expanded(
                           flex: 1,
                           child: FTextField(
-                            labelText: "Quantity",
+                            labelText: l10n.quantity,
                             controller: breedField.quantityController,
                             keyboardType: TextInputType.number,
                             hintText: '5',
@@ -159,7 +135,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             const Text(
-                              "0%",
+                              '0%',
                               style: TextStyle(
                                 color: UColors.colorPrimary,
                                 fontSize: sizes.fontSizeSm,
@@ -174,48 +150,35 @@ class FarmRegistrationScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: sizes.spaceBtwInputFields),
+                    const SizedBox(height: sizes.spaceBtwInputFields),
                   ],
                 );
               }),
-
-              // Currency Dropdown
               DropDown(
-                labelText: Constants.currency,
-                hint: "Select your Currency",
+                labelText: l10n.currency,
+                hint: l10n.selectCurrency,
                 items: currencies,
-                value: viewModel.farm.currency.isEmpty
-                    ? null
-                    : viewModel.farm.currency,
+                value: viewModel.farm.currency.isEmpty ? null : viewModel.farm.currency,
                 onChanged: (value) => viewModel.updateCurrency(value ?? ''),
               ),
               const SizedBox(height: sizes.spaceBtwInputFields),
-
-              // Registration Date Picker
               DatePickerField(
                 selectedDate: viewModel.farm.registrationDate,
                 onDateSelected: viewModel.updateDate,
-                labelText: 'Starting Date',
+                labelText: l10n.startingDate,
               ),
               const SizedBox(height: sizes.spaceBtwSections),
-
-              // Submit Button
               PrimaryButton(
-                  label: Constants.RegisterBtn,
-                  onPressed: () {
-                    // if (viewModel.validateForm(_formKey)) {
-                    //   viewModel.submitForm();
-                    Navigator.pop(context); // dialog band karo
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            BottomNavigation
-                              (), // apna class name yahan
-                      ),
-                      (route) => false, // back press pe login pe wapas na jaye
-                    );
-                  }),
+                label: l10n.registerFarm,
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => const BottomNavigation()),
+                    (route) => false,
+                  );
+                },
+              ),
               const SizedBox(height: sizes.spaceBtwSections),
             ],
           ),

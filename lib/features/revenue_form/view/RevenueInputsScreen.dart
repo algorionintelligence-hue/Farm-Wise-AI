@@ -1,15 +1,15 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/Utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
+import '../../../core/utils/sizes.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/PrimaryButton.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../herd_form/widgets/CustomInput.dart';
 import '../../herd_form/widgets/DatePickerTile.dart';
 import '../../herd_form/widgets/SectionCard.dart';
-
-import 'package:dropdown_button2/dropdown_button2.dart';
 
 class RevenueInputsScreen extends ConsumerStatefulWidget {
   const RevenueInputsScreen({super.key});
@@ -20,35 +20,20 @@ class RevenueInputsScreen extends ConsumerStatefulWidget {
 }
 
 class _RevenueInputsScreenState extends ConsumerState<RevenueInputsScreen> {
-  // Milk Revenue
   final _milkRevenueCtrl = TextEditingController();
   final _dailyLitresSoldCtrl = TextEditingController();
   final _pricePerLitreCtrl = TextEditingController();
   final _collectionTransportCtrl = TextEditingController();
 
-  // Animal Sales
   final _animalSalesCtrl = TextEditingController();
   final _salePriceCtrl = TextEditingController();
   final _commissionMarketFeeCtrl = TextEditingController();
   DateTime? _animalSoldDate;
   String? _animalCategory;
 
-  // Other Revenue
   final _otherRevenueCtrl = TextEditingController();
   final _manureBiogasCtrl = TextEditingController();
   final _subsidiesGrantsCtrl = TextEditingController();
-
-  static const _categories = [
-    "Cow",
-    "Buffalo",
-    "Bull",
-    "Heifer",
-    "Calf (Male)",
-    "Calf (Female)",
-    "Goat",
-    "Sheep",
-    "Other",
-  ];
 
   @override
   void dispose() {
@@ -67,143 +52,143 @@ class _RevenueInputsScreenState extends ConsumerState<RevenueInputsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final categories = [
+      l10n.cow,
+      l10n.buffalo,
+      l10n.bull,
+      l10n.heifer,
+      l10n.calfMale,
+      l10n.calfFemale,
+      l10n.goat,
+      l10n.sheep,
+      l10n.other,
+    ];
+
     return AppScaffoldBgBasic(
       showBackButton: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Header ──
-          const Text(
-            "Revenue Inputs",
-            style: TextStyle(
+          Text(
+            l10n.revenueInputsTitle,
+            style: const TextStyle(
               fontSize: sizes.fontSizeHeadings,
               fontWeight: FontWeight.bold,
               color: UColors.colorPrimary,
             ),
           ),
           const SizedBox(height: sizes.sm),
-          const Text(
-            "Enter all revenue sources for accurate ERP tracking",
-            style: TextStyle(
+          Text(
+            l10n.revenueInputsSubtitle,
+            style: const TextStyle(
               fontSize: sizes.fontSizeSm,
               color: UColors.textSecondary,
               height: 1.5,
             ),
           ),
           const SizedBox(height: sizes.defaultSpace),
-
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // ── Milk Revenue ──────────────────────
                   SectionCard(
                     icon: Icons.water_drop_rounded,
-                    title: "Milk Revenue",
+                    title: l10n.milkRevenueTitle,
                     children: [
                       CustomInput(
-                        label: "Milk Revenue",
+                        label: l10n.milkRevenue,
                         controller: _milkRevenueCtrl,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
                       ),
                       CustomInput(
-                        label: "Daily Litres Sold",
+                        label: l10n.dailyLitresSold,
                         controller: _dailyLitresSoldCtrl,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
                       ),
                       CustomInput(
-                        label: "Price Per Litre",
+                        label: l10n.pricePerLitre,
                         controller: _pricePerLitreCtrl,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
                       ),
                       CustomInput(
-                        label: "Collection / Transport Cost (optional)",
+                        label: l10n.collectionTransportCostOptional,
                         controller: _collectionTransportCtrl,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: sizes.spaceBtwItems),
-
-                  // ── Animal Sales ──────────────────────
                   SectionCard(
                     icon: Icons.pets_rounded,
-                    title: "Animal Sales",
+                    title: l10n.animalSalesTitle,
                     children: [
                       CustomInput(
-                        label: "Animal Sales (count)",
+                        label: l10n.animalSalesCount,
                         controller: _animalSalesCtrl,
                         keyboardType: TextInputType.number,
                       ),
-
-                      // ✅ Date picker tile
                       DatePickerTile(
                         icon: Icons.calendar_today_rounded,
-                        label: "Animal Sold Date",
+                        label: l10n.animalSoldDate,
                         selectedDate: _animalSoldDate,
-                        onPicked: (date) =>
-                            setState(() => _animalSoldDate = date),
+                        onPicked: (date) => setState(() => _animalSoldDate = date),
                       ),
-
                       const SizedBox(height: sizes.sm),
-
-                      // ✅ Category dropdown
                       _CategoryDropdown(
                         value: _animalCategory,
-                        categories: _categories,
-                        onChanged: (val) =>
-                            setState(() => _animalCategory = val),
+                        categories: categories,
+                        onChanged: (value) => setState(() => _animalCategory = value),
                       ),
-
                       const SizedBox(height: sizes.sm),
-
                       CustomInput(
-                        label: "Sale Price",
+                        label: l10n.salePrice,
                         controller: _salePriceCtrl,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
                       ),
                       CustomInput(
-                        label: "Commission / Market Fee (optional)",
+                        label: l10n.commissionMarketFeeOptional,
                         controller: _commissionMarketFeeCtrl,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: sizes.spaceBtwItems),
-
-                  // ── Other Revenue ─────────────────────
                   SectionCard(
                     icon: Icons.attach_money_rounded,
-                    title: "Other Revenue",
+                    title: l10n.otherRevenueTitle,
                     children: [
                       CustomInput(
-                        label: "Other Revenue",
+                        label: l10n.otherRevenue,
                         controller: _otherRevenueCtrl,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
                       ),
                       CustomInput(
-                        label: "Manure / Biogas Income (optional)",
+                        label: l10n.manureBiogasIncomeOptional,
                         controller: _manureBiogasCtrl,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
                       ),
                       CustomInput(
-                        label: "Subsidies / Grants (optional)",
+                        label: l10n.subsidiesGrantsOptional,
                         controller: _subsidiesGrantsCtrl,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: sizes.spaceBtwSections),
-
                   PrimaryButton(
-                    label: "Save Revenue Data",
-                    onPressed: () {
-                      // TODO: save logic
-                    },
+                    label: l10n.saveRevenueData,
+                    onPressed: () {},
                   ),
                   const SizedBox(height: sizes.defaultSpace),
                 ],
@@ -215,10 +200,6 @@ class _RevenueInputsScreenState extends ConsumerState<RevenueInputsScreen> {
     );
   }
 }
-
-// ═══════════════════════════════════════════════
-// Reusable Category Dropdown
-// ═══════════════════════════════════════════════
 
 class _CategoryDropdown extends StatelessWidget {
   final String? value;
@@ -233,13 +214,14 @@ class _CategoryDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool hasValue = value != null;
+    final hasValue = value != null;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Animal Category",
+          l10n.animalCategory,
           style: const TextStyle(
             fontSize: sizes.fontSizeSm,
             fontWeight: FontWeight.w800,
@@ -247,29 +229,30 @@ class _CategoryDropdown extends StatelessWidget {
           ),
         ),
         const SizedBox(height: sizes.xs),
-
         DropdownButtonHideUnderline(
           child: DropdownButton2<String>(
             isExpanded: true,
-            hint: const Text(
-              "Select category",
-              style: TextStyle(
+            hint: Text(
+              l10n.selectCategory,
+              style: const TextStyle(
                 fontSize: sizes.fontSizeSm,
                 color: UColors.darkGrey,
               ),
             ),
             value: value,
             items: categories
-                .map((cat) => DropdownMenuItem<String>(
-              value: cat,
-              child: Text(
-                cat,
-                style: const TextStyle(
-                  fontSize: sizes.fontSizeSm,
-                  color: UColors.textPrimary,
-                ),
-              ),
-            ))
+                .map(
+                  (category) => DropdownMenuItem<String>(
+                    value: category,
+                    child: Text(
+                      category,
+                      style: const TextStyle(
+                        fontSize: sizes.fontSizeSm,
+                        color: UColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                )
                 .toList(),
             onChanged: onChanged,
             buttonStyleData: ButtonStyleData(
@@ -281,7 +264,8 @@ class _CategoryDropdown extends StatelessWidget {
                     : UColors.inputBg,
                 borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
                 border: Border.all(
-                  color: hasValue ? UColors.colorPrimary : UColors.borderPrimary,
+                  color:
+                      hasValue ? UColors.colorPrimary : UColors.borderPrimary,
                   width: hasValue ? 1.5 : 1.0,
                 ),
               ),
@@ -319,4 +303,3 @@ class _CategoryDropdown extends StatelessWidget {
     );
   }
 }
-

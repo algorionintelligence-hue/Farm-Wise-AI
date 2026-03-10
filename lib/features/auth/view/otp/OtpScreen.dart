@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../../core/Utils/sizes.dart';
+import '../../../../core/utils/sizes.dart';
 import '../../../../core/providers/auth_providers.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../../model/OtpModel.dart';
@@ -220,3 +220,4 @@ class OtpScreen extends ConsumerWidget {
     );
   }
 }
+

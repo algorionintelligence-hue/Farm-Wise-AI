@@ -1,7 +1,7 @@
 import 'package:farm_wise_ai/core/themes/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../Utils/sizes.dart';
+import '../utils/sizes.dart';
 
 class AddBtn extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -29,3 +29,4 @@ class AddBtn extends StatelessWidget {
     );
   }
   }
+

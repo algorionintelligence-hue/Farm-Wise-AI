@@ -1,20 +1,21 @@
-import 'package:farm_wise_ai/core/widgets/CustomHeaderRowDashboard.dart';
-import 'package:farm_wise_ai/features/SideDrawer/View/SideDrawer.dart';
 import 'package:flutter/material.dart';
 
-import '../Utils/sizes.dart';
 import '../themes/app_colors.dart';
+import '../utils/sizes.dart';
+import 'CustomHeaderRowDashboard.dart';
+import '../../features/SideDrawer/View/SideDrawer.dart';
 
 class AppScaffoldBg extends StatelessWidget {
-  Widget child;
+  final Widget child;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   AppScaffoldBg({super.key, required this.child});
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: SideDrawer(),
+      drawer: const SideDrawer(),
       backgroundColor: UColors.colorPrimary,
       body: Column(
         children: [

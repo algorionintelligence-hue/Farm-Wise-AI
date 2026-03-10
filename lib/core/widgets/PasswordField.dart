@@ -2,7 +2,7 @@ import 'package:farm_wise_ai/core/widgets/FTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../Utils/sizes.dart';
+import '../utils/sizes.dart';
 import '../providers/auth_providers.dart';
 import '../themes/app_colors.dart';
 

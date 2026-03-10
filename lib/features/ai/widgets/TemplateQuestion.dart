@@ -1,5 +1,6 @@
-// ── Template Questions ─────────────────────────
 import 'package:flutter/material.dart';
+
+import '../../../l10n/app_localizations.dart';
 
 class TemplateQuestion {
   final String label;
@@ -13,53 +14,50 @@ class TemplateQuestion {
   });
 }
 
-const templates = [
-  TemplateQuestion(
-    label: "Profitable?",
-    question: "Am I profitable this month?",
-    icon: Icons.trending_up_rounded,
-  ),
-  TemplateQuestion(
-    label: "Money flow",
-    question: "Where is my money going?",
-    icon: Icons.account_balance_wallet_rounded,
-  ),
-  TemplateQuestion(
-    label: "Pregnancy rate",
-    question:
-    "If I improve pregnancy rate from 60% to 75% what happens?",
-    icon: Icons.favorite_rounded,
-  ),
-  TemplateQuestion(
-    label: "Cost per animal",
-    question: "What is my cost_form per animal?",
-    icon: Icons.pets_rounded,
-  ),
-  TemplateQuestion(
-    label: "Cash in 3 months",
-    question: "How much cash will I have after 3 months?",
-    icon: Icons.savings_rounded,
-  ),
-  TemplateQuestion(
-    label: "Top 10 costly",
-    question: "Which 10 animals are costing me the most?",
-    icon: Icons.bar_chart_rounded,
-  ),
-  TemplateQuestion(
-    label: "Feed price +15%",
-    question:
-    "If feed price increases 15% what should I change first?",
-    icon: Icons.grass_rounded,
-  ),
-  TemplateQuestion(
-    label: "Repeat breeding",
-    question: "What is the financial loss of repeat breeding?",
-    icon: Icons.loop_rounded,
-  ),
-  TemplateQuestion(
-    label: "Sell male calves",
-    question:
-    "When should I sell male calves for best cashflow?",
-    icon: Icons.sell_rounded,
-  ),
-];
+List<TemplateQuestion> buildTemplateQuestions(AppLocalizations l10n) => [
+      TemplateQuestion(
+        label: l10n.templateProfitableLabel,
+        question: l10n.templateProfitableQuestion,
+        icon: Icons.trending_up_rounded,
+      ),
+      TemplateQuestion(
+        label: l10n.templateMoneyFlowLabel,
+        question: l10n.templateMoneyFlowQuestion,
+        icon: Icons.account_balance_wallet_rounded,
+      ),
+      TemplateQuestion(
+        label: l10n.templatePregnancyRateLabel,
+        question: l10n.templatePregnancyRateQuestion,
+        icon: Icons.favorite_rounded,
+      ),
+      TemplateQuestion(
+        label: l10n.templateCostPerAnimalLabel,
+        question: l10n.templateCostPerAnimalQuestion,
+        icon: Icons.pets_rounded,
+      ),
+      TemplateQuestion(
+        label: l10n.templateCashIn3MonthsLabel,
+        question: l10n.templateCashIn3MonthsQuestion,
+        icon: Icons.savings_rounded,
+      ),
+      TemplateQuestion(
+        label: l10n.templateTop10CostlyLabel,
+        question: l10n.templateTop10CostlyQuestion,
+        icon: Icons.bar_chart_rounded,
+      ),
+      TemplateQuestion(
+        label: l10n.templateFeedPriceUpLabel,
+        question: l10n.templateFeedPriceUpQuestion,
+        icon: Icons.grass_rounded,
+      ),
+      TemplateQuestion(
+        label: l10n.templateRepeatBreedingLabel,
+        question: l10n.templateRepeatBreedingQuestion,
+        icon: Icons.loop_rounded,
+      ),
+      TemplateQuestion(
+        label: l10n.templateSellMaleCalvesLabel,
+        question: l10n.templateSellMaleCalvesQuestion,
+        icon: Icons.sell_rounded,
+      ),
+    ];

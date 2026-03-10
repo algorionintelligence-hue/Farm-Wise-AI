@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
-import '../Utils/sizes.dart';
+import 'language_switcher.dart';
+import '../utils/sizes.dart';
 import '../themes/app_colors.dart';
 
 class AppScaffoldBgBasic extends StatelessWidget {
@@ -23,12 +22,8 @@ class AppScaffoldBgBasic extends StatelessWidget {
         children: [
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.only(left: 16 , right: 16),
-              child:
-
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              child: Row(
                 children: [
                   if (showBackButton)
                     BackButton(
@@ -37,7 +32,9 @@ class AppScaffoldBgBasic extends StatelessWidget {
                     )
                   else
                     const SizedBox(width: 48),
-                  const Spacer(), // pushes logo to the right
+                  const Spacer(),
+                  const LanguageSwitcher(compact: true),
+                  const SizedBox(width: sizes.sm),
                   SizedBox(
                     height: 50,
                     child: Image.asset(

@@ -1,19 +1,18 @@
-
 import 'package:farm_wise_ai/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/Utils/sizes.dart';
+import '../../../core/utils/sizes.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../cost_form/view/CostInputsScreen.dart';
 import '../../herd_form/view/HerdStepperScreen.dart';
 import '../../revenue_form/view/RevenueInputsScreen.dart';
 import '../../working_capital/view/WorkingCapitalScreen.dart';
 import '../viewmodel/BottomNavViewModel.dart';
 
-// ── Options Data ──────────────────────────────
 class _QuickAddOption {
-  final String label;
-  final String subtitle;
+  final String Function(AppLocalizations l10n) label;
+  final String Function(AppLocalizations l10n) subtitle;
   final IconData icon;
   final Color color;
   final Widget screen;
@@ -27,40 +26,45 @@ class _QuickAddOption {
   });
 }
 
-const _options = [
+String _registerAnimalLabel(AppLocalizations l10n) => l10n.registerAnimal;
+String _addToHerdLabel(AppLocalizations l10n) => l10n.addToHerd;
+String _addRevenueLabel(AppLocalizations l10n) => l10n.addRevenue;
+String _milkSalesLabel(AppLocalizations l10n) => l10n.milkSales;
+String _addCostsLabel(AppLocalizations l10n) => l10n.addCosts;
+String _feedVetLabel(AppLocalizations l10n) => l10n.feedVet;
+String _workingCapitalLabel(AppLocalizations l10n) => l10n.workingCapital;
+String _cashPayablesLabel(AppLocalizations l10n) => l10n.cashPayables;
+
+final _options = <_QuickAddOption>[
   _QuickAddOption(
-    label: "Register Animal",
-    subtitle: "Add to herd",
+    label: _registerAnimalLabel,
+    subtitle: _addToHerdLabel,
     icon: Icons.pets_rounded,
     color: Color(0xFF384A24),
     screen: HerdStepperScreen(),
   ),
   _QuickAddOption(
-    label: "Add Revenue",
-    subtitle: "Milk & sales",
+    label: _addRevenueLabel,
+    subtitle: _milkSalesLabel,
     icon: Icons.trending_up_rounded,
     color: Color(0xFF2E7D32),
     screen: RevenueInputsScreen(),
   ),
   _QuickAddOption(
-    label: "Add Costs",
-    subtitle: "Feed & vet",
+    label: _addCostsLabel,
+    subtitle: _feedVetLabel,
     icon: Icons.receipt_long_rounded,
     color: Color(0xFF1565C0),
     screen: CostInputsScreen(),
   ),
   _QuickAddOption(
-    label: "Working Capital",
-    subtitle: "Cash & payables",
+    label: _workingCapitalLabel,
+    subtitle: _cashPayablesLabel,
     icon: Icons.account_balance_wallet_rounded,
     color: Color(0xFF6A1B9A),
     screen: WorkingCapitalScreen(),
   ),
 ];
-
-// ═══════════════════════════════════════════════
-// Bottom Navigation
-// ═══════════════════════════════════════════════
 
 class BottomNavigation extends ConsumerStatefulWidget {
   const BottomNavigation({super.key});
@@ -83,13 +87,11 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
       vsync: this,
       duration: const Duration(milliseconds: 250),
     );
-    _fadeAnim =
-        CurvedAnimation(parent: _animController, curve: Curves.easeOut);
+    _fadeAnim = CurvedAnimation(parent: _animController, curve: Curves.easeOut);
     _slideAnim = Tween<Offset>(
       begin: const Offset(0, 0.2),
       end: Offset.zero,
-    ).animate(
-        CurvedAnimation(parent: _animController, curve: Curves.easeOut));
+    ).animate(CurvedAnimation(parent: _animController, curve: Curves.easeOut));
   }
 
   @override
@@ -112,22 +114,18 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
   @override
   Widget build(BuildContext context) {
     final selectedIndex = ref.watch(navIndexProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: UColors.lightGrey,
       body: Stack(
         children: [
-          // ── Main Screen ──
           screens[selectedIndex],
-
-          // ── Dim overlay ──
           if (_isMenuOpen)
             GestureDetector(
               onTap: _closeMenu,
               child: Container(color: Colors.black.withOpacity(0.4)),
             ),
-
-          // ── Animated Quick Add Panel ──
           if (_isMenuOpen)
             Positioned(
               bottom: 90,
@@ -153,7 +151,6 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // ── Header ──
                         Row(
                           children: [
                             Container(
@@ -162,14 +159,16 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                                 color: UColors.colorPrimary.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(sizes.borderRadiusMd),
                               ),
-                              child: const Icon(Icons.add_rounded,
-                                  size: sizes.iconSm,
-                                  color: UColors.colorPrimary),
+                              child: const Icon(
+                                Icons.add_rounded,
+                                size: sizes.iconSm,
+                                color: UColors.colorPrimary,
+                              ),
                             ),
                             const SizedBox(width: sizes.sm),
-                            const Text(
-                              "Quick Add",
-                              style: TextStyle(
+                            Text(
+                              l10n.quickAdd,
+                              style: const TextStyle(
                                 fontSize: sizes.fontSizeMd,
                                 fontWeight: FontWeight.w800,
                                 color: UColors.colorPrimary,
@@ -178,18 +177,17 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                             const Spacer(),
                             GestureDetector(
                               onTap: _closeMenu,
-                              child: const Icon(Icons.close_rounded,
-                                  size: sizes.iconSm,
-                                  color: UColors.darkGrey),
+                              child: const Icon(
+                                Icons.close_rounded,
+                                size: sizes.iconSm,
+                                color: UColors.darkGrey,
+                              ),
                             ),
                           ],
                         ),
-
                         const SizedBox(height: sizes.sm),
                         const Divider(height: 1, color: UColors.borderPrimary),
                         const SizedBox(height: sizes.sm),
-
-                        // ── 2x2 Grid ──
                         GridView.count(
                           crossAxisCount: 2,
                           shrinkWrap: true,
@@ -210,20 +208,17 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                                 decoration: BoxDecoration(
                                   color: opt.color.withOpacity(0.07),
                                   borderRadius: BorderRadius.circular(sizes.cardRadiusMd),
-                                  border: Border.all(
-                                      color: opt.color.withOpacity(0.2)),
+                                  border: Border.all(color: opt.color.withOpacity(0.2)),
                                 ),
                                 padding: const EdgeInsets.all(sizes.sm),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(opt.icon,
-                                        color: opt.color,
-                                        size: sizes.iconMd),
+                                    Icon(opt.icon, color: opt.color, size: sizes.iconMd),
                                     const SizedBox(height: sizes.xs),
                                     Text(
-                                      opt.label,
+                                      opt.label(l10n),
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
@@ -231,7 +226,7 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                                       ),
                                     ),
                                     Text(
-                                      opt.subtitle,
+                                      opt.subtitle(l10n),
                                       style: const TextStyle(
                                         fontSize: 11,
                                         color: UColors.textSecondary,
@@ -251,7 +246,6 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
             ),
         ],
       ),
-
       bottomNavigationBar: Container(
         height: 80,
         decoration: BoxDecoration(
@@ -272,14 +266,12 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: [
-
-            // ── Nav Icons ──
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _NavItem(
                   icon: Icons.home_filled,
-                  label: "Dashboard",
+                  label: l10n.dashboard,
                   isActive: selectedIndex == 0,
                   onTap: () {
                     _closeMenu();
@@ -288,7 +280,7 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                 ),
                 _NavItem(
                   assetIcon: 'lib/core/assets/icons/inventory.png',
-                  label: "Inventory",
+                  label: l10n.inventory,
                   isActive: selectedIndex == 1,
                   onTap: () {
                     _closeMenu();
@@ -298,7 +290,7 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                 const SizedBox(width: 60),
                 _NavItem(
                   assetIcon: 'lib/core/assets/icons/cash.png',
-                  label: "Cash",
+                  label: l10n.cash,
                   isActive: selectedIndex == 3,
                   onTap: () {
                     _closeMenu();
@@ -307,7 +299,7 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                 ),
                 _NavItem(
                   assetIcon: 'lib/core/assets/icons/breeding.png',
-                  label: "Breeding",
+                  label: l10n.breeding,
                   isActive: selectedIndex == 4,
                   onTap: () {
                     _closeMenu();
@@ -316,8 +308,6 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                 ),
               ],
             ),
-
-            // ── Center FAB ──
             Positioned(
               top: -40,
               child: Container(
@@ -354,7 +344,6 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
                           ),
                         ],
                       ),
-                      // + rotates to X when open
                       child: AnimatedRotation(
                         turns: _isMenuOpen ? 0.125 : 0,
                         duration: const Duration(milliseconds: 250),
@@ -375,10 +364,6 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation>
     );
   }
 }
-
-// ═══════════════════════════════════════════════
-// Reusable Nav Item
-// ═══════════════════════════════════════════════
 
 class _NavItem extends StatelessWidget {
   final IconData? icon;
@@ -422,3 +407,4 @@ class _NavItem extends StatelessWidget {
     );
   }
 }
+

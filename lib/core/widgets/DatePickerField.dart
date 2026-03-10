@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../Utils/sizes.dart';
+import '../utils/sizes.dart';
 import '../themes/app_colors.dart';
 
 class DatePickerField extends ConsumerWidget {

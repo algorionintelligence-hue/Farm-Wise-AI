@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/Utils/sizes.dart';
+import '../../../core/utils/sizes.dart';
 import '../viewmodel/herd_viewmodel.dart';
 import 'CustomInput.dart';
 

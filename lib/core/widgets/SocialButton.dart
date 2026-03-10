@@ -3,7 +3,7 @@
 // ═════════════════════════════════════════════════════════════
 import 'package:flutter/material.dart';
 
-import '../Utils/sizes.dart';
+import '../utils/sizes.dart';
 import '../themes/app_colors.dart';
 import '../utils/DeviceHelper.dart';
 

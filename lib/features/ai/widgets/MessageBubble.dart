@@ -5,7 +5,7 @@
 import 'package:farm_wise_ai/features/ai/widgets/TypingIndicator.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/Utils/sizes.dart';
+import '../../../core/utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
 import '../model/message_model.dart';
 

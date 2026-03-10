@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
-import '../Utils/sizes.dart';
+import '../../l10n/app_localizations.dart';
+import '../utils/sizes.dart';
 import '../themes/app_colors.dart';
+import 'language_switcher.dart';
 
 class CustomHeaderRowDashboard extends StatelessWidget {
-  final GlobalKey<ScaffoldState>? scaffoldKey; // Add this
+  final GlobalKey<ScaffoldState>? scaffoldKey;
+
   const CustomHeaderRowDashboard({super.key, this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       color: UColors.colorPrimary,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: sizes.md),
@@ -20,61 +25,21 @@ class CustomHeaderRowDashboard extends StatelessWidget {
               scaffoldKey?.currentState?.openDrawer();
             },
           ),
-
-          /// Title
           Expanded(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Farm ka ',
-                  style: TextStyle(
-                    color: UColors.white,
-                    fontSize: sizes.fontSizeHeadings,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    const Text(
-                      'CFO',
-                      style: TextStyle(
-                        color: UColors.white,
-                        fontSize: sizes.fontSizeHeadings,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    // Positioned(
-                    //   top: -8,
-                    //   left: -8,
-                    //   child: Icon(
-                    //     Icons.eco_outlined,
-                    //     color: UColors.colorPrimary.withOpacity(0.8),
-                    //     size: 16,
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ],
+            child: Text(
+              l10n.appName,
+              style: const TextStyle(
+                color: UColors.white,
+                fontSize: sizes.fontSizeHeadings,
+                fontWeight: FontWeight.w700,
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-
-          /// Actions
-          GestureDetector(
-            onTap: () {
-              print('Profile tapped');
-            },
-            child: const CircleAvatar(
-              radius: sizes.circularImageRadius,
-              backgroundColor: Colors.white24,
-              child: Icon(Icons.person, color: Colors.white, size: sizes.circularImageIcon),
-            ),
-          ),
-
+          const SizedBox(width: sizes.sm),
+          const LanguageSwitcher(compact: true),
         ],
       ),
     );
-
   }
 }

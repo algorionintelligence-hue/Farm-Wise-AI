@@ -1,24 +1,21 @@
-// ═══════════════════════════════════════════════
-// Input Bar
-// ═══════════════════════════════════════════════
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/Utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
+import '../../../core/utils/sizes.dart';
+import '../../../l10n/app_localizations.dart';
 
 class InputBar extends StatelessWidget {
   final TextEditingController controller;
   final void Function(String) onSend;
 
-  const InputBar({required this.controller, required this.onSend});
+  const InputBar({super.key, required this.controller, required this.onSend});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: sizes.sm, vertical: sizes.xs),
+      padding: const EdgeInsets.symmetric(horizontal: sizes.sm, vertical: sizes.xs),
       decoration: BoxDecoration(
         color: UColors.light,
         borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
@@ -26,8 +23,7 @@ class InputBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.auto_awesome_rounded,
-              size: sizes.iconSm, color: UColors.colorPrimary),
+          const Icon(Icons.auto_awesome_rounded, size: sizes.iconSm, color: UColors.colorPrimary),
           const SizedBox(width: sizes.sm),
           Expanded(
             child: TextField(
@@ -37,15 +33,15 @@ class InputBar extends StatelessWidget {
                 fontSize: sizes.fontSizeSm,
                 color: UColors.textPrimary,
               ),
-              decoration: const InputDecoration(
-                hintText: "Ask about profits, costs, herd_form...",
-                hintStyle: TextStyle(
+              decoration: InputDecoration(
+                hintText: l10n.askAboutProfitsCosts,
+                hintStyle: const TextStyle(
                   fontSize: sizes.fontSizeSm,
                   color: UColors.darkGrey,
                 ),
                 border: InputBorder.none,
                 isDense: true,
-                contentPadding: EdgeInsets.symmetric(vertical: sizes.sm),
+                contentPadding: const EdgeInsets.symmetric(vertical: sizes.sm),
               ),
             ),
           ),
@@ -57,8 +53,7 @@ class InputBar extends StatelessWidget {
                 color: UColors.colorPrimary,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.send_rounded,
-                  color: Colors.white, size: sizes.iconSm),
+              child: const Icon(Icons.send_rounded, color: Colors.white, size: sizes.iconSm),
             ),
           ),
         ],

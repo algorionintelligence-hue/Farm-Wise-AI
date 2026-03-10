@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/Utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
+import '../../../core/utils/sizes.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/PrimaryButton.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../herd_form/widgets/CustomInput.dart';
 import '../../herd_form/widgets/ReadOnlyField.dart';
 import '../../herd_form/widgets/SectionCard.dart';
-
-
 
 class WorkingCapitalScreen extends ConsumerStatefulWidget {
   const WorkingCapitalScreen({super.key});
 
   @override
-  ConsumerState<WorkingCapitalScreen> createState() =>
-      _WorkingCapitalScreenState();
+  ConsumerState<WorkingCapitalScreen> createState() => _WorkingCapitalScreenState();
 }
 
-class _WorkingCapitalScreenState
-    extends ConsumerState<WorkingCapitalScreen> {
+class _WorkingCapitalScreenState extends ConsumerState<WorkingCapitalScreen> {
   final _cashOnHandCtrl = TextEditingController();
   final _receivablesMilkCtrl = TextEditingController();
   final _payablesFeedCtrl = TextEditingController();
@@ -35,7 +32,6 @@ class _WorkingCapitalScreenState
     super.dispose();
   }
 
-  // Net Working Capital = Cash + Receivables - Payables - Loan
   String get _netWorkingCapital {
     final cash = double.tryParse(_cashOnHandCtrl.text) ?? 0;
     final receivables = double.tryParse(_receivablesMilkCtrl.text) ?? 0;
@@ -47,81 +43,74 @@ class _WorkingCapitalScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return AppScaffoldBgBasic(
       showBackButton: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Header ──
-          const Text(
-            "Working Capital",
-            style: TextStyle(
+          Text(
+            l10n.workingCapital,
+            style: const TextStyle(
               fontSize: sizes.fontSizeHeadings,
               fontWeight: FontWeight.bold,
               color: UColors.colorPrimary,
             ),
           ),
           const SizedBox(height: sizes.sm),
-          const Text(
-            "Track your farm's short-term financial position",
-            style: TextStyle(
+          Text(
+            l10n.workingCapitalSubtitle,
+            style: const TextStyle(
               fontSize: sizes.fontSizeSm,
               color: UColors.textSecondary,
               height: 1.5,
             ),
           ),
           const SizedBox(height: sizes.defaultSpace),
-
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // ── Inputs ──
                   SectionCard(
                     icon: Icons.account_balance_wallet_rounded,
-                    title: "Working Capital",
-                    subtitle: "Starting position & short-term obligations",
+                    title: l10n.workingCapital,
+                    subtitle: l10n.workingCapitalSectionSubtitle,
                     children: [
                       CustomInput(
-                        label: "Cash on Hand (Starting)",
+                        label: l10n.cashOnHandStarting,
                         controller: _cashOnHandCtrl,
                         keyboardType: TextInputType.number,
                         onChanged: (_) => setState(() {}),
                       ),
                       CustomInput(
-                        label: "Receivables (Milk Buyers)",
+                        label: l10n.receivablesMilkBuyers,
                         controller: _receivablesMilkCtrl,
                         keyboardType: TextInputType.number,
                         onChanged: (_) => setState(() {}),
                       ),
                       CustomInput(
-                        label: "Payables (Feed Supplier)",
+                        label: l10n.payablesFeedSupplier,
                         controller: _payablesFeedCtrl,
                         keyboardType: TextInputType.number,
                         onChanged: (_) => setState(() {}),
                       ),
                       CustomInput(
-                        label: "Loan Instalments, if any (expense only)",
+                        label: l10n.loanInstalmentsExpenseOnly,
                         controller: _loanInstalmentsCtrl,
                         keyboardType: TextInputType.number,
                         onChanged: (_) => setState(() {}),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: sizes.spaceBtwItems),
-
-                  // ── Info Note ──
                   Container(
                     padding: const EdgeInsets.all(sizes.md),
                     decoration: BoxDecoration(
                       color: UColors.colorPrimary.withOpacity(0.05),
-                      borderRadius:
-                      BorderRadius.circular(sizes.cardRadiusMd),
-                      border: Border.all(
-                        color: UColors.colorPrimary.withOpacity(0.2),
-                      ),
+                      borderRadius: BorderRadius.circular(sizes.cardRadiusMd),
+                      border: Border.all(color: UColors.colorPrimary.withOpacity(0.2)),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,10 +121,10 @@ class _WorkingCapitalScreenState
                           color: UColors.colorPrimary.withOpacity(0.7),
                         ),
                         const SizedBox(width: sizes.sm),
-                        const Expanded(
+                        Expanded(
                           child: Text(
-                            "Loan instalments are recorded as an expense only — this is not a lending feature.",
-                            style: TextStyle(
+                            l10n.loanInfoNote,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: UColors.textSecondary,
                               height: 1.5,
@@ -145,30 +134,23 @@ class _WorkingCapitalScreenState
                       ],
                     ),
                   ),
-
                   const SizedBox(height: sizes.spaceBtwItems),
-
-                  // ── Net Working Capital Summary ──
                   SectionCard(
                     icon: Icons.summarize_rounded,
-                    title: "Net Working Capital",
-                    subtitle: "Cash + Receivables − Payables − Loan",
+                    title: l10n.netWorkingCapital,
+                    subtitle: l10n.netWorkingCapitalFormula,
                     children: [
                       ReadOnlyField(
-                        label: "Net Working Capital (auto)",
+                        label: l10n.netWorkingCapitalAuto,
                         value: _netWorkingCapital,
                         icon: Icons.calculate_rounded,
                       ),
                     ],
                   ),
-
                   const SizedBox(height: sizes.spaceBtwSections),
-
                   PrimaryButton(
-                    label: "Save Working Capital",
-                    onPressed: () {
-                      // TODO: save logic
-                    },
+                    label: l10n.saveWorkingCapital,
+                    onPressed: () {},
                   ),
                   const SizedBox(height: sizes.defaultSpace),
                 ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Utils/sizes.dart';
+import '../utils/sizes.dart';
 import '../themes/app_colors.dart';
 
 class DropDownFieldWithBg<T> extends StatelessWidget {

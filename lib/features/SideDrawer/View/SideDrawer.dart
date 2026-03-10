@@ -3,18 +3,15 @@ import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
 import 'package:farm_wise_ai/features/cost_form/view/CostInputsScreen.dart';
 import 'package:farm_wise_ai/features/report_&_pdf_export/view/ReportPdfExportScreen.dart';
 import 'package:farm_wise_ai/features/revenue_form/view/RevenueInputsScreen.dart';
-import 'package:farm_wise_ai/features/working_capital/view/WorkingCapitalScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-import '../../../core/Utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
-import '../../../core/utils/Constants.dart';
-import '../../senario_simulator/View/SenarioSimulatorScreen.dart';
+import '../../../core/utils/sizes.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../senario_simulator/view/SenarioSimulatorScreen.dart';
 
-// State Provider to track which drawer item is selected
-final selectedDrawerItemProvider = StateProvider<String>((ref) => 'Lists');
+final selectedDrawerItemProvider = StateProvider<String?>((ref) => null);
 
 class SideDrawer extends ConsumerWidget {
   const SideDrawer({super.key});
@@ -22,32 +19,30 @@ class SideDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedItem = ref.watch(selectedDrawerItemProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.8,
       backgroundColor: UColors.white,
       child: Column(
         children: [
-          // Header Section
           _buildHeader(),
-
-          // Menu Items Section
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: sizes.md),
               children: [
-                 _DrawerItem(
-            icon: Image.asset(
-            "lib/core/assets/icons/scenario.png",
-              width: sizes.iconMdLg,
-              height: sizes.iconMdLg,),
-
-                  label: Constants.SCENARIO_SIMULATOR,
-                  isSelected: selectedItem == Constants.SCENARIO_SIMULATOR,
+                _DrawerItem(
+                  icon: Image.asset(
+                    'lib/core/assets/icons/scenario.png',
+                    width: sizes.iconMdLg,
+                    height: sizes.iconMdLg,
+                  ),
+                  label: l10n.scenarioSimulator,
+                  isSelected: selectedItem == l10n.scenarioSimulator,
                   hasNotification: true,
                   onTap: () {
-                    Navigator.pop(context); // close drawer
-
+                    ref.read(selectedDrawerItemProvider.notifier).state = l10n.scenarioSimulator;
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -57,15 +52,17 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Image.asset("lib/core/assets/icons/chatbot.png",
+                  icon: Image.asset(
+                    'lib/core/assets/icons/chatbot.png',
                     width: sizes.iconMdLg,
-                    height: sizes.iconMdLg,),
-                  label: Constants.AI_QA_CHAT,
-                  isSelected: selectedItem == Constants.AI_QA_CHAT,
+                    height: sizes.iconMdLg,
+                  ),
+                  label: l10n.aiQaChat,
+                  isSelected: selectedItem == l10n.aiQaChat,
                   hasNotification: true,
                   onTap: () {
-                    Navigator.pop(context); // close drawer
-
+                    ref.read(selectedDrawerItemProvider.notifier).state = l10n.aiQaChat;
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -75,14 +72,16 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Image.asset("lib/core/assets/icons/pdf.png",
+                  icon: Image.asset(
+                    'lib/core/assets/icons/pdf.png',
                     width: sizes.iconMdLg,
-                    height: sizes.iconMdLg,),
-                  label: Constants.REPORT_PDF_EXPORT,
-                  isSelected: selectedItem == Constants.REPORT_PDF_EXPORT,
+                    height: sizes.iconMdLg,
+                  ),
+                  label: l10n.reportPdfExport,
+                  isSelected: selectedItem == l10n.reportPdfExport,
                   onTap: () {
-                    Navigator.pop(context); // close drawer
-
+                    ref.read(selectedDrawerItemProvider.notifier).state = l10n.reportPdfExport;
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -92,15 +91,16 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Image.asset("lib/core/assets/icons/cost.png",
+                  icon: Image.asset(
+                    'lib/core/assets/icons/cost.png',
                     width: sizes.iconMdLg,
-                    height: sizes.iconMdLg,),
-
-                  label: Constants.COST_INPUT,
-                  isSelected: selectedItem == Constants.COST_INPUT,
+                    height: sizes.iconMdLg,
+                  ),
+                  label: l10n.costInput,
+                  isSelected: selectedItem == l10n.costInput,
                   onTap: () {
-                    Navigator.pop(context); // close drawer
-
+                    ref.read(selectedDrawerItemProvider.notifier).state = l10n.costInput;
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -110,15 +110,16 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                  icon: Image.asset("lib/core/assets/icons/revenue.png",
+                  icon: Image.asset(
+                    'lib/core/assets/icons/revenue.png',
                     width: sizes.iconMdLg,
-                    height: sizes.iconMdLg,),
-
-                  label: Constants.REVENUE_INPUT,
-                  isSelected: selectedItem == Constants.REVENUE_INPUT,
+                    height: sizes.iconMdLg,
+                  ),
+                  label: l10n.revenueInput,
+                  isSelected: selectedItem == l10n.revenueInput,
                   onTap: () {
-                    Navigator.pop(context); // close drawer
-
+                    ref.read(selectedDrawerItemProvider.notifier).state = l10n.revenueInput;
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -128,24 +129,24 @@ class SideDrawer extends ConsumerWidget {
                   },
                 ),
                 _DrawerItem(
-                    icon: Image.asset("lib/core/assets/icons/logout.png",
-                      width: sizes.iconMdLg,
-                      height: sizes.iconMdLg,),
-
-                  label: Constants.LOGOUT,
-                  isSelected: selectedItem == Constants.LOGOUT,
+                  icon: Image.asset(
+                    'lib/core/assets/icons/logout.png',
+                    width: sizes.iconMdLg,
+                    height: sizes.iconMdLg,
+                  ),
+                  label: l10n.logout,
+                  isSelected: selectedItem == l10n.logout,
                   onTap: () {
-                    Navigator.pop(context); // close drawer
-
+                    ref.read(selectedDrawerItemProvider.notifier).state = l10n.logout;
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  LoginScreen(),
+                        builder: (context) => LoginScreen(),
                       ),
                     );
                   },
                 ),
-
               ],
             ),
           ),
@@ -157,11 +158,11 @@ class SideDrawer extends ConsumerWidget {
   Widget _buildHeader() {
     return Container(
       width: double.infinity,
-      height: sizes.homePrimaryHeaderHeight * 0.7, // Adjusting based on your size class
+      height: sizes.homePrimaryHeaderHeight * 0.7,
       decoration: const BoxDecoration(
-        color: UColors.colorPrimary, // Matching the purple in your image
+        color: UColors.colorPrimary,
         image: DecorationImage(
-          image: NetworkImage('https://www.transparenttextures.com/patterns/cubes.png'), // Subtle geometric pattern
+          image: NetworkImage('https://www.transparenttextures.com/patterns/cubes.png'),
           opacity: 0.2,
           repeat: ImageRepeat.repeat,
         ),
@@ -171,11 +172,11 @@ class SideDrawer extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 80,
             height: 80,
             child: Image.asset(
-              "lib/core/assets/images/logo_without_bg.png",
+              'lib/core/assets/images/logo_without_bg.png',
               fit: BoxFit.contain,
             ),
           ),
@@ -187,18 +188,16 @@ class SideDrawer extends ConsumerWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Row(
-            children: [
-              Text(
-                'Cattle Farm',
+          Builder(
+            builder: (context) {
+              return Text(
+                AppLocalizations.of(context)!.farmProfile,
                 style: TextStyle(
                   color: UColors.textWhite.withOpacity(0.8),
                   fontSize: sizes.fontSizeLg,
                 ),
-              ),
-              // const SizedBox(width: sizes.xs),
-              // Icon(Icons.people, color: UColors.textWhite.withOpacity(0.8), size: sizes.iconXs),
-            ],
+              );
+            },
           ),
         ],
       ),
@@ -207,7 +206,7 @@ class SideDrawer extends ConsumerWidget {
 }
 
 class _DrawerItem extends StatelessWidget {
-  final Widget icon;   // changed
+  final Widget icon;
   final String label;
   final bool isSelected;
   final bool hasNotification;
@@ -233,7 +232,7 @@ class _DrawerItem extends StatelessWidget {
         onTap: onTap,
         leading: Stack(
           children: [
-            icon, // directly use widget
+            icon,
             if (hasNotification)
               Positioned(
                 right: 0,

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/Utils/sizes.dart';
-import '../../../core/themes/app_colors.dart';
-import '../../../core/widgets/AppScaffoldBgBasic.dart';
-import '../viewmodel/herd_viewmodel.dart';
 
-// ═══════════════════════════════════════════════
-// HerdDashboardScreen — Consistent UI
-// ═══════════════════════════════════════════════
+import '../../../core/themes/app_colors.dart';
+import '../../../core/utils/sizes.dart';
+import '../../../core/widgets/AppScaffoldBgBasic.dart';
+import '../../../l10n/app_localizations.dart';
+import '../viewmodel/herd_viewmodel.dart';
 
 class HerdDashboardScreen extends ConsumerWidget {
   const HerdDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final vm = ref.watch(herdProvider.notifier);
 
     final revenue = vm.monthlyRevenue();
@@ -27,34 +26,30 @@ class HerdDashboardScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Header Title ──────────────────────────
-            const Text(
-              "Farm Dashboard",
-              style: TextStyle(
+            Text(
+              l10n.farmDashboard,
+              style: const TextStyle(
                 fontSize: sizes.fontSizeLg,
                 fontWeight: FontWeight.w800,
                 color: UColors.colorPrimary,
               ),
             ),
             const SizedBox(height: 4),
-            const Text(
-              "Monthly overview of your herd_form",
-              style: TextStyle(
+            Text(
+              l10n.monthlyOverviewHerd,
+              style: const TextStyle(
                 fontSize: sizes.fontSizeSm,
                 color: UColors.textSecondary,
               ),
             ),
-        
             const SizedBox(height: 28),
-        
-            // ── Summary Cards Row ─────────────────────
             Row(
               children: [
                 Expanded(
                   child: _SummaryCard(
                     icon: Icons.trending_up_rounded,
-                    label: "Revenue",
-                    value: "Rs. ${revenue.toStringAsFixed(0)}",
+                    label: l10n.revenue,
+                    value: 'Rs. ${revenue.toStringAsFixed(0)}',
                     iconColor: UColors.success,
                     bgColor: const Color(0xFFEDF7ED),
                   ),
@@ -63,55 +58,49 @@ class HerdDashboardScreen extends ConsumerWidget {
                 Expanded(
                   child: _SummaryCard(
                     icon: Icons.trending_down_rounded,
-                    label: "Cost",
-                    value: "Rs. ${cost.toStringAsFixed(0)}",
+                    label: l10n.cost,
+                    value: 'Rs. ${cost.toStringAsFixed(0)}',
                     iconColor: UColors.error,
                     bgColor: const Color(0xFFFDEDED),
                   ),
                 ),
               ],
             ),
-        
             const SizedBox(height: 12),
-        
-            // ── Profit Card  ─
-            _ProfitCard(profit: profit),
-        
+            _ProfitCard(
+              title: l10n.monthlyProfit,
+              profit: profit,
+            ),
             const SizedBox(height: 12),
-        
-            // ── Expected Calves ───────────────────────
             _InfoCard(
               icon: Icons.pets_rounded,
-              label: "Expected Calves (next 6 months)",
+              label: l10n.expectedCalvesNext6Months,
               value: calves.toString(),
             ),
-        
             const SizedBox(height: 28),
-        
-            // ── Section Title ─────────────────────────
-            const Text(
-              "Monthly Breakdown",
-              style: TextStyle(
+            Text(
+              l10n.monthlyBreakdown,
+              style: const TextStyle(
                 fontSize: sizes.fontSizeMd,
                 fontWeight: FontWeight.w700,
                 color: UColors.colorPrimary,
               ),
             ),
             const SizedBox(height: 12),
-        
-            // ── Bar Chart Visual ──────────────────────
-            _BarChart(revenue: revenue, cost: cost, profit: profit),
+            _BarChart(
+              revenue: revenue,
+              cost: cost,
+              profit: profit,
+              revenueLabel: l10n.revenue,
+              costLabel: l10n.cost,
+              profitLabel: l10n.profit,
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-
-// ═══════════════════════════════════════════════
-// Summary Card (Revenue / Cost)
-// ═══════════════════════════════════════════════
 
 class _SummaryCard extends StatelessWidget {
   final IconData icon;
@@ -172,19 +161,15 @@ class _SummaryCard extends StatelessWidget {
   }
 }
 
-
-// ═══════════════════════════════════════════════
-// Profit Card
-// ═══════════════════════════════════════════════
-
 class _ProfitCard extends StatelessWidget {
+  final String title;
   final double profit;
-  const _ProfitCard({required this.profit});
+
+  const _ProfitCard({required this.title, required this.profit});
 
   @override
   Widget build(BuildContext context) {
     final isPositive = profit >= 0;
-    final color = isPositive ? UColors.colorPrimary : UColors.error;
 
     return Container(
       width: double.infinity,
@@ -199,9 +184,9 @@ class _ProfitCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Monthly Profit",
-                style: TextStyle(
+              Text(
+                title,
+                style: const TextStyle(
                   fontSize: 12,
                   color: Colors.white70,
                   fontWeight: FontWeight.w500,
@@ -209,7 +194,7 @@ class _ProfitCard extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                "Rs. ${profit.abs().toStringAsFixed(0)}",
+                'Rs. ${profit.abs().toStringAsFixed(0)}',
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w800,
@@ -237,11 +222,6 @@ class _ProfitCard extends StatelessWidget {
     );
   }
 }
-
-
-// ═══════════════════════════════════════════════
-// Info Card (Calves)
-// ═══════════════════════════════════════════════
 
 class _InfoCard extends StatelessWidget {
   final IconData icon;
@@ -298,38 +278,50 @@ class _InfoCard extends StatelessWidget {
   }
 }
 
-
-// ═══════════════════════════════════════════════
-// Simple Bar Chart
-// ═══════════════════════════════════════════════
-
 class _BarChart extends StatelessWidget {
   final double revenue;
   final double cost;
   final double profit;
+  final String revenueLabel;
+  final String costLabel;
+  final String profitLabel;
 
   const _BarChart({
     required this.revenue,
     required this.cost,
     required this.profit,
+    required this.revenueLabel,
+    required this.costLabel,
+    required this.profitLabel,
   });
 
   @override
   Widget build(BuildContext context) {
-    final maxVal = [revenue, cost, profit.abs(), 1.0].reduce(
-          (a, b) => a > b ? a : b,
-    );
+    final maxVal = [revenue, cost, profit.abs(), 1.0]
+        .reduce((a, b) => a > b ? a : b);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _Bar(label: "Revenue", value: revenue, maxVal: maxVal,
-            color: UColors.success),
-        _Bar(label: "Cost", value: cost, maxVal: maxVal,
-            color: UColors.error),
-        _Bar(label: "Profit", value: profit, maxVal: maxVal,
-            color: profit >= 0 ? UColors.colorPrimary : UColors.error),
+        _Bar(
+          label: revenueLabel,
+          value: revenue,
+          maxVal: maxVal,
+          color: UColors.success,
+        ),
+        _Bar(
+          label: costLabel,
+          value: cost,
+          maxVal: maxVal,
+          color: UColors.error,
+        ),
+        _Bar(
+          label: profitLabel,
+          value: profit,
+          maxVal: maxVal,
+          color: profit >= 0 ? UColors.colorPrimary : UColors.error,
+        ),
       ],
     );
   }

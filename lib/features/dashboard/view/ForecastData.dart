@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/Utils/sizes.dart';
-import '../../../core/themes/app_colors.dart';
-import '../../../core/widgets/DropDownFieldWithBg.dart';
 
-// 1. Our Data model (Same as before)
+import '../../../core/themes/app_colors.dart';
+import '../../../core/utils/sizes.dart';
+import '../../../core/widgets/DropDownFieldWithBg.dart';
+import '../../../l10n/app_localizations.dart';
+
 class ForecastData {
   final String month;
   final double h1;
@@ -14,12 +15,8 @@ class ForecastData {
   ForecastData(this.month, this.h1, this.h2, this.h3);
 }
 
-// 2. The Providers
-// A StateProvider to hold the currently selected number of months (defaults to 3)
 final selectedMonthsProvider = StateProvider<int>((ref) => 3);
 
-// A Provider to hold our static mock data
-// (In a real app, this might be a FutureProvider fetching from an API)
 final forecastDataProvider = Provider<List<ForecastData>>((ref) {
   return [
     ForecastData('Apr', 130, 80, 40),
@@ -37,20 +34,15 @@ final forecastDataProvider = Provider<List<ForecastData>>((ref) {
   ];
 });
 
-// 3. The Widget (Now a ConsumerWidget)
 class AdvancedForecastCard extends ConsumerWidget {
-  const AdvancedForecastCard({Key? key}) : super(key: key);
-
-  final List<int> _monthOptions = const [3, 6, 9, 12];
+  const AdvancedForecastCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Watch the providers to reactively update the UI when they change
     final selectedMonths = ref.watch(selectedMonthsProvider);
     final allData = ref.watch(forecastDataProvider);
-
-    // Get only the data the user wants to see based on the state
     final visibleData = allData.take(selectedMonths).toList();
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       decoration: BoxDecoration(
@@ -61,77 +53,67 @@ class AdvancedForecastCard extends ConsumerWidget {
             color: Colors.grey.withOpacity(0.1),
             blurRadius: 10,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       padding: const EdgeInsets.all(sizes.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header with Dropdown
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Forecast',
-                style: TextStyle(
+              Text(
+                l10n.forecast,
+                style: const TextStyle(
                   color: UColors.colorPrimary,
                   fontSize: sizes.fontSizeLg,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              // Custom Dropdown
-// Inside build(BuildContext context, WidgetRef ref)...
-
-        DropDownFieldWithBg(
+              DropDownFieldWithBg(
                 value: selectedMonths,
                 items: const [3, 6, 9, 12],
-                itemLabelBuilder: (val) => 'Next $val Months',
+                itemLabelBuilder: (val) => l10n.nextMonths(val),
                 onChanged: (newValue) {
                   if (newValue != null) {
                     ref.read(selectedMonthsProvider.notifier).state = newValue;
                   }
                 },
-              ),            ],
+              ),
+            ],
           ),
           const SizedBox(height: sizes.defaultSpace),
-
-          // Chart Area
           SizedBox(
             height: 200,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Fixed Y-Axis Labels
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: ['4.0M', '3.0M', '2.0M', '1.0M', '0.0M']
-                      .map((label) => Text(
-                    label,
-                    style: TextStyle(
-                      color: UColors.darkGrey,
-                      fontSize: sizes.fontSizeSm - 2,
-                    ),
-                  ))
+                      .map(
+                        (label) => Text(
+                          label,
+                          style: TextStyle(
+                            color: UColors.darkGrey,
+                            fontSize: sizes.fontSizeSm - 2,
+                          ),
+                        ),
+                      )
                       .toList(),
                 ),
                 const SizedBox(width: sizes.sm),
-
-                // Scrollable Chart Content
                 Expanded(
                   child: Stack(
                     children: [
-                      // Fixed Horizontal Grid Lines in the background
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: List.generate(
                           5,
-                              (index) => Container(
-                              height: 1, color: UColors.grey),
+                          (index) => Container(height: 1, color: UColors.grey),
                         ),
                       ),
-
-                      // Horizontally Scrollable Bars
                       Padding(
                         padding: const EdgeInsets.only(top: sizes.sm),
                         child: SingleChildScrollView(
@@ -140,11 +122,12 @@ class AdvancedForecastCard extends ConsumerWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: visibleData
-                                .map((data) => Padding(
-                              padding: const EdgeInsets.only(
-                                  right: sizes.lg),
-                              child: _buildMonthBarGroup(data),
-                            ))
+                                .map(
+                                  (data) => Padding(
+                                    padding: const EdgeInsets.only(right: sizes.lg),
+                                    child: _buildMonthBarGroup(data),
+                                  ),
+                                )
                                 .toList(),
                           ),
                         ),
@@ -159,6 +142,7 @@ class AdvancedForecastCard extends ConsumerWidget {
       ),
     );
   }
+
   Widget _buildMonthBarGroup(ForecastData data) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -189,12 +173,10 @@ class AdvancedForecastCard extends ConsumerWidget {
 
   Widget _gradientBar(double targetHeight, List<Color> colors) {
     return TweenAnimationBuilder<double>(
-      // The key is the secret sauce.
-      // It forces the widget to reset and re-animate when the height changes.
       key: ValueKey(targetHeight),
       tween: Tween<double>(begin: 0.0, end: targetHeight),
       duration: const Duration(milliseconds: 1000),
-      curve: Curves.easeOutBack, // Added a slight "bounce" at the top for flair
+      curve: Curves.easeOutBack,
       builder: (context, height, child) {
         return Container(
           width: sizes.xl,
@@ -211,6 +193,5 @@ class AdvancedForecastCard extends ConsumerWidget {
         );
       },
     );
-  }}
-
-// (Your sizes class remains the same here)
+  }
+}

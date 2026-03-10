@@ -9,23 +9,19 @@ import '../../features/auth/repository/auth_repository.dart';
 import '../../features/auth/viewmodel/otp_viewmodel.dart';
 import '../../features/auth/viewmodel/viewmodel.dart';
 
-
-// Repository Provider
 final authRepositoryProvider = Provider((ref) => AuthRepository());
 final termsAcceptedProvider = StateProvider<bool>((ref) => false);
 final herdStepProvider = StateProvider<int>((ref) => 0);
 
-// viewmodel Provider
 final authViewModelProvider = Provider((ref) => AuthViewModel(ref));
 final otpProvider = StateNotifierProvider<OtpViewModel, OtpModel>(
-      (ref) => OtpViewModel(),
+  (ref) => OtpViewModel(),
 );
-// ── Provider ──────────────────────────────────
-final chatProvider =
-StateNotifierProvider<ChatNotifier, List<ChatMessage>>(
-      (ref) => ChatNotifier(),
+
+final chatProvider = StateNotifierProvider<ChatNotifier, List<ChatMessage>>(
+  (ref) => ChatNotifier(ref),
 );
-// State Providers for UI
+
 final loginLoadingProvider = StateProvider<bool>((ref) => false);
 final signupLoadingProvider = StateProvider<bool>((ref) => false);
 final passwordVisibilityProvider = StateProvider<bool>((ref) => false);

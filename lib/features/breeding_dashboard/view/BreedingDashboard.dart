@@ -1,7 +1,7 @@
 import 'package:farm_wise_ai/core/widgets/AppScaffoldBg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/Utils/sizes.dart';
+import '../../../core/utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
 
 class BreedingDashboard extends ConsumerWidget {
@@ -174,5 +174,6 @@ class BreedingDashboard extends ConsumerWidget {
   }
 
 }
+
 
 
