@@ -1,10 +1,10 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
+/// The translations for English (`en`).
 class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
@@ -27,7 +27,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginTitle => 'Log in';
 
   @override
-  String get loginSubtitle => 'Track your herd, finances, and farm performance in one place.';
+  String get loginSubtitle =>
+      'Track your herd, finances, and farm performance in one place.';
 
   @override
   String get emailLabel => 'Your email address';
@@ -45,7 +46,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get continueButton => 'Continue';
 
   @override
-  String get noAccount => 'Don\\'t have an account?';
+  String get noAccount => 'Don\'t have an account?';
 
   @override
   String get signUp => ' Sign up';
@@ -120,7 +121,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cashRunwayTitle => 'Cash Runway';
 
   @override
-  String get todaysGrowth => 'Today\\'s Growth';
+  String get todaysGrowth => 'Today\'s Growth';
 
   @override
   String get revenue => 'Revenue';
@@ -150,10 +151,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forecastedCashInjection => 'Forecasted cash injection';
 
   @override
-  String get signupTitle => 'Let\\'s Get You Registered';
+  String get signupTitle => 'Let\'s Get You Registered';
 
   @override
-  String get signupSubtitle => 'Fill in the details below to create your account.';
+  String get signupSubtitle =>
+      'Fill in the details below to create your account.';
 
   @override
   String get firstName => 'First Name';
@@ -198,7 +200,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get farmRegistrationTitle => 'Register Your Farm';
 
   @override
-  String get farmRegistrationSubtitle => 'Tell us about your farm so we can help you track your animals, milk, and business easily.';
+  String get farmRegistrationSubtitle =>
+      'Tell us about your farm so we can help you track your animals, milk, and business easily.';
 
   @override
   String get farmName => 'Farm Name';
@@ -279,7 +282,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aiFarmAdvisor => 'AI Farm Advisor';
 
   @override
-  String get askFarmFinance => 'Ask anything about your farm\\'s finances and herd.';
+  String get askFarmFinance =>
+      'Ask anything about your farm\'s finances and herd.';
 
   @override
   String get askMeAnything => 'Ask me anything!';
@@ -294,7 +298,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forecast => 'Forecast';
 
   @override
-  String nextMonths(int count) => 'Next {count} Months'.replaceAll('{count}', count.toString());
+  String nextMonths(Object count) {
+    return 'Next $count Months';
+  }
 
   @override
   String get templateProfitableLabel => 'Profitable?';
@@ -312,7 +318,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get templatePregnancyRateLabel => 'Pregnancy rate';
 
   @override
-  String get templatePregnancyRateQuestion => 'If I improve pregnancy rate from 60% to 75%, what happens?';
+  String get templatePregnancyRateQuestion =>
+      'If I improve pregnancy rate from 60% to 75%, what happens?';
 
   @override
   String get templateCostPerAnimalLabel => 'Cost per animal';
@@ -324,31 +331,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get templateCashIn3MonthsLabel => 'Cash in 3 months';
 
   @override
-  String get templateCashIn3MonthsQuestion => 'How much cash will I have after 3 months?';
+  String get templateCashIn3MonthsQuestion =>
+      'How much cash will I have after 3 months?';
 
   @override
   String get templateTop10CostlyLabel => 'Top 10 costly';
 
   @override
-  String get templateTop10CostlyQuestion => 'Which 10 animals are costing me the most?';
+  String get templateTop10CostlyQuestion =>
+      'Which 10 animals are costing me the most?';
 
   @override
   String get templateFeedPriceUpLabel => 'Feed price +15%';
 
   @override
-  String get templateFeedPriceUpQuestion => 'If feed price increases 15%, what should I change first?';
+  String get templateFeedPriceUpQuestion =>
+      'If feed price increases 15%, what should I change first?';
 
   @override
   String get templateRepeatBreedingLabel => 'Repeat breeding';
 
   @override
-  String get templateRepeatBreedingQuestion => 'What is the financial loss of repeat breeding?';
+  String get templateRepeatBreedingQuestion =>
+      'What is the financial loss of repeat breeding?';
 
   @override
   String get templateSellMaleCalvesLabel => 'Sell male calves';
 
   @override
-  String get templateSellMaleCalvesQuestion => 'When should I sell male calves for best cash flow?';
+  String get templateSellMaleCalvesQuestion =>
+      'When should I sell male calves for best cash flow?';
 
   @override
   String get reportsTitle => 'Financial & Operational Reports';
@@ -366,10 +378,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inventoryReport => 'Inventory Report';
 
   @override
-  String get workingCapitalSubtitle => 'Track your farm\\'s short-term financial position';
+  String get workingCapitalSubtitle =>
+      'Track your farm\'s short-term financial position';
 
   @override
-  String get workingCapitalSectionSubtitle => 'Starting position and short-term obligations';
+  String get workingCapitalSectionSubtitle =>
+      'Starting position and short-term obligations';
 
   @override
   String get cashOnHandStarting => 'Cash on Hand (Starting)';
@@ -381,10 +395,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payablesFeedSupplier => 'Payables (Feed Supplier)';
 
   @override
-  String get loanInstalmentsExpenseOnly => 'Loan Instalments, if any (expense only)';
+  String get loanInstalmentsExpenseOnly =>
+      'Loan Instalments, if any (expense only)';
 
   @override
-  String get loanInfoNote => 'Loan instalments are recorded as an expense only. This is not a lending feature.';
+  String get loanInfoNote =>
+      'Loan instalments are recorded as an expense only. This is not a lending feature.';
 
   @override
   String get netWorkingCapital => 'Net Working Capital';
@@ -402,19 +418,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get costInputsTitle => 'Cost Inputs';
 
   @override
-  String get costInputsSubtitle => 'Enter all cost details for accurate ERP tracking';
+  String get costInputsSubtitle =>
+      'Enter all cost details for accurate ERP tracking';
 
   @override
   String get feedCosts => 'Feed Costs';
 
   @override
-  String get feedCostsSubtitle => 'chokar, silage, bhusa, concentrate, mineral mix';
+  String get feedCostsSubtitle =>
+      'chokar, silage, bhusa, concentrate, mineral mix';
 
   @override
   String get feedType => 'Feed Type';
 
   @override
-  String get quantityPerDayMonthly => 'Quantity / Day (per group) or Monthly Total';
+  String get quantityPerDayMonthly =>
+      'Quantity / Day (per group) or Monthly Total';
 
   @override
   String get pricePerUnit => 'Price / Unit';
@@ -441,7 +460,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get breedingCost => 'Breeding Cost';
 
   @override
-  String get naturalServiceOrAiStrawCost => 'Natural Service Fee or AI Straw Cost';
+  String get naturalServiceOrAiStrawCost =>
+      'Natural Service Fee or AI Straw Cost';
 
   @override
   String get technicianFee => 'Technician Fee';
@@ -459,7 +479,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get salariesTotalMonth => 'Salaries Total / Month';
 
   @override
-  String get housingFoodAllowanceOptional => 'Housing / Food Allowance (optional)';
+  String get housingFoodAllowanceOptional =>
+      'Housing / Food Allowance (optional)';
 
   @override
   String get utilitiesOverhead => 'Utilities & Overhead';
@@ -504,7 +525,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get revenueInputsTitle => 'Revenue Inputs';
 
   @override
-  String get revenueInputsSubtitle => 'Enter all revenue sources for accurate ERP tracking';
+  String get revenueInputsSubtitle =>
+      'Enter all revenue sources for accurate ERP tracking';
 
   @override
   String get milkRevenueTitle => 'Milk Revenue';
@@ -519,7 +541,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pricePerLitre => 'Price Per Litre';
 
   @override
-  String get collectionTransportCostOptional => 'Collection / Transport Cost (optional)';
+  String get collectionTransportCostOptional =>
+      'Collection / Transport Cost (optional)';
 
   @override
   String get animalSalesTitle => 'Animal Sales';
@@ -540,7 +563,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get salePrice => 'Sale Price';
 
   @override
-  String get commissionMarketFeeOptional => 'Commission / Market Fee (optional)';
+  String get commissionMarketFeeOptional =>
+      'Commission / Market Fee (optional)';
 
   @override
   String get otherRevenueTitle => 'Other Revenue';
@@ -598,5 +622,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get monthlyProfit => 'Monthly Profit';
-
 }

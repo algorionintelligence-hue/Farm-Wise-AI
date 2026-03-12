@@ -1,10 +1,10 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
+/// The translations for Urdu (`ur`).
 class AppLocalizationsUr extends AppLocalizations {
   AppLocalizationsUr([String locale = 'ur']) : super(locale);
 
@@ -27,7 +27,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get loginTitle => 'لاگ اِن کریں';
 
   @override
-  String get loginSubtitle => 'اپنے باڑے، مالیات، اور فارم کی کارکردگی کو ایک ہی جگہ پر ٹریک کریں۔';
+  String get loginSubtitle =>
+      'اپنے باڑے، مالیات، اور فارم کی کارکردگی کو ایک ہی جگہ پر ٹریک کریں۔';
 
   @override
   String get emailLabel => 'ای میل ایڈریس';
@@ -153,7 +154,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get signupTitle => 'آئیے آپ کو رجسٹر کرتے ہیں';
 
   @override
-  String get signupSubtitle => 'اکاؤنٹ بنانے کے لئے نیچے اپنی تفصیلات درج کریں۔';
+  String get signupSubtitle =>
+      'اکاؤنٹ بنانے کے لئے نیچے اپنی تفصیلات درج کریں۔';
 
   @override
   String get firstName => 'پہلا نام';
@@ -198,7 +200,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get farmRegistrationTitle => 'اپنا فارم رجسٹر کریں';
 
   @override
-  String get farmRegistrationSubtitle => 'اپنے فارم کے بارے میں بتائیں تاکہ ہم آپ کو جانور، دودھ اور کاروبار آسانی سے ٹریک کرنے میں مدد دے سکیں۔';
+  String get farmRegistrationSubtitle =>
+      'اپنے فارم کے بارے میں بتائیں تاکہ ہم آپ کو جانور، دودھ اور کاروبار آسانی سے ٹریک کرنے میں مدد دے سکیں۔';
 
   @override
   String get farmName => 'فارم کا نام';
@@ -222,7 +225,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get totalAnimals => 'کل جانور';
 
   @override
-  String get totalAnimalsHint => 'جانوروں کی تعداد درج کریں، مثال کے طور پر 100';
+  String get totalAnimalsHint =>
+      'جانوروں کی تعداد درج کریں، مثال کے طور پر 100';
 
   @override
   String get breedName => 'نسل کا نام';
@@ -279,7 +283,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get aiFarmAdvisor => 'اے آئی فارم ایڈوائزر';
 
   @override
-  String get askFarmFinance => 'اپنے فارم کی مالیات اور ریوڑ کے بارے میں کچھ بھی پوچھیں۔';
+  String get askFarmFinance =>
+      'اپنے فارم کی مالیات اور ریوڑ کے بارے میں کچھ بھی پوچھیں۔';
 
   @override
   String get askMeAnything => 'مجھ سے کچھ بھی پوچھیں!';
@@ -294,7 +299,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get forecast => 'پیش گوئی';
 
   @override
-  String nextMonths(int count) => 'اگلے {count} ماہ'.replaceAll('{count}', count.toString());
+  String nextMonths(Object count) {
+    return 'اگلے $count ماہ';
+  }
 
   @override
   String get templateProfitableLabel => 'منافع بخش؟';
@@ -312,7 +319,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get templatePregnancyRateLabel => 'حمل کی شرح';
 
   @override
-  String get templatePregnancyRateQuestion => 'اگر میں حمل کی شرح 60٪ سے 75٪ تک بہتر کروں تو کیا ہوگا؟';
+  String get templatePregnancyRateQuestion =>
+      'اگر میں حمل کی شرح 60٪ سے 75٪ تک بہتر کروں تو کیا ہوگا؟';
 
   @override
   String get templateCostPerAnimalLabel => 'فی جانور لاگت';
@@ -324,31 +332,36 @@ class AppLocalizationsUr extends AppLocalizations {
   String get templateCashIn3MonthsLabel => '3 ماہ میں کیش';
 
   @override
-  String get templateCashIn3MonthsQuestion => '3 ماہ بعد میرے پاس کتنی نقد رقم ہوگی؟';
+  String get templateCashIn3MonthsQuestion =>
+      '3 ماہ بعد میرے پاس کتنی نقد رقم ہوگی؟';
 
   @override
   String get templateTop10CostlyLabel => 'سب سے مہنگے 10';
 
   @override
-  String get templateTop10CostlyQuestion => 'کون سے 10 جانور مجھے سب سے زیادہ لاگت دے رہے ہیں؟';
+  String get templateTop10CostlyQuestion =>
+      'کون سے 10 جانور مجھے سب سے زیادہ لاگت دے رہے ہیں؟';
 
   @override
   String get templateFeedPriceUpLabel => 'فیڈ قیمت +15٪';
 
   @override
-  String get templateFeedPriceUpQuestion => 'اگر فیڈ کی قیمت 15٪ بڑھ جائے تو مجھے پہلے کیا بدلنا چاہیے؟';
+  String get templateFeedPriceUpQuestion =>
+      'اگر فیڈ کی قیمت 15٪ بڑھ جائے تو مجھے پہلے کیا بدلنا چاہیے؟';
 
   @override
   String get templateRepeatBreedingLabel => 'ریپیٹ بریڈنگ';
 
   @override
-  String get templateRepeatBreedingQuestion => 'ریپیٹ بریڈنگ کا مالی نقصان کیا ہے؟';
+  String get templateRepeatBreedingQuestion =>
+      'ریپیٹ بریڈنگ کا مالی نقصان کیا ہے؟';
 
   @override
   String get templateSellMaleCalvesLabel => 'نر بچھڑے فروخت کریں';
 
   @override
-  String get templateSellMaleCalvesQuestion => 'بہترین کیش فلو کے لیے مجھے نر بچھڑے کب فروخت کرنے چاہئیں؟';
+  String get templateSellMaleCalvesQuestion =>
+      'بہترین کیش فلو کے لیے مجھے نر بچھڑے کب فروخت کرنے چاہئیں؟';
 
   @override
   String get reportsTitle => 'مالی اور آپریشنل رپورٹس';
@@ -366,10 +379,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get inventoryReport => 'انوینٹری رپورٹ';
 
   @override
-  String get workingCapitalSubtitle => 'اپنے فارم کی قلیل مدتی مالی پوزیشن کو ٹریک کریں';
+  String get workingCapitalSubtitle =>
+      'اپنے فارم کی قلیل مدتی مالی پوزیشن کو ٹریک کریں';
 
   @override
-  String get workingCapitalSectionSubtitle => 'ابتدائی پوزیشن اور قلیل مدتی ذمہ داریاں';
+  String get workingCapitalSectionSubtitle =>
+      'ابتدائی پوزیشن اور قلیل مدتی ذمہ داریاں';
 
   @override
   String get cashOnHandStarting => 'دستی نقدی (آغاز)';
@@ -381,10 +396,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get payablesFeedSupplier => 'قابل ادائیگی (فیڈ سپلائر)';
 
   @override
-  String get loanInstalmentsExpenseOnly => 'لون اقساط، اگر کوئی ہوں (صرف اخراجات)';
+  String get loanInstalmentsExpenseOnly =>
+      'لون اقساط، اگر کوئی ہوں (صرف اخراجات)';
 
   @override
-  String get loanInfoNote => 'لون اقساط صرف اخراجات کے طور پر ریکارڈ کی جاتی ہیں۔ یہ قرض فراہم کرنے کی سہولت نہیں ہے۔';
+  String get loanInfoNote =>
+      'لون اقساط صرف اخراجات کے طور پر ریکارڈ کی جاتی ہیں۔ یہ قرض فراہم کرنے کی سہولت نہیں ہے۔';
 
   @override
   String get netWorkingCapital => 'نیٹ ورکنگ کیپیٹل';
@@ -402,7 +419,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get costInputsTitle => 'لاگت ان پٹس';
 
   @override
-  String get costInputsSubtitle => 'درست ERP ٹریکنگ کے لیے تمام لاگت کی تفصیل درج کریں';
+  String get costInputsSubtitle =>
+      'درست ERP ٹریکنگ کے لیے تمام لاگت کی تفصیل درج کریں';
 
   @override
   String get feedCosts => 'فیڈ لاگت';
@@ -414,7 +432,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get feedType => 'فیڈ کی قسم';
 
   @override
-  String get quantityPerDayMonthly => 'روزانہ مقدار (گروپ کے مطابق) یا ماہانہ کل';
+  String get quantityPerDayMonthly =>
+      'روزانہ مقدار (گروپ کے مطابق) یا ماہانہ کل';
 
   @override
   String get pricePerUnit => 'فی یونٹ قیمت';
@@ -504,7 +523,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get revenueInputsTitle => 'آمدن ان پٹس';
 
   @override
-  String get revenueInputsSubtitle => 'درست ERP ٹریکنگ کے لیے تمام آمدنی ذرائع درج کریں';
+  String get revenueInputsSubtitle =>
+      'درست ERP ٹریکنگ کے لیے تمام آمدنی ذرائع درج کریں';
 
   @override
   String get milkRevenueTitle => 'دودھ کی آمدن';
@@ -519,7 +539,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pricePerLitre => 'فی لیٹر قیمت';
 
   @override
-  String get collectionTransportCostOptional => 'کلیکشن / ٹرانسپورٹ لاگت (اختیاری)';
+  String get collectionTransportCostOptional =>
+      'کلیکشن / ٹرانسپورٹ لاگت (اختیاری)';
 
   @override
   String get animalSalesTitle => 'جانوروں کی فروخت';
@@ -598,5 +619,4 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get monthlyProfit => 'ماہانہ منافع';
-
 }
