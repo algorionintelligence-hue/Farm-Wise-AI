@@ -13,11 +13,14 @@ class LanguageSwitcher extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLocale = Localizations.localeOf(context).languageCode;
+    final selectedLocale = ref.watch(localeProvider);
+    final currentLocale =
+        selectedLocale?.languageCode ?? Localizations.localeOf(context).languageCode;
     final l10n = AppLocalizations.of(context)!;
 
     return PopupMenuButton<String>(
       tooltip: l10n.switchLanguage,
+      initialValue: currentLocale,
       onSelected: (languageCode) {
         ref.read(localeProvider.notifier).state = Locale(languageCode);
       },
