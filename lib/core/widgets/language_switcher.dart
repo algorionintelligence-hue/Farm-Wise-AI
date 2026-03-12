@@ -30,6 +30,10 @@ class LanguageSwitcher extends ConsumerWidget {
           value: 'ur',
           child: Text(l10n.urdu),
         ),
+        PopupMenuItem<String>(
+          value: 'sd',
+          child: Text(l10n.sindhi),
+        ),
       ],
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -47,7 +51,11 @@ class LanguageSwitcher extends ConsumerWidget {
             const Icon(Icons.language, size: sizes.iconSm, color: UColors.white),
             const SizedBox(width: sizes.xs),
             Text(
-              currentLocale == 'ur' ? l10n.urdu : 'EN',
+              switch (currentLocale) {
+                'ur' => l10n.urdu,
+                'sd' => l10n.sindhi,
+                _ => 'EN',
+              },
               style: const TextStyle(
                 color: UColors.white,
                 fontSize: sizes.fontSizeSm,
