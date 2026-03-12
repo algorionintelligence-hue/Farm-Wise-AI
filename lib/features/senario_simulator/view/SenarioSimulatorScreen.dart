@@ -100,7 +100,7 @@ class ScenarioSimulatorScreen extends ConsumerWidget {
         children: [
           Row(
             children: [
-              const Text('• ', style: TextStyle(color: UColors.textDark)),
+              const Text('ï¿½ ', style: TextStyle(color: UColors.textDark)),
               Text(
                 '$label ${value >= 0 ? '+' : ''}${value.toInt()}%',
                 style: const TextStyle(

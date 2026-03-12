@@ -1,4 +1,3 @@
-import 'package:farm_wise_ai/features/SideDrawer/View/view.dart';
 import 'package:farm_wise_ai/features/ai/view/AiQnaScreen.dart';
 import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
 import 'package:farm_wise_ai/features/cost_form/view/CostInputsScreen.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../../core/utils/sizes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../senario_simulator/view/SenarioSimulatorScreen.dart';
 
 final selectedDrawerItemProvider = StateProvider<String?>((ref) => null);
 
