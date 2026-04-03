@@ -238,6 +238,174 @@ abstract class AppLocalizations {
   /// **'Register Animal'**
   String get registerAnimal;
 
+  /// No description provided for @animalRegistrationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal Registration'**
+  String get animalRegistrationTitle;
+
+  /// No description provided for @animalRegistrationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in all details to register your animal'**
+  String get animalRegistrationSubtitle;
+
+  /// No description provided for @animalInfoStepTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal Info'**
+  String get animalInfoStepTitle;
+
+  /// No description provided for @productionStepTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Production'**
+  String get productionStepTitle;
+
+  /// Step label with number
+  ///
+  /// In en, this message translates to:
+  /// **'Step {number}'**
+  String stepLabel(Object number);
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @animalIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal ID'**
+  String get animalIdLabel;
+
+  /// No description provided for @categoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categoryLabel;
+
+  /// No description provided for @stageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage'**
+  String get stageLabel;
+
+  /// No description provided for @weightKgLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight (kg)'**
+  String get weightKgLabel;
+
+  /// No description provided for @selectStage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select stage'**
+  String get selectStage;
+
+  /// No description provided for @stageLactating.
+  ///
+  /// In en, this message translates to:
+  /// **'Lactating'**
+  String get stageLactating;
+
+  /// No description provided for @stageDry.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry'**
+  String get stageDry;
+
+  /// No description provided for @stagePregnant.
+  ///
+  /// In en, this message translates to:
+  /// **'Pregnant'**
+  String get stagePregnant;
+
+  /// No description provided for @stageOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get stageOpen;
+
+  /// No description provided for @breedingDatesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Breeding Dates'**
+  String get breedingDatesTitle;
+
+  /// No description provided for @breedingDatesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select relevant dates for breeding tracking'**
+  String get breedingDatesSubtitle;
+
+  /// No description provided for @serviceDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Date'**
+  String get serviceDate;
+
+  /// No description provided for @pdDate.
+  ///
+  /// In en, this message translates to:
+  /// **'PD Date'**
+  String get pdDate;
+
+  /// No description provided for @calvingDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Calving Date'**
+  String get calvingDate;
+
+  /// No description provided for @expectedCalves36Months.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected Calves (3/6 months)'**
+  String get expectedCalves36Months;
+
+  /// No description provided for @avgMilkPerDayLitres.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Milk / Day (litres)'**
+  String get avgMilkPerDayLitres;
+
+  /// No description provided for @milkPricePerLitre.
+  ///
+  /// In en, this message translates to:
+  /// **'Milk Price (per litre)'**
+  String get milkPricePerLitre;
+
+  /// No description provided for @feedCostMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Feed Cost (monthly)'**
+  String get feedCostMonthly;
+
+  /// No description provided for @medicalCostMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical Cost (monthly)'**
+  String get medicalCostMonthly;
+
+  /// No description provided for @laborCostMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Labor Cost (monthly)'**
+  String get laborCostMonthly;
+
+  /// No description provided for @projectedMonthlyProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Projected Monthly Profit'**
+  String get projectedMonthlyProfit;
+
+  /// No description provided for @tapToSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to select'**
+  String get tapToSelect;
+
   /// No description provided for @addToHerd.
   ///
   /// In en, this message translates to:

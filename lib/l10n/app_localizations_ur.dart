@@ -79,6 +79,94 @@ class AppLocalizationsUr extends AppLocalizations {
   String get registerAnimal => 'جانور رجسٹر کریں';
 
   @override
+  String get animalRegistrationTitle => 'جانور کی رجسٹریشن';
+
+  @override
+  String get animalRegistrationSubtitle =>
+      'اپنے جانور کی رجسٹریشن کے لیے تمام تفصیلات بھریں';
+
+  @override
+  String get animalInfoStepTitle => 'جانور کی معلومات';
+
+  @override
+  String get productionStepTitle => 'پیداوار';
+
+  @override
+  String stepLabel(Object number) {
+    return 'مرحلہ $number';
+  }
+
+  @override
+  String get save => 'محفوظ کریں';
+
+  @override
+  String get animalIdLabel => 'جانور آئی ڈی';
+
+  @override
+  String get categoryLabel => 'قسم';
+
+  @override
+  String get stageLabel => 'مرحلہ';
+
+  @override
+  String get weightKgLabel => 'وزن (کلوگرام)';
+
+  @override
+  String get selectStage => 'مرحلہ منتخب کریں';
+
+  @override
+  String get stageLactating => 'دودھ دینے والی';
+
+  @override
+  String get stageDry => 'خشک';
+
+  @override
+  String get stagePregnant => 'حاملہ';
+
+  @override
+  String get stageOpen => 'غیر حاملہ';
+
+  @override
+  String get breedingDatesTitle => 'بریڈنگ تاریخیں';
+
+  @override
+  String get breedingDatesSubtitle =>
+      'بریڈنگ ٹریکنگ کے لیے متعلقہ تاریخیں منتخب کریں';
+
+  @override
+  String get serviceDate => 'سروس تاریخ';
+
+  @override
+  String get pdDate => 'پی ڈی تاریخ';
+
+  @override
+  String get calvingDate => 'بچھڑے کی پیدائش کی تاریخ';
+
+  @override
+  String get expectedCalves36Months => 'متوقع بچھڑے (3/6 ماہ)';
+
+  @override
+  String get avgMilkPerDayLitres => 'اوسط دودھ / دن (لیٹر)';
+
+  @override
+  String get milkPricePerLitre => 'دودھ کی قیمت (فی لیٹر)';
+
+  @override
+  String get feedCostMonthly => 'فیڈ لاگت (ماہانہ)';
+
+  @override
+  String get medicalCostMonthly => 'طبی لاگت (ماہانہ)';
+
+  @override
+  String get laborCostMonthly => 'مزدوری لاگت (ماہانہ)';
+
+  @override
+  String get projectedMonthlyProfit => 'متوقع ماہانہ منافع';
+
+  @override
+  String get tapToSelect => 'منتخب کرنے کے لیے ٹیپ کریں';
+
+  @override
   String get addToHerd => 'ریوڑ میں شامل کریں';
 
   @override

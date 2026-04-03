@@ -16,8 +16,8 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
   final laborCostController = TextEditingController();
   final expectedSaleController = TextEditingController();
 
-  String category = "Cow";
-  String stage = "lactating";
+  String? category;
+  String? stage;
 
   DateTime? serviceDate;
   DateTime? pdDate;

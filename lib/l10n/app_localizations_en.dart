@@ -79,6 +79,94 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registerAnimal => 'Register Animal';
 
   @override
+  String get animalRegistrationTitle => 'Animal Registration';
+
+  @override
+  String get animalRegistrationSubtitle =>
+      'Fill in all details to register your animal';
+
+  @override
+  String get animalInfoStepTitle => 'Animal Info';
+
+  @override
+  String get productionStepTitle => 'Production';
+
+  @override
+  String stepLabel(Object number) {
+    return 'Step $number';
+  }
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get animalIdLabel => 'Animal ID';
+
+  @override
+  String get categoryLabel => 'Category';
+
+  @override
+  String get stageLabel => 'Stage';
+
+  @override
+  String get weightKgLabel => 'Weight (kg)';
+
+  @override
+  String get selectStage => 'Select stage';
+
+  @override
+  String get stageLactating => 'Lactating';
+
+  @override
+  String get stageDry => 'Dry';
+
+  @override
+  String get stagePregnant => 'Pregnant';
+
+  @override
+  String get stageOpen => 'Open';
+
+  @override
+  String get breedingDatesTitle => 'Breeding Dates';
+
+  @override
+  String get breedingDatesSubtitle =>
+      'Select relevant dates for breeding tracking';
+
+  @override
+  String get serviceDate => 'Service Date';
+
+  @override
+  String get pdDate => 'PD Date';
+
+  @override
+  String get calvingDate => 'Calving Date';
+
+  @override
+  String get expectedCalves36Months => 'Expected Calves (3/6 months)';
+
+  @override
+  String get avgMilkPerDayLitres => 'Avg Milk / Day (litres)';
+
+  @override
+  String get milkPricePerLitre => 'Milk Price (per litre)';
+
+  @override
+  String get feedCostMonthly => 'Feed Cost (monthly)';
+
+  @override
+  String get medicalCostMonthly => 'Medical Cost (monthly)';
+
+  @override
+  String get laborCostMonthly => 'Labor Cost (monthly)';
+
+  @override
+  String get projectedMonthlyProfit => 'Projected Monthly Profit';
+
+  @override
+  String get tapToSelect => 'Tap to select';
+
+  @override
   String get addToHerd => 'Add to herd';
 
   @override

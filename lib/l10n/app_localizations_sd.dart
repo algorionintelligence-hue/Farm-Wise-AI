@@ -79,6 +79,94 @@ class AppLocalizationsSd extends AppLocalizations {
   String get registerAnimal => 'جانور رجسٽر ڪريو';
 
   @override
+  String get animalRegistrationTitle => 'جانورن جي رجسٽريشن';
+
+  @override
+  String get animalRegistrationSubtitle =>
+      'پنهنجي جانور جي رجسٽريشن لاءِ سڀ تفصيل ڀريو';
+
+  @override
+  String get animalInfoStepTitle => 'جانور جي ڄاڻ';
+
+  @override
+  String get productionStepTitle => 'پيداوار';
+
+  @override
+  String stepLabel(Object number) {
+    return 'مرحلو $number';
+  }
+
+  @override
+  String get save => 'محفوظ ڪريو';
+
+  @override
+  String get animalIdLabel => 'جانور آئي ڊي';
+
+  @override
+  String get categoryLabel => 'قسم';
+
+  @override
+  String get stageLabel => 'مرحلو';
+
+  @override
+  String get weightKgLabel => 'وزن (ڪلوگرام)';
+
+  @override
+  String get selectStage => 'مرحلو چونڊيو';
+
+  @override
+  String get stageLactating => 'کير ڏيندڙ';
+
+  @override
+  String get stageDry => 'خشڪ';
+
+  @override
+  String get stagePregnant => 'حامله';
+
+  @override
+  String get stageOpen => 'غير حامله';
+
+  @override
+  String get breedingDatesTitle => 'نسل ڪشي تاريخون';
+
+  @override
+  String get breedingDatesSubtitle =>
+      'نسل ڪشي ٽريڪنگ لاءِ لاڳاپيل تاريخون چونڊيو';
+
+  @override
+  String get serviceDate => 'سروس تاريخ';
+
+  @override
+  String get pdDate => 'پي ڊي تاريخ';
+
+  @override
+  String get calvingDate => 'ٻچي جي ڄمڻ جي تاريخ';
+
+  @override
+  String get expectedCalves36Months => 'امڪاني ٻچا (3/6 مهينا)';
+
+  @override
+  String get avgMilkPerDayLitres => 'سراسري کير / ڏينهن (ليٽر)';
+
+  @override
+  String get milkPricePerLitre => 'کير جي قيمت (في ليٽر)';
+
+  @override
+  String get feedCostMonthly => 'فيڊ خرچ (ماهوار)';
+
+  @override
+  String get medicalCostMonthly => 'طبي خرچ (ماهوار)';
+
+  @override
+  String get laborCostMonthly => 'مزدوري خرچ (ماهوار)';
+
+  @override
+  String get projectedMonthlyProfit => 'متوقع ماهوار منافع';
+
+  @override
+  String get tapToSelect => 'منتخب ڪرڻ لاءِ ٽئپ ڪريو';
+
+  @override
   String get addToHerd => 'ريوڙ ۾ شامل ڪريو';
 
   @override

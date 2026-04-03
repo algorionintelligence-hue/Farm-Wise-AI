@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
+import '../../../l10n/app_localizations.dart';
 import '../viewmodel/herd_viewmodel.dart';
 import 'DatePickerTile.dart';
 
@@ -15,6 +16,7 @@ class BreedingStep extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(herdProvider);              // ✅ Fix: state change pe rebuild hoga
     final vm = ref.watch(herdProvider.notifier);
+    final l10n = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.only(top: sizes.md),
@@ -22,18 +24,18 @@ class BreedingStep extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ── Section Label ──────────────────────────
-          const Text(
-            "Breeding Dates",
-            style: TextStyle(
+          Text(
+            l10n.breedingDatesTitle,
+            style: const TextStyle(
               fontSize: sizes.fontSizeMd,
               fontWeight: FontWeight.w800,
               color: UColors.colorPrimary,
             ),
           ),
           const SizedBox(height: sizes.xs),
-          const Text(
-            "Select relevant dates for breeding tracking",
-            style: TextStyle(
+          Text(
+            l10n.breedingDatesSubtitle,
+            style: const TextStyle(
               fontSize: sizes.fontSizeSm,
               color: UColors.textSecondary,
             ),
@@ -44,7 +46,7 @@ class BreedingStep extends ConsumerWidget {
           // ── Service Date ───────────────────────────
           DatePickerTile(
             icon: Icons.favorite_rounded,
-            label: "Service Date",
+            label: l10n.serviceDate,
             selectedDate: vm.serviceDate,
             onPicked: (date) {
               vm.serviceDate = date;
@@ -57,7 +59,7 @@ class BreedingStep extends ConsumerWidget {
           // ── PD Date ────────────────────────────────
           DatePickerTile(
             icon: Icons.medical_services_rounded,
-            label: "PD Date",
+            label: l10n.pdDate,
             selectedDate: vm.pdDate,
             onPicked: (date) {
               vm.pdDate = date;
@@ -70,7 +72,7 @@ class BreedingStep extends ConsumerWidget {
           // ── Calving Date ───────────────────────────
           DatePickerTile(
             icon: Icons.child_care_rounded,
-            label: "Calving Date",
+            label: l10n.calvingDate,
             selectedDate: vm.calvingDate,
             onPicked: (date) {
               vm.calvingDate = date;
@@ -109,9 +111,9 @@ class BreedingStep extends ConsumerWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Expected Calves (3/6 months)",
-                      style: TextStyle(
+                    Text(
+                      l10n.expectedCalves36Months,
+                      style: const TextStyle(
                         fontSize: 11,
                         color: Colors.white70,
                         fontWeight: FontWeight.w500,

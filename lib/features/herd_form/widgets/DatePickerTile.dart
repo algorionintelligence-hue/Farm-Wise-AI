@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
-
+import '../../../l10n/app_localizations.dart';
 
 class DatePickerTile extends StatelessWidget {
   final IconData icon;
@@ -18,14 +19,10 @@ class DatePickerTile extends StatelessWidget {
     required this.onPicked,
   });
 
-  // Format: 12 Jan 2025
-  String get _formattedDate {
-    if (selectedDate == null) return "Tap to select";
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    return "${selectedDate!.day} ${months[selectedDate!.month - 1]} ${selectedDate!.year}";
+  String _formattedDate(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    if (selectedDate == null) return l10n.tapToSelect;
+    return DateFormat('d MMM yyyy', l10n.localeName).format(selectedDate!);
   }
 
   @override
@@ -34,7 +31,7 @@ class DatePickerTile extends StatelessWidget {
 
     return GestureDetector(
       onTap: () async {
-        // ✅ Fix: keyboard band karo, Labor Cost focus na jaye
+        // ? Fix: keyboard band karo, Labor Cost focus na jaye
         FocusScope.of(context).unfocus();
         await Future.delayed(const Duration(milliseconds: 150));
 
@@ -72,7 +69,7 @@ class DatePickerTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // ── Icon Box ──
+            // ? Icon Box
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -90,7 +87,7 @@ class DatePickerTile extends StatelessWidget {
 
             const SizedBox(width: 14),
 
-            // ── Label + Date ──
+            // ? Label + Date
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,11 +104,11 @@ class DatePickerTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    _formattedDate,   // ✅ Fix: "12 Jan 2025" format
+                    _formattedDate(context),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight:
-                      hasDate ? FontWeight.w600 : FontWeight.normal,
+                          hasDate ? FontWeight.w600 : FontWeight.normal,
                       color: hasDate
                           ? UColors.colorPrimary.withOpacity(0.8)
                           : UColors.darkGrey,
@@ -121,7 +118,7 @@ class DatePickerTile extends StatelessWidget {
               ),
             ),
 
-            // ── Trailing Icon ──
+            // ? Trailing Icon
             Icon(
               hasDate
                   ? Icons.check_circle_rounded

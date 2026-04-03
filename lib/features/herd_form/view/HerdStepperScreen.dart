@@ -5,11 +5,11 @@ import '../../../core/utils/sizes.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/PrimaryButton.dart';
+import '../../../l10n/app_localizations.dart';
 import '../viewmodel/herd_viewmodel.dart';
 import '../widgets/AnimalInfoStep.dart';
 import '../widgets/BreedingStep.dart';
 import '../widgets/ProductionStep.dart';
-import 'HerdDashboardScreen.dart';
 
 class HerdStepperScreen extends ConsumerWidget {
   const HerdStepperScreen({super.key});
@@ -17,6 +17,7 @@ class HerdStepperScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final vm = ref.watch(herdProvider.notifier);
+    final l10n = AppLocalizations.of(context)!;
 
     return AppScaffoldBgBasic(
       showBackButton: true,
@@ -26,18 +27,18 @@ class HerdStepperScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ── Header ──
-          const Text(
-            "Animal Registration",
-            style: TextStyle(
+          Text(
+            l10n.animalRegistrationTitle,
+            style: const TextStyle(
               fontSize: sizes.fontSizeHeadings,
               fontWeight: FontWeight.bold,
               color: UColors.colorPrimary,
             ),
           ),
           const SizedBox(height: sizes.sm),
-          const Text(
-            "Fill in all details to register your animal",
-            style: TextStyle(
+          Text(
+            l10n.animalRegistrationSubtitle,
+            style: const TextStyle(
               fontSize: sizes.fontSizeSm,
               color: UColors.textSecondary,
               height: 1.5,
@@ -51,23 +52,23 @@ class HerdStepperScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   _TimelineStep(
-                    number: "1",
-                    title: "Animal Info",
+                    number: 1,
+                    title: l10n.animalInfoStepTitle,
                     icon: Icons.pets_rounded,
                     isLast: false,
                     child: const AnimalInfoStep(),
                   ),
                   _TimelineStep(
-                    number: "2",
-                    title: "Breeding",
+                    number: 2,
+                    title: l10n.breeding,
                     icon: Icons.favorite_rounded,
                     isLast: false,
                     child: const BreedingStep(),
                   ),
 
                   _TimelineStep(
-                    number: "3",
-                    title: "Production",
+                    number: 3,
+                    title: l10n.productionStepTitle,
                     icon: Icons.water_drop_rounded,
                     isLast: false,
                     child: const ProductionStep(),
@@ -76,15 +77,9 @@ class HerdStepperScreen extends ConsumerWidget {
                   const SizedBox(height: sizes.spaceBtwSections),
 
                   PrimaryButton(
-                    label: "Save & view Dashboard",
+                    label: l10n.save,
                     onPressed: () {
                       vm.save();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const HerdDashboardScreen(),
-                        ),
-                      );
                     },
                   ),
                   const SizedBox(height: sizes.defaultSpace),
@@ -100,7 +95,7 @@ class HerdStepperScreen extends ConsumerWidget {
 
 // ── Timeline Step ───────────────────────────────
 class _TimelineStep extends StatelessWidget {
-  final String number;
+  final int number;
   final String title;
   final IconData icon;
   final bool isLast;
@@ -116,6 +111,7 @@ class _TimelineStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +175,7 @@ class _TimelineStep extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        "Step $number",
+                        l10n.stepLabel(number),
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/utils/sizes.dart';
+import '../../../l10n/app_localizations.dart';
 import '../viewmodel/herd_viewmodel.dart';
 import 'CustomInput.dart';
 
@@ -14,6 +15,7 @@ class ProductionStep extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final vm = ref.watch(herdProvider.notifier);
+    final l10n = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       child: Padding(
@@ -23,27 +25,27 @@ class ProductionStep extends ConsumerWidget {
           children: [
             // ── Inputs ──────────────────────────────
             CustomInput(
-              label: "Avg Milk / Day (litres)",
+              label: l10n.avgMilkPerDayLitres,
               controller: vm.avgMilkController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
             CustomInput(
-              label: "Milk Price (per litre)",
+              label: l10n.milkPricePerLitre,
               controller: vm.milkPriceController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
             CustomInput(
-              label: "Feed Cost (monthly)",
+              label: l10n.feedCostMonthly,
               controller: vm.feedCostController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
             CustomInput(
-              label: "Medical Cost (monthly)",
+              label: l10n.medicalCostMonthly,
               controller: vm.medicalCostController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
             CustomInput(
-              label: "Labor Cost (monthly)",
+              label: l10n.laborCostMonthly,
               controller: vm.laborCostController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
@@ -79,9 +81,9 @@ class ProductionStep extends ConsumerWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Projected Monthly Profit",
-                        style: TextStyle(
+                      Text(
+                        l10n.projectedMonthlyProfit,
+                        style: const TextStyle(
                           fontSize: 11,
                           color: Colors.white70,
                           fontWeight: FontWeight.w500,
