@@ -174,7 +174,7 @@ class FarmRegistrationScreen extends ConsumerWidget {
                   Navigator.pop(context);
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (_) => const BottomNavigation()),
+                    MaterialPageRoute(builder: (_) =>  const BottomNavigation()),
                     (route) => false,
                   );
                 },

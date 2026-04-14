@@ -5,16 +5,22 @@ import '../../../core/themes/app_colors.dart';
 
 class CustomInput extends StatelessWidget {
   final String label;
+  final String? hintText;
   final TextEditingController controller;
   final TextInputType keyboardType;
   final void Function(String)? onChanged;
+  final bool readOnly;
+  final bool enabled;
 
   const CustomInput({
     super.key,
     required this.label,
+    this.hintText,
     required this.controller,
     this.keyboardType = TextInputType.text,
     this.onChanged,
+    this.readOnly = false,
+    this.enabled = true,
   });
 
   @override
@@ -37,12 +43,14 @@ class CustomInput extends StatelessWidget {
             controller: controller,
             keyboardType: keyboardType,
             onChanged: onChanged,
+            readOnly: readOnly,
+            enabled: enabled,
             style: const TextStyle(
               fontSize: sizes.fontSizeSm,
               color: UColors.textPrimary,
             ),
             decoration: InputDecoration(
-              hintText: label,
+              hintText: hintText ?? label,
               hintStyle: const TextStyle(
                 fontSize: sizes.fontSizeSm,
                 color: UColors.darkGrey,

@@ -76,7 +76,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quickAdd => 'Quick Add';
 
   @override
-  String get registerAnimal => 'Register Animal';
+  String get registerAnimal => 'Add Animal';
+
+  @override
+  String get addBreeding => 'Add Breeding';
 
   @override
   String get animalRegistrationTitle => 'Animal Registration';
@@ -100,31 +103,76 @@ class AppLocalizationsEn extends AppLocalizations {
   String get save => 'Save';
 
   @override
+  String get tagNumberLabel => 'Tag Number';
+
+  @override
+  String get tagNumberHint => 'e.g. TG-0042';
+
+  @override
   String get animalIdLabel => 'Animal ID';
 
   @override
   String get categoryLabel => 'Category';
 
   @override
+  String get genderLabel => 'Gender';
+
+  @override
+  String get selectGender => 'Select gender';
+
+  @override
+  String get genderMale => 'Male';
+
+  @override
+  String get genderFemale => 'Female';
+
+  @override
+  String get breedLabel => 'Breed';
+
+  @override
+  String get selectBreed => 'Select breed';
+
+  @override
   String get stageLabel => 'Stage';
 
   @override
-  String get weightKgLabel => 'Weight (kg)';
+  String get stageFemaleCalf => 'Female Calf';
 
   @override
-  String get selectStage => 'Select stage';
+  String get stageHeifer => 'Heifer';
 
   @override
   String get stageLactating => 'Lactating';
 
   @override
-  String get stageDry => 'Dry';
-
-  @override
   String get stagePregnant => 'Pregnant';
 
   @override
+  String get stageDry => 'Dry';
+
+  @override
   String get stageOpen => 'Open';
+
+  @override
+  String get stageMaleCalf => 'Male Calf';
+
+  @override
+  String get stageYoungBull => 'Young Bull';
+
+  @override
+  String get stageBull => 'Bull';
+
+  @override
+  String get dateOfBirthLabel => 'Date of Birth';
+
+  @override
+  String get weightKgLabel => 'Weight (kg)';
+
+  @override
+  String get weightHint => 'e.g. 320';
+
+  @override
+  String get selectStage => 'Select stage';
 
   @override
   String get breedingDatesTitle => 'Breeding Dates';
@@ -165,6 +213,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tapToSelect => 'Tap to select';
+
+  @override
+  String get breedingRecordTitle => 'Breeding Record';
+
+  @override
+  String get breedingServiceOnlySubtitle =>
+      'Service record only for this stage';
+
+  @override
+  String get breedingPregnancySubtitle => 'Track service and pregnancy dates';
+
+  @override
+  String get milkRecordTitle => 'Milk Record';
 
   @override
   String get addToHerd => 'Add to herd';
@@ -713,4 +774,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get monthlyProfit => 'Monthly Profit';
+
+  @override
+  String get entryDetailsTitle => 'Entry Details';
+
+  @override
+  String get entryDetailsSubtitle => 'How did it join the farm?';
+
+  @override
+  String get entryTypeLabel => 'Entry Type';
+
+  @override
+  String get entryTypePurchased => 'Purchased';
+
+  @override
+  String get entryTypeBornOnFarm => 'Born on farm';
+
+  @override
+  String get entryDateLabel => 'Entry Date';
+
+  @override
+  String get purchasePriceLabel => 'Purchase Price (PKR)';
 }

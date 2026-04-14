@@ -1,188 +1,335 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../../core/utils/sizes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../viewmodel/herd_viewmodel.dart';
 import '../widgets/CustomInput.dart';
+import '../widgets/DatePickerTile.dart';
+import '../widgets/FormDropdownField.dart';
+import '../widgets/FormSectionCard.dart';
 
 class AnimalInfoStep extends ConsumerWidget {
   const AnimalInfoStep({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(herdProvider);
     final vm = ref.watch(herdProvider.notifier);
     final l10n = AppLocalizations.of(context)!;
+
+    const categories = [
+      'Cow',
+      'Buffalo',
+      'Goat',
+      'Sheep',
+    ];
+
+    const breeds = [
+      'Sahiwal',
+      'Nili Ravi',
+      'Holstein Friesian',
+      'Jersey',
+      'Crossbred',
+      'Other',
+    ];
+
+    const maleStageItems = [
+      StageKey.maleCalf,
+      StageKey.youngBull,
+      StageKey.bull,
+    ];
+
+    const femaleStageItems = [
+      StageKey.femaleCalf,
+      StageKey.heifer,
+      StageKey.lactating,
+      StageKey.pregnant,
+      StageKey.dry,
+      StageKey.open,
+    ];
+
+    final maleStageLabels = [
+      l10n.stageMaleCalf,
+      l10n.stageYoungBull,
+      l10n.stageBull,
+    ];
+
+    final femaleStageLabels = [
+      l10n.stageFemaleCalf,
+      l10n.stageHeifer,
+      l10n.stageLactating,
+      l10n.stagePregnant,
+      l10n.stageDry,
+      l10n.stageOpen,
+    ];
+
+    final stage = vm.stage;
+    final bool showBreeding = stage == StageKey.youngBull ||
+        stage == StageKey.bull ||
+        stage == StageKey.heifer ||
+        stage == StageKey.lactating ||
+        stage == StageKey.pregnant ||
+        stage == StageKey.dry ||
+        stage == StageKey.open;
+    final bool showPregnancy =
+        stage == StageKey.pregnant || stage == StageKey.dry;
+    final bool showMilk = stage == StageKey.lactating;
+    final bool serviceOnly = showBreeding && !showPregnancy;
 
     return Padding(
       padding: const EdgeInsets.only(top: sizes.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Animal ID - text keyboard
-          CustomInput(
-            label: l10n.animalIdLabel,
-            controller: vm.animalIdController,
-            keyboardType: TextInputType.text,
-          ),
-
-          // Category - dropdown
-          _DropdownInput(
-            label: l10n.categoryLabel,
-            hint: l10n.selectCategory,
-            value: vm.category,
-            items: const [
-              "Cow",
-              "Buffalo",
-              "Bull",
-              "Heifer",
-              "Calf (Male)",
-              "Calf (Female)"
-            ],
-            itemLabels: [
-              l10n.cow,
-              l10n.buffalo,
-              l10n.bull,
-              l10n.heifer,
-              l10n.calfMale,
-              l10n.calfFemale,
-            ],
-            onChanged: (value) {
-              if (value == null) return;
-              vm.category = value;
-            },
-          ),
-
-          // Stage - dropdown
-          _DropdownInput(
-            label: l10n.stageLabel,
-            hint: l10n.selectStage,
-            value: vm.stage,
-            items: const ["lactating", "dry", "pregnant", "open"],
-            itemLabels: [
-              l10n.stageLactating,
-              l10n.stageDry,
-              l10n.stagePregnant,
-              l10n.stageOpen,
-            ],
-            onChanged: (value) {
-              if (value == null) return;
-              vm.stage = value;
-            },
-          ),
-
-          // Weight - number keyboard
-          CustomInput(
-            label: l10n.weightKgLabel,
-            controller: vm.weightController,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _DropdownInput extends StatelessWidget {
-  final String label;
-  final String hint;
-  final String? value;
-  final List<String> items;
-  final List<String> itemLabels;
-  final ValueChanged<String?> onChanged;
-
-  const _DropdownInput({
-    required this.label,
-    required this.hint,
-    required this.value,
-    required this.items,
-    required this.itemLabels,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: sizes.sm),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: sizes.fontSizeSm,
-              fontWeight: FontWeight.w800,
-              color: UColors.colorPrimary,
-            ),
-          ),
-          const SizedBox(height: sizes.xs),
-          DropdownButtonHideUnderline(
-            child: DropdownButton2<String>(
-              value: value,
-              isExpanded: true,
-              hint: Text(
-                hint,
-                style: const TextStyle(
-                  fontSize: sizes.fontSizeSm,
-                  color: UColors.darkGrey,
+          FormSectionCard(
+            title: l10n.animalInfoStepTitle,
+            child: Column(
+              children: [
+                CustomInput(
+                  label: l10n.tagNumberLabel,
+                  hintText: l10n.tagNumberHint,
+                  controller: vm.tagNumberController,
                 ),
-              ),
-              items: items
-                  .asMap()
-                  .entries
-                  .map(
-                    (entry) => DropdownMenuItem<String>(
-                      value: entry.value,
-                      child: Text(
-                        itemLabels[entry.key],
-                        style: const TextStyle(
-                          fontSize: sizes.fontSizeSm,
-                          fontWeight: FontWeight.w600,
-                          color: UColors.textPrimary,
-                        ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormDropdownField(
+                        label: l10n.categoryLabel,
+                        hint: l10n.selectCategory,
+                        value: vm.category,
+                        items: categories,
+                        itemLabels: [
+                          l10n.cow,
+                          l10n.buffalo,
+                          l10n.goat,
+                          l10n.sheep,
+                        ],
+                        onChanged: (value) {
+                          if (value == null) return;
+                          vm.setCategory(value);
+                        },
                       ),
                     ),
-                  )
-                  .toList(),
-              onChanged: onChanged,
-              buttonStyleData: ButtonStyleData(
-                height: 52,
-                padding: const EdgeInsets.symmetric(horizontal: sizes.md),
-                decoration: BoxDecoration(
-                  color: UColors.inputBg,
-                  borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
-                  border: Border.all(
-                    color: UColors.borderPrimary,
-                    width: 1.0,
-                  ),
-                ),
-              ),
-              iconStyleData: const IconStyleData(
-                icon: Icon(Icons.keyboard_arrow_down_rounded),
-                iconSize: 22,
-                iconEnabledColor: UColors.darkGrey,
-              ),
-              dropdownStyleData: DropdownStyleData(
-                maxHeight: 280,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(sizes.cardRadiusMd),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 12,
-                      offset: Offset(0, 4),
+                    const SizedBox(width: sizes.sm),
+                    Expanded(
+                      child: FormDropdownField(
+                        label: l10n.genderLabel,
+                        hint: l10n.selectGender,
+                        value: vm.gender,
+                        items: const [GenderKey.male, GenderKey.female],
+                        itemLabels: [l10n.genderMale, l10n.genderFemale],
+                        onChanged: (value) {
+                          if (value == null) return;
+                          vm.setGender(value);
+                        },
+                      ),
                     ),
                   ],
                 ),
-              ),
-              menuItemStyleData: const MenuItemStyleData(
-                height: 44,
-                padding: EdgeInsets.symmetric(horizontal: sizes.md),
-              ),
+                FormDropdownField(
+                  label: l10n.stageLabel,
+                  hint: l10n.selectStage,
+                  value: vm.gender == null ? null : vm.stage,
+                  items: vm.gender == GenderKey.male
+                      ? maleStageItems
+                      : vm.gender == GenderKey.female
+                          ? femaleStageItems
+                          : const <String>[],
+                  itemLabels: vm.gender == GenderKey.male
+                      ? maleStageLabels
+                      : vm.gender == GenderKey.female
+                          ? femaleStageLabels
+                          : const <String>[],
+                  enabled: vm.gender != null,
+                  onChanged: (value) {
+                    if (value == null) return;
+                    vm.setStage(value);
+                  },
+                ),
+                FormDropdownField(
+                  label: l10n.breedLabel,
+                  hint: l10n.selectBreed,
+                  value: vm.breed,
+                  items: breeds,
+                  onChanged: (value) {
+                    if (value == null) return;
+                    vm.setBreed(value);
+                  },
+                ),
+                DatePickerTile(
+                  icon: Icons.calendar_today_rounded,
+                  label: l10n.dateOfBirthLabel,
+                  selectedDate: vm.dateOfBirth,
+                  onPicked: (date) => vm.setDateOfBirth(date),
+                ),
+                CustomInput(
+                  label: l10n.weightKgLabel,
+                  hintText: l10n.weightHint,
+                  controller: vm.weightController,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                ),
+              ],
             ),
           ),
+          FormSectionCard(
+            title: l10n.entryDetailsTitle,
+            subtitle: l10n.entryDetailsSubtitle,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.entryTypeLabel,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: UColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: sizes.xs),
+                Wrap(
+                  spacing: sizes.sm,
+                  children: [
+                    ChoiceChip(
+                      label: Text(l10n.entryTypePurchased),
+                      selected: vm.entryType == 'purchased',
+                      onSelected: (_) => vm.setEntryType('purchased'),
+                      selectedColor: UColors.colorPrimary,
+                      labelStyle: TextStyle(
+                        color: vm.entryType == 'purchased'
+                            ? Colors.white
+                            : UColors.textPrimary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: BorderSide(
+                          color: vm.entryType == 'purchased'
+                              ? UColors.colorPrimary
+                              : UColors.borderPrimary,
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
+                    ),
+                    ChoiceChip(
+                      label: Text(l10n.entryTypeBornOnFarm),
+                      selected: vm.entryType == 'born_on_farm',
+                      onSelected: (_) => vm.setEntryType('born_on_farm'),
+                      selectedColor: UColors.colorPrimary,
+                      labelStyle: TextStyle(
+                        color: vm.entryType == 'born_on_farm'
+                            ? Colors.white
+                            : UColors.textPrimary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: BorderSide(
+                          color: vm.entryType == 'born_on_farm'
+                              ? UColors.colorPrimary
+                              : UColors.borderPrimary,
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: sizes.sm),
+                if (vm.entryType == 'purchased') ...[
+                  DatePickerTile(
+                    icon: Icons.calendar_today_rounded,
+                    label: l10n.entryDateLabel,
+                    selectedDate: vm.entryDate,
+                    onPicked: (date) => vm.setEntryDate(date),
+                  ),
+                  CustomInput(
+                    label: l10n.purchasePriceLabel,
+                    hintText: '0',
+                    controller: vm.purchasePriceController,
+                    keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true),
+                  ),
+                ] else if (vm.entryType == 'born_on_farm') ...[
+                  DatePickerTile(
+                    icon: Icons.calendar_today_rounded,
+                    label: l10n.entryDateLabel,
+                    selectedDate: vm.entryDate,
+                    onPicked: (date) => vm.setEntryDate(date),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          if (showBreeding)
+            FormSectionCard(
+              title: l10n.breedingRecordTitle,
+              subtitle: serviceOnly
+                  ? l10n.breedingServiceOnlySubtitle
+                  : l10n.breedingPregnancySubtitle,
+              child: Column(
+                children: [
+                  DatePickerTile(
+                    icon: Icons.favorite_rounded,
+                    label: l10n.serviceDate,
+                    selectedDate: vm.serviceDate,
+                    onPicked: (date) {
+                      vm.serviceDate = date;
+                      ref.read(herdProvider.notifier).refreshDates();
+                    },
+                  ),
+                  if (showPregnancy) ...[
+                    const SizedBox(height: sizes.sm),
+                    DatePickerTile(
+                      icon: Icons.medical_services_rounded,
+                      label: l10n.pdDate,
+                      selectedDate: vm.pdDate,
+                      onPicked: (date) {
+                        vm.pdDate = date;
+                        ref.read(herdProvider.notifier).refreshDates();
+                      },
+                    ),
+                    const SizedBox(height: sizes.sm),
+                    DatePickerTile(
+                      icon: Icons.child_care_rounded,
+                      label: l10n.calvingDate,
+                      selectedDate: vm.calvingDate,
+                      onPicked: (date) {
+                        vm.calvingDate = date;
+                        ref.read(herdProvider.notifier).refreshDates();
+                      },
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          if (showMilk)
+            FormSectionCard(
+              title: l10n.milkRecordTitle,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomInput(
+                      label: l10n.avgMilkPerDayLitres,
+                      controller: vm.avgMilkController,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                    ),
+                  ),
+                  const SizedBox(width: sizes.sm),
+                  Expanded(
+                    child: CustomInput(
+                      label: l10n.milkPricePerLitre,
+                      controller: vm.milkPriceController,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

@@ -235,8 +235,14 @@ abstract class AppLocalizations {
   /// No description provided for @registerAnimal.
   ///
   /// In en, this message translates to:
-  /// **'Register Animal'**
+  /// **'Add Animal'**
   String get registerAnimal;
+
+  /// No description provided for @addBreeding.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Breeding'**
+  String get addBreeding;
 
   /// No description provided for @animalRegistrationTitle.
   ///
@@ -274,6 +280,18 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get save;
 
+  /// No description provided for @tagNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag Number'**
+  String get tagNumberLabel;
+
+  /// No description provided for @tagNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. TG-0042'**
+  String get tagNumberHint;
+
   /// No description provided for @animalIdLabel.
   ///
   /// In en, this message translates to:
@@ -286,23 +304,59 @@ abstract class AppLocalizations {
   /// **'Category'**
   String get categoryLabel;
 
+  /// No description provided for @genderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get genderLabel;
+
+  /// No description provided for @selectGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Select gender'**
+  String get selectGender;
+
+  /// No description provided for @genderMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get genderMale;
+
+  /// No description provided for @genderFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get genderFemale;
+
+  /// No description provided for @breedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Breed'**
+  String get breedLabel;
+
+  /// No description provided for @selectBreed.
+  ///
+  /// In en, this message translates to:
+  /// **'Select breed'**
+  String get selectBreed;
+
   /// No description provided for @stageLabel.
   ///
   /// In en, this message translates to:
   /// **'Stage'**
   String get stageLabel;
 
-  /// No description provided for @weightKgLabel.
+  /// No description provided for @stageFemaleCalf.
   ///
   /// In en, this message translates to:
-  /// **'Weight (kg)'**
-  String get weightKgLabel;
+  /// **'Female Calf'**
+  String get stageFemaleCalf;
 
-  /// No description provided for @selectStage.
+  /// No description provided for @stageHeifer.
   ///
   /// In en, this message translates to:
-  /// **'Select stage'**
-  String get selectStage;
+  /// **'Heifer'**
+  String get stageHeifer;
 
   /// No description provided for @stageLactating.
   ///
@@ -310,23 +364,65 @@ abstract class AppLocalizations {
   /// **'Lactating'**
   String get stageLactating;
 
-  /// No description provided for @stageDry.
-  ///
-  /// In en, this message translates to:
-  /// **'Dry'**
-  String get stageDry;
-
   /// No description provided for @stagePregnant.
   ///
   /// In en, this message translates to:
   /// **'Pregnant'**
   String get stagePregnant;
 
+  /// No description provided for @stageDry.
+  ///
+  /// In en, this message translates to:
+  /// **'Dry'**
+  String get stageDry;
+
   /// No description provided for @stageOpen.
   ///
   /// In en, this message translates to:
   /// **'Open'**
   String get stageOpen;
+
+  /// No description provided for @stageMaleCalf.
+  ///
+  /// In en, this message translates to:
+  /// **'Male Calf'**
+  String get stageMaleCalf;
+
+  /// No description provided for @stageYoungBull.
+  ///
+  /// In en, this message translates to:
+  /// **'Young Bull'**
+  String get stageYoungBull;
+
+  /// No description provided for @stageBull.
+  ///
+  /// In en, this message translates to:
+  /// **'Bull'**
+  String get stageBull;
+
+  /// No description provided for @dateOfBirthLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get dateOfBirthLabel;
+
+  /// No description provided for @weightKgLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight (kg)'**
+  String get weightKgLabel;
+
+  /// No description provided for @weightHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 320'**
+  String get weightHint;
+
+  /// No description provided for @selectStage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select stage'**
+  String get selectStage;
 
   /// No description provided for @breedingDatesTitle.
   ///
@@ -405,6 +501,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap to select'**
   String get tapToSelect;
+
+  /// No description provided for @breedingRecordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Breeding Record'**
+  String get breedingRecordTitle;
+
+  /// No description provided for @breedingServiceOnlySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Service record only for this stage'**
+  String get breedingServiceOnlySubtitle;
+
+  /// No description provided for @breedingPregnancySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track service and pregnancy dates'**
+  String get breedingPregnancySubtitle;
+
+  /// No description provided for @milkRecordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Milk Record'**
+  String get milkRecordTitle;
 
   /// No description provided for @addToHerd.
   ///
@@ -1455,6 +1575,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Monthly Profit'**
   String get monthlyProfit;
+
+  /// No description provided for @entryDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry Details'**
+  String get entryDetailsTitle;
+
+  /// No description provided for @entryDetailsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How did it join the farm?'**
+  String get entryDetailsSubtitle;
+
+  /// No description provided for @entryTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry Type'**
+  String get entryTypeLabel;
+
+  /// No description provided for @entryTypePurchased.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchased'**
+  String get entryTypePurchased;
+
+  /// No description provided for @entryTypeBornOnFarm.
+  ///
+  /// In en, this message translates to:
+  /// **'Born on farm'**
+  String get entryTypeBornOnFarm;
+
+  /// No description provided for @entryDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry Date'**
+  String get entryDateLabel;
+
+  /// No description provided for @purchasePriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Price (PKR)'**
+  String get purchasePriceLabel;
 }
 
 class _AppLocalizationsDelegate

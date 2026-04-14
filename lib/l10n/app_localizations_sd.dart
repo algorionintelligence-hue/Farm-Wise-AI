@@ -76,7 +76,10 @@ class AppLocalizationsSd extends AppLocalizations {
   String get quickAdd => 'جلدي شامل ڪريو';
 
   @override
-  String get registerAnimal => 'جانور رجسٽر ڪريو';
+  String get registerAnimal => 'جانور شامل ڪريو';
+
+  @override
+  String get addBreeding => 'نسل ڪشي شامل ڪريو';
 
   @override
   String get animalRegistrationTitle => 'جانورن جي رجسٽريشن';
@@ -100,31 +103,76 @@ class AppLocalizationsSd extends AppLocalizations {
   String get save => 'محفوظ ڪريو';
 
   @override
+  String get tagNumberLabel => 'ٽيگ نمبر';
+
+  @override
+  String get tagNumberHint => 'مثال: TG-0042';
+
+  @override
   String get animalIdLabel => 'جانور آئي ڊي';
 
   @override
   String get categoryLabel => 'قسم';
 
   @override
+  String get genderLabel => 'جنس';
+
+  @override
+  String get selectGender => 'جنس چونڊيو';
+
+  @override
+  String get genderMale => 'نر';
+
+  @override
+  String get genderFemale => 'مادي';
+
+  @override
+  String get breedLabel => 'نسل';
+
+  @override
+  String get selectBreed => 'نسل چونڊيو';
+
+  @override
   String get stageLabel => 'مرحلو';
 
   @override
-  String get weightKgLabel => 'وزن (ڪلوگرام)';
+  String get stageFemaleCalf => 'مادي ٻچڙي';
 
   @override
-  String get selectStage => 'مرحلو چونڊيو';
+  String get stageHeifer => 'هيفر';
 
   @override
   String get stageLactating => 'کير ڏيندڙ';
 
   @override
-  String get stageDry => 'خشڪ';
-
-  @override
   String get stagePregnant => 'حامله';
 
   @override
+  String get stageDry => 'خشڪ';
+
+  @override
   String get stageOpen => 'غير حامله';
+
+  @override
+  String get stageMaleCalf => 'نر ٻچڙو';
+
+  @override
+  String get stageYoungBull => 'ننڍو ڍڳو';
+
+  @override
+  String get stageBull => 'ڍڳو';
+
+  @override
+  String get dateOfBirthLabel => 'پيدائش جي تاريخ';
+
+  @override
+  String get weightKgLabel => 'وزن (ڪلوگرام)';
+
+  @override
+  String get weightHint => 'مثال: 320';
+
+  @override
+  String get selectStage => 'مرحلو چونڊيو';
 
   @override
   String get breedingDatesTitle => 'نسل ڪشي تاريخون';
@@ -165,6 +213,18 @@ class AppLocalizationsSd extends AppLocalizations {
 
   @override
   String get tapToSelect => 'منتخب ڪرڻ لاءِ ٽئپ ڪريو';
+
+  @override
+  String get breedingRecordTitle => 'نسل ڪشي جو رڪارڊ';
+
+  @override
+  String get breedingServiceOnlySubtitle => 'هن مرحلي لاءِ صرف سروس رڪارڊ';
+
+  @override
+  String get breedingPregnancySubtitle => 'سروس ۽ حمل جون تاريخون';
+
+  @override
+  String get milkRecordTitle => 'کير جو رڪارڊ';
 
   @override
   String get addToHerd => 'ريوڙ ۾ شامل ڪريو';
@@ -707,4 +767,25 @@ class AppLocalizationsSd extends AppLocalizations {
 
   @override
   String get monthlyProfit => 'ماهوار منافعو';
+
+  @override
+  String get entryDetailsTitle => 'داخلا جون تفصيلون';
+
+  @override
+  String get entryDetailsSubtitle => 'هي فارم ۾ ڪيئن شامل ٿيو؟';
+
+  @override
+  String get entryTypeLabel => 'داخلا جو قسم';
+
+  @override
+  String get entryTypePurchased => 'خريد ڪيل';
+
+  @override
+  String get entryTypeBornOnFarm => 'فارم تي ڄمل';
+
+  @override
+  String get entryDateLabel => 'داخلا جي تاريخ';
+
+  @override
+  String get purchasePriceLabel => 'خريداري قيمت (PKR)';
 }
