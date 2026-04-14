@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/sizes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../breeding_form/view/BreedingEntryScreen.dart';
 import '../../breeding_dashboard/view/BreedingDashboard.dart';
 
 import '../../cost_form/view/CostInputsScreen.dart';
@@ -52,7 +53,7 @@ final options = <QuickAddOption>[
     subtitle: breedingDatesLabel,
     icon: Icons.favorite_rounded,
     color: Color(0xFFB45309),
-    screen: BreedingDashboard(),
+    screen: BreedingEntryScreen(),
   ),
   QuickAddOption(
     label: addRevenueLabel,
