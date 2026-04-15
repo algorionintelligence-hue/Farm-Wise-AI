@@ -86,11 +86,6 @@ class AnimalInfoStep extends ConsumerWidget {
             icon: Icons.pets_rounded,
             title: l10n.animalInfoStepTitle,
             children: [
-              CustomInput(
-                label: l10n.tagNumberLabel,
-                hintText: l10n.tagNumberHint,
-                controller: vm.tagNumberController,
-              ),
               Row(
                 children: [
                   Expanded(
@@ -192,7 +187,9 @@ class AnimalInfoStep extends ConsumerWidget {
                   ChoiceChip(
                     label: Text(l10n.entryTypePurchased),
                     selected: vm.entryType == 'purchased',
-                    onSelected: (_) => vm.setEntryType('purchased'),
+                    onSelected: (selected) {
+                      vm.setEntryType(selected ? 'purchased' : null);
+                    },
                     selectedColor: UColors.colorPrimary,
                     labelStyle: TextStyle(
                       color: vm.entryType == 'purchased'
@@ -211,32 +208,10 @@ class AnimalInfoStep extends ConsumerWidget {
                     ),
                     backgroundColor: Colors.white,
                   ),
-                  ChoiceChip(
-                    label: Text(l10n.entryTypeBornOnFarm),
-                    selected: vm.entryType == 'born_on_farm',
-                    onSelected: (_) => vm.setEntryType('born_on_farm'),
-                    selectedColor: UColors.colorPrimary,
-                    labelStyle: TextStyle(
-                      color: vm.entryType == 'born_on_farm'
-                          ? Colors.white
-                          : UColors.textPrimary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        color: vm.entryType == 'born_on_farm'
-                            ? UColors.colorPrimary
-                            : UColors.borderPrimary,
-                      ),
-                    ),
-                    backgroundColor: Colors.white,
-                  ),
                 ],
               ),
-              const SizedBox(height: sizes.sm),
               if (vm.entryType == 'purchased') ...[
+                const SizedBox(height: sizes.sm),
                 DatePickerTile(
                   icon: Icons.calendar_today_rounded,
                   label: l10n.entryDateLabel,
@@ -249,13 +224,6 @@ class AnimalInfoStep extends ConsumerWidget {
                   controller: vm.purchasePriceController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                ),
-              ] else if (vm.entryType == 'born_on_farm') ...[
-                DatePickerTile(
-                  icon: Icons.calendar_today_rounded,
-                  label: l10n.entryDateLabel,
-                  selectedDate: vm.entryDate,
-                  onPicked: (date) => vm.setEntryDate(date),
                 ),
               ],
             ],

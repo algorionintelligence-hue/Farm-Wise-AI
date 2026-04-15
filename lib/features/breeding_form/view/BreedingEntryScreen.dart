@@ -6,14 +6,21 @@ import '../../../core/utils/sizes.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/PrimaryButton.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../herd_store/herd_store.dart';
 import '../../herd_form/widgets/CustomInput.dart';
 import '../../herd_form/widgets/DatePickerTile.dart';
 import '../../herd_form/widgets/FormDropdownField.dart';
 import '../../herd_form/widgets/SectionCard.dart';
 import '../../herd_form/viewmodel/herd_viewmodel.dart';
+import '../../production_form/view/ProductionEntryScreen.dart';
 
 class BreedingEntryScreen extends ConsumerStatefulWidget {
-  const BreedingEntryScreen({super.key});
+  const BreedingEntryScreen({
+    super.key,
+    this.continueToProduction = false,
+  });
+
+  final bool continueToProduction;
 
   @override
   ConsumerState<BreedingEntryScreen> createState() => _BreedingEntryScreenState();
@@ -49,7 +56,10 @@ class _BreedingEntryScreenState extends ConsumerState<BreedingEntryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final vm = ref.read(herdProvider.notifier);
+    final vm = ref.watch(herdProvider.notifier);
+
+    _serviceDate ??= vm.serviceDate;
+    _pdDate ??= vm.pdDate;
 
     return AppScaffoldBgBasic(
       showBackButton: true,
@@ -266,11 +276,47 @@ class _BreedingEntryScreenState extends ConsumerState<BreedingEntryScreen> {
             ),
             const SizedBox(height: sizes.spaceBtwSections),
             PrimaryButton(
-              label: l10n.save,
+              label:
+                  widget.continueToProduction ? l10n.continueButton : l10n.save,
               onPressed: () {
-                // Since this animal is coming from the registration form,
-                // its ID is already managed in HerdViewModel.
+                if (_serviceType == null || _serviceType!.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please select service type.'),
+                    ),
+                  );
+                  return;
+                }
+                if (_serviceDate == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please select service date.'),
+                    ),
+                  );
+                  return;
+                }
+
+                vm.serviceDate = _serviceDate;
+                vm.pdDate = _pdDate;
+                vm.calvingDate = _expectedCalvingDate;
+                vm.refreshDates();
+                vm.save();
+                ref.read(herdStoreProvider.notifier).upsert(vm.state);
+
+                if (widget.continueToProduction) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const ProductionEntryScreen(),
+                    ),
+                  );
+                  return;
+                }
+
                 Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(l10n.animalRegisteredSuccess)),
+                );
               },
             ),
           ],

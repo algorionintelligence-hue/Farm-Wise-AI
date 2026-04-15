@@ -143,7 +143,7 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
     state = state.copyWith(breed: breed);
   }
 
-  void setEntryType(String value) {
+  void setEntryType(String? value) {
     if (entryType != value) {
       entryDate = null;
     }
@@ -162,6 +162,49 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
   void setDateOfBirth(DateTime value) {
     dateOfBirth = value;
     state = state.copyWith(dateOfBirth: dateOfBirth);
+  }
+
+  String? validateAnimalInfoStep() {
+    if (category == null || category!.isEmpty) {
+      return 'Please select category.';
+    }
+    if (gender == null || gender!.isEmpty) {
+      return 'Please select gender.';
+    }
+    if (stage == null || stage!.isEmpty) {
+      return 'Please select stage.';
+    }
+    if (breed == null || breed!.isEmpty) {
+      return 'Please select breed.';
+    }
+    if (dateOfBirth == null) {
+      return 'Please select date of birth.';
+    }
+    if (weightController.text.trim().isEmpty) {
+      return 'Please enter weight.';
+    }
+    if (entryType == 'purchased') {
+      if (entryDate == null) {
+        return 'Please select purchase date.';
+      }
+      if (purchasePriceController.text.trim().isEmpty) {
+        return 'Please enter purchase price.';
+      }
+    }
+    return null;
+  }
+
+  String? validateProductionStep() {
+    if (avgMilkController.text.trim().isEmpty) {
+      return 'Please enter avg milk per day.';
+    }
+    if (milkPriceController.text.trim().isEmpty) {
+      return 'Please enter milk price per litre.';
+    }
+    if (feedCostController.text.trim().isEmpty) {
+      return 'Please enter feed cost monthly.';
+    }
+    return null;
   }
 
   void save() {
