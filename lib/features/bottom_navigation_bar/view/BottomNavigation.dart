@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/sizes.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../breeding_form/view/BreedingEntryScreen.dart';
 import '../../breeding_dashboard/view/BreedingDashboard.dart';
 
 import '../../cost_form/view/CostInputsScreen.dart';
@@ -31,8 +30,6 @@ class QuickAddOption {
 
 String addAnimalLabel(AppLocalizations l10n) => l10n.registerAnimal;
 String addToHerdLabel(AppLocalizations l10n) => l10n.addToHerd;
-String addBreedingLabel(AppLocalizations l10n) => l10n.addBreeding;
-String breedingDatesLabel(AppLocalizations l10n) => l10n.breedingDatesTitle;
 String addRevenueLabel(AppLocalizations l10n) => l10n.addRevenue;
 String milkSalesLabel(AppLocalizations l10n) => l10n.milkSales;
 String addCostsLabel(AppLocalizations l10n) => l10n.addCosts;
@@ -47,13 +44,6 @@ final options = <QuickAddOption>[
     icon: Icons.pets_rounded,
     color: Color(0xFF384A24),
     screen: HerdStepperScreen(),
-  ),
-  QuickAddOption(
-    label: addBreedingLabel,
-    subtitle: breedingDatesLabel,
-    icon: Icons.favorite_rounded,
-    color: Color(0xFFB45309),
-    screen: BreedingEntryScreen(),
   ),
   QuickAddOption(
     label: addRevenueLabel,

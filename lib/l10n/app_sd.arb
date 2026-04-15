@@ -255,5 +255,9 @@
   "entryTypePurchased": "خريد ڪيل",
   "entryTypeBornOnFarm": "فارم تي ڄمل",
   "entryDateLabel": "داخلا جي تاريخ",
-  "purchasePriceLabel": "خريداري قيمت (PKR)"
+  "purchasePriceLabel": "خريداري قيمت (PKR)",
+  "selectMotherCow": "ماءُ / ڳئون چونڊيو",
+  "searchByTagNumber": "ٽيگ نمبر سان ڳوليو",
+  "serviceDateAfterDobError": "سروس تاريخ هميشه پيدائش جي تاريخ کان پوءِ هجڻ گهرجي.",
+  "noFemaleAnimalsAvailable": "ڪا به مادي جانور موجود ناهي. مهرباني ڪري پهريان مادي جانور شامل ڪريو."
 }

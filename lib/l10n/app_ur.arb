@@ -423,5 +423,10 @@
   "entryTypePurchased": "خریدا گیا",
   "entryTypeBornOnFarm": "فارم پر پیدا ہوا",
   "entryDateLabel": "اندراج کی تاریخ",
-  "purchasePriceLabel": "خریداری قیمت (PKR)"
+  "purchasePriceLabel": "خریداری قیمت (PKR)",
+  "calfCannotHaveBreedingDatesError": "بچھڑا/بچھڑی اسٹیج کے لئے بریڈنگ تاریخیں قابلِ اجازت نہیں ہیں۔",
+  "selectMotherCow": "ماں / گائے منتخب کریں",
+  "searchByTagNumber": "ٹیگ نمبر سے تلاش کریں",
+  "serviceDateAfterDobError": "سروس تاریخ ہمیشہ تاریخِ پیدائش کے بعد ہونی چاہیے۔",
+  "noFemaleAnimalsAvailable": "کوئی مادہ جانور دستیاب نہیں۔ پہلے مادہ جانور شامل کریں۔"
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/themes/app_colors.dart';
 import '../../../core/utils/sizes.dart';
@@ -9,15 +10,16 @@ import '../../herd_form/widgets/CustomInput.dart';
 import '../../herd_form/widgets/DatePickerTile.dart';
 import '../../herd_form/widgets/FormDropdownField.dart';
 import '../../herd_form/widgets/SectionCard.dart';
+import '../../herd_form/viewmodel/herd_viewmodel.dart';
 
-class BreedingEntryScreen extends StatefulWidget {
+class BreedingEntryScreen extends ConsumerStatefulWidget {
   const BreedingEntryScreen({super.key});
 
   @override
-  State<BreedingEntryScreen> createState() => _BreedingEntryScreenState();
+  ConsumerState<BreedingEntryScreen> createState() => _BreedingEntryScreenState();
 }
 
-class _BreedingEntryScreenState extends State<BreedingEntryScreen> {
+class _BreedingEntryScreenState extends ConsumerState<BreedingEntryScreen> {
   final _aiServiceCostController = TextEditingController(text: '0');
   final _bullFeeController = TextEditingController(text: '0');
   final _pdFeeController = TextEditingController(text: '0');
@@ -47,6 +49,7 @@ class _BreedingEntryScreenState extends State<BreedingEntryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final vm = ref.read(herdProvider.notifier);
 
     return AppScaffoldBgBasic(
       showBackButton: true,
@@ -77,6 +80,7 @@ class _BreedingEntryScreenState extends State<BreedingEntryScreen> {
               title: l10n.breedingDatesTitle,
               subtitle: l10n.breedingDatesSubtitle,
               children: [
+                // Removed Mother Picker as per requirement
                 FormDropdownField(
                   label: l10n.serviceType,
                   hint: 'Select service type',
@@ -264,6 +268,8 @@ class _BreedingEntryScreenState extends State<BreedingEntryScreen> {
             PrimaryButton(
               label: l10n.save,
               onPressed: () {
+                // Since this animal is coming from the registration form,
+                // its ID is already managed in HerdViewModel.
                 Navigator.pop(context);
               },
             ),

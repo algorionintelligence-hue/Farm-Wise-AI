@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '../../../core/themes/app_colors.dart';
 import '../../../core/utils/sizes.dart';
@@ -28,6 +29,8 @@ class FormDropdownField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedValue = enabled ? value : null;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: sizes.sm),
       child: Column(
@@ -42,60 +45,59 @@ class FormDropdownField extends StatelessWidget {
             ),
           ),
           const SizedBox(height: sizes.xs),
-          DropdownButtonFormField<String>(
-            value: enabled ? value : null,
-            onChanged: enabled ? onChanged : null,
-            icon: const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: UColors.colorPrimary,
-            ),
-            style: TextStyle(
-              fontSize: sizes.fontSizeSm,
-              color: enabled ? UColors.textPrimary : UColors.darkGrey,
-            ),
-            hint: Text(
-              hint,
-              style: const TextStyle(
-                fontSize: sizes.fontSizeSm,
-                color: UColors.darkGrey,
+          DropdownButtonHideUnderline(
+            child: DropdownButton2<String>(
+              isExpanded: true,
+              value: selectedValue,
+              onChanged: enabled ? onChanged : null,
+              hint: Text(
+                hint,
+                style: const TextStyle(
+                  fontSize: sizes.fontSizeSm,
+                  color: UColors.darkGrey,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: enabled ? UColors.inputBg : UColors.borderPrimary,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: sizes.md,
-                vertical: sizes.md,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
-                borderSide: const BorderSide(color: UColors.borderPrimary),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
-                borderSide: const BorderSide(color: UColors.borderPrimary),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
-                borderSide: const BorderSide(color: UColors.borderPrimary),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
-                borderSide: const BorderSide(
+              iconStyleData: const IconStyleData(
+                icon: Icon(
+                  Icons.keyboard_arrow_down_rounded,
                   color: UColors.colorPrimary,
-                  width: 1.5,
                 ),
               ),
-            ),
-            items: List.generate(items.length, (index) {
-              return DropdownMenuItem<String>(
-                value: items[index],
-                child: Text(
-                  itemLabels?[index] ?? items[index],
-                  style: const TextStyle(fontSize: sizes.fontSizeSm),
+              buttonStyleData: ButtonStyleData(
+                height: 52,
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: sizes.md),
+                decoration: BoxDecoration(
+                  color: enabled ? UColors.inputBg : UColors.borderPrimary,
+                  borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
+                  border: Border.all(color: UColors.borderPrimary),
                 ),
-              );
-            }),
+              ),
+              dropdownStyleData: DropdownStyleData(
+                maxHeight: 280,
+                offset: const Offset(0, 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
+                  border: Border.all(color: UColors.borderPrimary),
+                ),
+              ),
+              menuItemStyleData: const MenuItemStyleData(height: 44),
+              items: List.generate(items.length, (index) {
+                return DropdownMenuItem<String>(
+                  value: items[index],
+                  child: Text(
+                    itemLabels?[index] ?? items[index],
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: sizes.fontSizeSm,
+                      color: enabled ? UColors.textPrimary : UColors.darkGrey,
+                    ),
+                  ),
+                );
+              }),
+            ),
           ),
         ],
       ),

@@ -788,4 +788,40 @@ class AppLocalizationsSd extends AppLocalizations {
 
   @override
   String get purchasePriceLabel => 'خريداري قيمت (PKR)';
+
+  @override
+  String get calfCannotHaveBreedingDatesError =>
+      'Breeding dates are not allowed for calf stages.';
+
+  @override
+  String get selectMotherCow => 'ماءُ / ڳئون چونڊيو';
+
+  @override
+  String get searchByTagNumber => 'ٽيگ نمبر سان ڳوليو';
+
+  @override
+  String get serviceDateAfterDobError =>
+      'سروس تاريخ هميشه پيدائش جي تاريخ کان پوءِ هجڻ گهرجي.';
+
+  @override
+  String get noFemaleAnimalsAvailable =>
+      'ڪا به مادي جانور موجود ناهي. مهرباني ڪري پهريان مادي جانور شامل ڪريو.';
+
+  @override
+  String get animalRegisteredSuccess => 'Animal Registered Successfully';
+
+  @override
+  String get nextStepPromptTitle => 'Animal Registered!';
+
+  @override
+  String get nextStepPromptSubtitle => 'What would you like to record next?';
+
+  @override
+  String get productionPromptSubtitle => 'Add daily milk production';
+
+  @override
+  String get breedingPromptSubtitle => 'Track service or pregnancy';
+
+  @override
+  String get dashboardPromptSubtitle => 'Back to main screen';
 }

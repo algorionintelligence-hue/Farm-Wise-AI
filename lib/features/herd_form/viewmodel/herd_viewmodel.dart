@@ -20,7 +20,6 @@ class GenderKey {
 }
 
 class HerdViewModel extends StateNotifier<HerdInputModel> {
-  // ✅ Fix: null ki jagah empty model se start karo
   HerdViewModel() : super(HerdInputModel());
 
   final tagNumberController = TextEditingController();
@@ -47,26 +46,36 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
   DateTime? calvingDate;
   DateTime? entryDate;
 
+  bool get isCalfStage =>
+      stage == StageKey.maleCalf || stage == StageKey.femaleCalf;
+
+  // 1. Lactating Female (Doodh dene wali aur Breedable dono)
+  bool get isLactatingFemale =>
+      gender == GenderKey.female && stage == StageKey.lactating;
+
+  // 2. Breedable Female (Heifer, Open, ya Dry - Pregnant included)
+  // Not lactating, but eligible for breeding record
+  bool get isBreedableFemaleOnly =>
+      gender == GenderKey.female &&
+      (stage == StageKey.heifer ||
+          stage == StageKey.open ||
+          stage == StageKey.dry ||
+          stage == StageKey.pregnant);
+
+  // Helper for navigation: Does it need BOTH production and breeding?
+  bool get isEligibleForBoth => isLactatingFemale;
+
+  bool get isNonBreedable =>
+      gender == GenderKey.male || isCalfStage;
+
+  bool get hasBreedingDates =>
+      serviceDate != null || pdDate != null || calvingDate != null;
+
   int expectedCalves() {
     if (serviceDate == null) return 0;
     final diff = DateTime.now().difference(serviceDate!).inDays;
-    return diff < 180 ? 1 : 0;
+    return diff <= 280 ? 1 : 0;
   }
-
-  double monthlyRevenue() {
-    final milk = double.tryParse(avgMilkController.text) ?? 0;
-    final price = double.tryParse(milkPriceController.text) ?? 0;
-    final percent = (double.tryParse(milkSoldController.text) ?? 100) / 100;
-    return milk * price * percent * 30;
-  }
-
-  double monthlyCost() {
-    return (double.tryParse(feedCostController.text) ?? 0) +
-        (double.tryParse(medicalCostController.text) ?? 0) +
-        (double.tryParse(laborCostController.text) ?? 0);
-  }
-
-  double monthlyProfit() => monthlyRevenue() - monthlyCost();
 
   void setCategory(String value) {
     category = value;
@@ -96,6 +105,7 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
     final bool showMilk = value == StageKey.lactating;
     final bool showPregnancy =
         value == StageKey.pregnant || value == StageKey.dry;
+    
     final bool showBreeding = value == StageKey.youngBull ||
         value == StageKey.bull ||
         value == StageKey.heifer ||
@@ -180,7 +190,15 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
     );
   }
 
-  // ✅ Fix: copyWith se naya object — Riverpod rebuild karega
+  String? validateBreedingStageRule() {
+    if (!isCalfStage || !hasBreedingDates) return null;
+    serviceDate = null;
+    pdDate = null;
+    calvingDate = null;
+    refreshDates();
+    return 'calfCannotHaveBreedingDatesError';
+  }
+
   void refreshDates() {
     state = state.copyWith(
       serviceDate: serviceDate,

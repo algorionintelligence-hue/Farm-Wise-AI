@@ -795,4 +795,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasePriceLabel => 'Purchase Price (PKR)';
+
+  @override
+  String get calfCannotHaveBreedingDatesError =>
+      'Breeding dates are not allowed for calf stages.';
+
+  @override
+  String get selectMotherCow => 'Select Mother / Cow';
+
+  @override
+  String get searchByTagNumber => 'Search by tag number';
+
+  @override
+  String get serviceDateAfterDobError =>
+      'Service date must be after date of birth.';
+
+  @override
+  String get noFemaleAnimalsAvailable =>
+      'No female animals available. Please add a female animal first.';
+
+  @override
+  String get animalRegisteredSuccess => 'Animal Registered Successfully';
+
+  @override
+  String get nextStepPromptTitle => 'Animal Registered!';
+
+  @override
+  String get nextStepPromptSubtitle => 'What would you like to record next?';
+
+  @override
+  String get productionPromptSubtitle => 'Add daily milk production';
+
+  @override
+  String get breedingPromptSubtitle => 'Track service or pregnancy';
+
+  @override
+  String get dashboardPromptSubtitle => 'Back to main screen';
 }

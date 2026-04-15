@@ -260,77 +260,7 @@ class AnimalInfoStep extends ConsumerWidget {
               ],
             ],
           ),
-          if (showBreeding)
-            SectionCard(
-              icon: Icons.favorite_rounded,
-              title: l10n.breedingRecordTitle,
-              subtitle: serviceOnly
-                  ? l10n.breedingServiceOnlySubtitle
-                  : l10n.breedingPregnancySubtitle,
-              children: [
-                DatePickerTile(
-                  icon: Icons.favorite_rounded,
-                  label: l10n.serviceDate,
-                  selectedDate: vm.serviceDate,
-                  onPicked: (date) {
-                    vm.serviceDate = date;
-                    ref.read(herdProvider.notifier).refreshDates();
-                  },
-                ),
-                if (showPregnancy) ...[
-                  const SizedBox(height: sizes.sm),
-                  DatePickerTile(
-                    icon: Icons.medical_services_rounded,
-                    label: l10n.pdDate,
-                    selectedDate: vm.pdDate,
-                    onPicked: (date) {
-                      vm.pdDate = date;
-                      ref.read(herdProvider.notifier).refreshDates();
-                    },
-                  ),
-                  const SizedBox(height: sizes.sm),
-                  DatePickerTile(
-                    icon: Icons.child_care_rounded,
-                    label: l10n.calvingDate,
-                    selectedDate: vm.calvingDate,
-                    onPicked: (date) {
-                      vm.calvingDate = date;
-                      ref.read(herdProvider.notifier).refreshDates();
-                    },
-                  ),
-                ],
-              ],
-            ),
-          if (showMilk)
-            SectionCard(
-              icon: Icons.water_drop_rounded,
-              title: l10n.milkRecordTitle,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: CustomInput(
-                        label: l10n.avgMilkPerDayLitres,
-                        controller: vm.avgMilkController,
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: sizes.sm),
-                    Expanded(
-                      child: CustomInput(
-                        label: l10n.milkPricePerLitre,
-                        controller: vm.milkPriceController,
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+
         ],
       ),
     );

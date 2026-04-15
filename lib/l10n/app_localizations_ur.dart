@@ -791,4 +791,40 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get purchasePriceLabel => 'خریداری قیمت (PKR)';
+
+  @override
+  String get calfCannotHaveBreedingDatesError =>
+      'بچھڑا/بچھڑی اسٹیج کے لئے بریڈنگ تاریخیں قابلِ اجازت نہیں ہیں۔';
+
+  @override
+  String get selectMotherCow => 'ماں / گائے منتخب کریں';
+
+  @override
+  String get searchByTagNumber => 'ٹیگ نمبر سے تلاش کریں';
+
+  @override
+  String get serviceDateAfterDobError =>
+      'سروس تاریخ ہمیشہ تاریخِ پیدائش کے بعد ہونی چاہیے۔';
+
+  @override
+  String get noFemaleAnimalsAvailable =>
+      'کوئی مادہ جانور دستیاب نہیں۔ پہلے مادہ جانور شامل کریں۔';
+
+  @override
+  String get animalRegisteredSuccess => 'Animal Registered Successfully';
+
+  @override
+  String get nextStepPromptTitle => 'Animal Registered!';
+
+  @override
+  String get nextStepPromptSubtitle => 'What would you like to record next?';
+
+  @override
+  String get productionPromptSubtitle => 'Add daily milk production';
+
+  @override
+  String get breedingPromptSubtitle => 'Track service or pregnancy';
+
+  @override
+  String get dashboardPromptSubtitle => 'Back to main screen';
 }

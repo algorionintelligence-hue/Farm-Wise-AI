@@ -1617,6 +1617,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Purchase Price (PKR)'**
   String get purchasePriceLabel;
+
+  /// No description provided for @calfCannotHaveBreedingDatesError.
+  ///
+  /// In en, this message translates to:
+  /// **'Breeding dates are not allowed for calf stages.'**
+  String get calfCannotHaveBreedingDatesError;
+
+  /// No description provided for @selectMotherCow.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Mother / Cow'**
+  String get selectMotherCow;
+
+  /// No description provided for @searchByTagNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by tag number'**
+  String get searchByTagNumber;
+
+  /// No description provided for @serviceDateAfterDobError.
+  ///
+  /// In en, this message translates to:
+  /// **'Service date must be after date of birth.'**
+  String get serviceDateAfterDobError;
+
+  /// No description provided for @noFemaleAnimalsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No female animals available. Please add a female animal first.'**
+  String get noFemaleAnimalsAvailable;
+
+  /// No description provided for @animalRegisteredSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal Registered Successfully'**
+  String get animalRegisteredSuccess;
+
+  /// No description provided for @nextStepPromptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal Registered!'**
+  String get nextStepPromptTitle;
+
+  /// No description provided for @nextStepPromptSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to record next?'**
+  String get nextStepPromptSubtitle;
+
+  /// No description provided for @productionPromptSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add daily milk production'**
+  String get productionPromptSubtitle;
+
+  /// No description provided for @breedingPromptSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track service or pregnancy'**
+  String get breedingPromptSubtitle;
+
+  /// No description provided for @dashboardPromptSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to main screen'**
+  String get dashboardPromptSubtitle;
 }
 
 class _AppLocalizationsDelegate
