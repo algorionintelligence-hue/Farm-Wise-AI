@@ -81,7 +81,7 @@ class ProductionEntryScreen extends ConsumerWidget {
                   const SizedBox(height: sizes.spaceBtwSections),
                   PrimaryButton(
                     label: l10n.save,
-                    onPressed: () {
+                    onPressed: () async {
                       final validationError = vm.validateProductionStep();
                       if (validationError != null) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -91,7 +91,8 @@ class ProductionEntryScreen extends ConsumerWidget {
                       }
 
                       vm.save();
-                      ref.read(herdStoreProvider.notifier).upsert(vm.state);
+                      await ref.read(herdStoreProvider.notifier).upsert(vm.state);
+                      if (!context.mounted) return;
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(l10n.animalRegisteredSuccess)),

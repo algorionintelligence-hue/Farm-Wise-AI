@@ -8,10 +8,8 @@ import '../../breeding_dashboard/view/BreedingDashboard.dart';
 
 import '../../cost_form/view/CostInputsScreen.dart';
 import '../../herd_form/view/HerdStepperScreen.dart';
-import '../../health_events/view/AddHealthEventScreen.dart';
 import '../../ledger/view/AddLedgerEntryScreen.dart';
 import '../../revenue_form/view/RevenueInputsScreen.dart';
-import '../../vaccinations/view/AddVaccinationScreen.dart';
 import '../../working_capital/view/WorkingCapitalScreen.dart';
 import '../viewmodel/BottomNavViewModel.dart';
 
@@ -39,11 +37,6 @@ String addCostsLabel(AppLocalizations l10n) => l10n.addCosts;
 String feedVetLabel(AppLocalizations l10n) => l10n.feedVet;
 String workingCapitalLabel(AppLocalizations l10n) => l10n.workingCapital;
 String cashPayablesLabel(AppLocalizations l10n) => l10n.cashPayables;
-
-String healthEventsLabel(AppLocalizations l10n) => 'Health Events';
-String healthEventsSubtitle(AppLocalizations l10n) => 'Vet visits & treatments';
-String vaccinationsLabel(AppLocalizations l10n) => 'Vaccinations';
-String vaccinationsSubtitle(AppLocalizations l10n) => 'Record vaccines';
 String financialLedgerLabel(AppLocalizations l10n) => 'Financial Ledger';
 String financialLedgerSubtitle(AppLocalizations l10n) => 'Income & expense entry';
 
@@ -54,20 +47,6 @@ final options = <QuickAddOption>[
     icon: Icons.pets_rounded,
     color: Color(0xFF384A24),
     screen: HerdStepperScreen(),
-  ),
-  QuickAddOption(
-    label: healthEventsLabel,
-    subtitle: healthEventsSubtitle,
-    icon: Icons.health_and_safety_rounded,
-    color: Color(0xFF2E7D32),
-    screen: AddHealthEventScreen(),
-  ),
-  QuickAddOption(
-    label: vaccinationsLabel,
-    subtitle: vaccinationsSubtitle,
-    icon: Icons.vaccines_rounded,
-    color: Color(0xFF1565C0),
-    screen: AddVaccinationScreen(),
   ),
   QuickAddOption(
     label: addRevenueLabel,

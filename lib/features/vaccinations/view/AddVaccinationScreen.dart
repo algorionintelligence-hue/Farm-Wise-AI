@@ -6,6 +6,8 @@ import '../../../core/utils/sizes.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/PrimaryButton.dart';
 import '../../herd_form/widgets/DatePickerTile.dart';
+import '../model/vaccination_record.dart';
+import '../viewmodel/vaccination_store.dart';
 
 class AddVaccinationScreen extends ConsumerStatefulWidget {
   const AddVaccinationScreen({super.key});
@@ -138,7 +140,40 @@ class _AddVaccinationScreenState extends ConsumerState<AddVaccinationScreen> {
                   const SizedBox(height: sizes.spaceBtwSections),
                   PrimaryButton(
                     label: 'Save vaccination',
-                    onPressed: () {},
+                    onPressed: () async {
+                      final animalRef = _animalCtrl.text.trim();
+                      if (animalRef.isEmpty) {
+                        _showMessage('Please enter animal tag or ID.');
+                        return;
+                      }
+                      if (_vaccineNameCtrl.text.trim().isEmpty) {
+                        _showMessage('Please enter vaccine name.');
+                        return;
+                      }
+                      if (_dateGiven == null) {
+                        _showMessage('Please select date given.');
+                        return;
+                      }
+
+                      final record = VaccinationRecord(
+                        id: DateTime.now().microsecondsSinceEpoch.toString(),
+                        animalRef: animalRef,
+                        vaccineName: _vaccineNameCtrl.text.trim(),
+                        dateGiven: _dateGiven!,
+                        nextDueDate: _nextDueDate,
+                        cost: double.tryParse(_costCtrl.text.trim()) ?? 0,
+                        batchNumber: _batchCtrl.text.trim(),
+                      );
+
+                      await ref.read(vaccinationStoreProvider.notifier).add(record);
+                      if (!context.mounted) return;
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Vaccination saved offline.'),
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(height: sizes.defaultSpace),
                 ],
@@ -147,6 +182,12 @@ class _AddVaccinationScreenState extends ConsumerState<AddVaccinationScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
     );
   }
 }

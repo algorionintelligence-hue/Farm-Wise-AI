@@ -1,8 +1,11 @@
 import 'package:farm_wise_ai/features/ai/view/AiQnaScreen.dart';
+import 'package:farm_wise_ai/features/animal_profile/view/AnimalDirectoryScreen.dart';
 import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
 import 'package:farm_wise_ai/features/cost_form/view/CostInputsScreen.dart';
+import 'package:farm_wise_ai/features/health_events/view/AddHealthEventScreen.dart';
 import 'package:farm_wise_ai/features/report_&_pdf_export/view/ReportPdfExportScreen.dart';
 import 'package:farm_wise_ai/features/revenue_form/view/RevenueInputsScreen.dart';
+import 'package:farm_wise_ai/features/vaccinations/view/AddVaccinationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,6 +34,25 @@ class SideDrawer extends ConsumerWidget {
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: sizes.md),
               children: [
+                _DrawerItem(
+                  icon: const Icon(
+                    Icons.list_alt_rounded,
+                    size: sizes.iconMdLg,
+                    color: UColors.colorPrimary,
+                  ),
+                  label: 'All Animals',
+                  isSelected: selectedItem == 'All Animals',
+                  onTap: () {
+                    ref.read(selectedDrawerItemProvider.notifier).state = 'All Animals';
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AnimalDirectoryScreen(),
+                      ),
+                    );
+                  },
+                ),
                 _DrawerItem(
                   icon: Image.asset(
                     'lib/core/assets/icons/scenario.png',
@@ -86,6 +108,44 @@ class SideDrawer extends ConsumerWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => const ReportpdfExportscreen(),
+                      ),
+                    );
+                  },
+                ),
+                _DrawerItem(
+                  icon: const Icon(
+                    Icons.health_and_safety_rounded,
+                    size: sizes.iconMdLg,
+                    color: UColors.colorPrimary,
+                  ),
+                  label: 'Health Events',
+                  isSelected: selectedItem == 'Health Events',
+                  onTap: () {
+                    ref.read(selectedDrawerItemProvider.notifier).state = 'Health Events';
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddHealthEventScreen(),
+                      ),
+                    );
+                  },
+                ),
+                _DrawerItem(
+                  icon: const Icon(
+                    Icons.vaccines_rounded,
+                    size: sizes.iconMdLg,
+                    color: UColors.colorPrimary,
+                  ),
+                  label: 'Vaccinations',
+                  isSelected: selectedItem == 'Vaccinations',
+                  onTap: () {
+                    ref.read(selectedDrawerItemProvider.notifier).state = 'Vaccinations';
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddVaccinationScreen(),
                       ),
                     );
                   },

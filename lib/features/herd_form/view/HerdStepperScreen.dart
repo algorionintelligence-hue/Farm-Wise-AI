@@ -55,7 +55,7 @@ class HerdStepperScreen extends ConsumerWidget {
                   const SizedBox(height: sizes.spaceBtwSections),
                   PrimaryButton(
                     label: buttonLabel,
-                    onPressed: () {
+                    onPressed: () async {
                       final validationError = vm.validateAnimalInfoStep();
                       if (validationError != null) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -74,9 +74,10 @@ class HerdStepperScreen extends ConsumerWidget {
 
                       // Save animal
                       vm.save();
-                      ref.read(herdStoreProvider.notifier).upsert(vm.state);
+                      await ref.read(herdStoreProvider.notifier).upsert(vm.state);
 
                       // Navigation Logic
+                      if (!context.mounted) return;
                       if (vm.isLactatingFemale) {
                         Navigator.pushReplacement(
                           context,

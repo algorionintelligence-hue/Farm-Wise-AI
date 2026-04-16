@@ -278,7 +278,7 @@ class _BreedingEntryScreenState extends ConsumerState<BreedingEntryScreen> {
             PrimaryButton(
               label:
                   widget.continueToProduction ? l10n.continueButton : l10n.save,
-              onPressed: () {
+              onPressed: () async {
                 if (_serviceType == null || _serviceType!.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -301,7 +301,8 @@ class _BreedingEntryScreenState extends ConsumerState<BreedingEntryScreen> {
                 vm.calvingDate = _expectedCalvingDate;
                 vm.refreshDates();
                 vm.save();
-                ref.read(herdStoreProvider.notifier).upsert(vm.state);
+                await ref.read(herdStoreProvider.notifier).upsert(vm.state);
+                if (!context.mounted) return;
 
                 if (widget.continueToProduction) {
                   Navigator.pushReplacement(

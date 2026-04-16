@@ -7,6 +7,8 @@ import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/PrimaryButton.dart';
 import '../../herd_form/widgets/CustomInput.dart';
 import '../../herd_form/widgets/DatePickerTile.dart';
+import '../model/health_event_record.dart';
+import '../viewmodel/health_event_store.dart';
 
 class AddHealthEventScreen extends ConsumerStatefulWidget {
   const AddHealthEventScreen({super.key});
@@ -146,7 +148,43 @@ class _AddHealthEventScreenState extends ConsumerState<AddHealthEventScreen> {
                   const SizedBox(height: sizes.spaceBtwSections),
                   PrimaryButton(
                     label: 'Save health event',
-                    onPressed: () {},
+                    onPressed: () async {
+                      final animalRef = _animalCtrl.text.trim();
+                      if (animalRef.isEmpty) {
+                        _showMessage('Please enter animal tag or ID.');
+                        return;
+                      }
+                      if (_eventDate == null) {
+                        _showMessage('Please select event date.');
+                        return;
+                      }
+                      if (_eventType == null || _eventType!.trim().isEmpty) {
+                        _showMessage('Please select event type.');
+                        return;
+                      }
+
+                      final record = HealthEventRecord(
+                        id: DateTime.now().microsecondsSinceEpoch.toString(),
+                        animalRef: animalRef,
+                        eventDate: _eventDate!,
+                        eventType: _eventType!.trim(),
+                        diagnosis: _diagnosisCtrl.text.trim(),
+                        vetName: _vetNameCtrl.text.trim(),
+                        vetFee: double.tryParse(_vetFeeCtrl.text.trim()) ?? 0,
+                        medicineCost:
+                            double.tryParse(_medicineCostCtrl.text.trim()) ?? 0,
+                        notes: _notesCtrl.text.trim(),
+                      );
+
+                      await ref.read(healthEventStoreProvider.notifier).add(record);
+                      if (!context.mounted) return;
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Health event saved offline.'),
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(height: sizes.defaultSpace),
                 ],
@@ -155,6 +193,12 @@ class _AddHealthEventScreenState extends ConsumerState<AddHealthEventScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
     );
   }
 }
