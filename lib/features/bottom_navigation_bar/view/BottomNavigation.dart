@@ -8,7 +8,10 @@ import '../../breeding_dashboard/view/BreedingDashboard.dart';
 
 import '../../cost_form/view/CostInputsScreen.dart';
 import '../../herd_form/view/HerdStepperScreen.dart';
+import '../../health_events/view/AddHealthEventScreen.dart';
+import '../../ledger/view/AddLedgerEntryScreen.dart';
 import '../../revenue_form/view/RevenueInputsScreen.dart';
+import '../../vaccinations/view/AddVaccinationScreen.dart';
 import '../../working_capital/view/WorkingCapitalScreen.dart';
 import '../viewmodel/BottomNavViewModel.dart';
 
@@ -37,6 +40,13 @@ String feedVetLabel(AppLocalizations l10n) => l10n.feedVet;
 String workingCapitalLabel(AppLocalizations l10n) => l10n.workingCapital;
 String cashPayablesLabel(AppLocalizations l10n) => l10n.cashPayables;
 
+String healthEventsLabel(AppLocalizations l10n) => 'Health Events';
+String healthEventsSubtitle(AppLocalizations l10n) => 'Vet visits & treatments';
+String vaccinationsLabel(AppLocalizations l10n) => 'Vaccinations';
+String vaccinationsSubtitle(AppLocalizations l10n) => 'Record vaccines';
+String financialLedgerLabel(AppLocalizations l10n) => 'Financial Ledger';
+String financialLedgerSubtitle(AppLocalizations l10n) => 'Income & expense entry';
+
 final options = <QuickAddOption>[
   QuickAddOption(
     label: addAnimalLabel,
@@ -46,18 +56,39 @@ final options = <QuickAddOption>[
     screen: HerdStepperScreen(),
   ),
   QuickAddOption(
+    label: healthEventsLabel,
+    subtitle: healthEventsSubtitle,
+    icon: Icons.health_and_safety_rounded,
+    color: Color(0xFF2E7D32),
+    screen: AddHealthEventScreen(),
+  ),
+  QuickAddOption(
+    label: vaccinationsLabel,
+    subtitle: vaccinationsSubtitle,
+    icon: Icons.vaccines_rounded,
+    color: Color(0xFF1565C0),
+    screen: AddVaccinationScreen(),
+  ),
+  QuickAddOption(
     label: addRevenueLabel,
     subtitle: milkSalesLabel,
     icon: Icons.trending_up_rounded,
-    color: Color(0xFF2E7D32),
+    color: Color(0xFF0F766E),
     screen: RevenueInputsScreen(),
   ),
   QuickAddOption(
     label: addCostsLabel,
     subtitle: feedVetLabel,
     icon: Icons.receipt_long_rounded,
-    color: Color(0xFF1565C0),
+    color: Color(0xFF7C3AED),
     screen: CostInputsScreen(),
+  ),
+  QuickAddOption(
+    label: financialLedgerLabel,
+    subtitle: financialLedgerSubtitle,
+    icon: Icons.account_balance_wallet_rounded,
+    color: Color(0xFFB45309),
+    screen: AddLedgerEntryScreen(),
   ),
   QuickAddOption(
     label: workingCapitalLabel,
