@@ -7,6 +7,8 @@ import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/PrimaryButton.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../breeding_form/view/BreedingEntryScreen.dart';
+import '../../health_events/view/AddHealthEventScreen.dart';
+import '../../vaccinations/view/AddVaccinationScreen.dart';
 import '../viewmodel/herd_viewmodel.dart';
 import '../widgets/AnimalInfoStep.dart';
 import '../../herd_store/herd_store.dart';
@@ -76,30 +78,36 @@ class HerdStepperScreen extends ConsumerWidget {
                       vm.save();
                       await ref.read(herdStoreProvider.notifier).upsert(vm.state);
 
-                      // Navigation Logic
-                      if (!context.mounted) return;
+                      // Decide next step based on animal data
+                      final animalRef = (vm.state.tagNumber?.trim().isNotEmpty == true)
+                          ? vm.state.tagNumber!.trim()
+                          : (vm.state.animalId?.trim().isNotEmpty == true
+                              ? vm.state.animalId!.trim()
+                              : null);
+
+                      WidgetBuilder? nextRoute;
                       if (vm.isLactatingFemale) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const BreedingEntryScreen(
+                        nextRoute = (_) => const BreedingEntryScreen(
                               continueToProduction: true,
+                            );
+                      } else if (vm.isBreedableFemaleOnly) {
+                        nextRoute = (_) => const BreedingEntryScreen();
+                      }
+
+                      if (!context.mounted) return;
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AddHealthEventScreen(
+                            initialAnimalRef: animalRef,
+                            nextScreenBuilder: (_) => AddVaccinationScreen(
+                              initialAnimalRef: animalRef,
+                              nextScreenBuilder: nextRoute,
                             ),
                           ),
-                        );
-                      } else if (vm.isBreedableFemaleOnly) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const BreedingEntryScreen()),
-                        );
-                      } else {
-                        // 3. Non-Breedable -> Back to Dashboard
-                        Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(l10n.animalRegisteredSuccess)),
-                        );
-                      }
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(height: sizes.defaultSpace),

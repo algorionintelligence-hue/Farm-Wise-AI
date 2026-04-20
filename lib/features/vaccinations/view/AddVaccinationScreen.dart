@@ -10,7 +10,14 @@ import '../model/vaccination_record.dart';
 import '../viewmodel/vaccination_store.dart';
 
 class AddVaccinationScreen extends ConsumerStatefulWidget {
-  const AddVaccinationScreen({super.key});
+  const AddVaccinationScreen({
+    super.key,
+    this.initialAnimalRef,
+    this.nextScreenBuilder,
+  });
+
+  final String? initialAnimalRef;
+  final WidgetBuilder? nextScreenBuilder;
 
   @override
   ConsumerState<AddVaccinationScreen> createState() => _AddVaccinationScreenState();
@@ -24,6 +31,14 @@ class _AddVaccinationScreenState extends ConsumerState<AddVaccinationScreen> {
 
   DateTime? _dateGiven;
   DateTime? _nextDueDate;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialAnimalRef != null && widget.initialAnimalRef!.isNotEmpty) {
+      _animalCtrl.text = widget.initialAnimalRef!;
+    }
+  }
 
   @override
   void dispose() {
@@ -167,12 +182,24 @@ class _AddVaccinationScreenState extends ConsumerState<AddVaccinationScreen> {
 
                       await ref.read(vaccinationStoreProvider.notifier).add(record);
                       if (!context.mounted) return;
-                      Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Vaccination saved offline.'),
-                        ),
-                      );
+                      if (widget.nextScreenBuilder != null) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: widget.nextScreenBuilder!),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Vaccination saved.'),
+                          ),
+                        );
+                      } else {
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Vaccination saved offline.'),
+                          ),
+                        );
+                      }
                     },
                   ),
                   const SizedBox(height: sizes.defaultSpace),

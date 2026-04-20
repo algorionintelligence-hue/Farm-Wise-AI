@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import '../../features/herd_form/model/herd.dart';
 import '../../features/health_events/model/health_event_record.dart';
 import '../../features/vaccinations/model/vaccination_record.dart';
+import '../../features/revenue_form/model/revenue_record.dart';
 
 class AppDatabase {
   AppDatabase._();
@@ -24,7 +25,7 @@ class AppDatabase {
 
     return openDatabase(
       path,
-      version: 2,
+      version: 4,
       onCreate: (db, version) async {
         await _createSchema(db);
       },
@@ -32,6 +33,12 @@ class AppDatabase {
         if (oldVersion < 2) {
           await _createHealthEventsTable(db);
           await _createVaccinationsTable(db);
+        }
+        if (oldVersion < 3) {
+          await _createRevenuesTable(db);
+        }
+        if (oldVersion < 4) {
+          await _addHerdRecordColumnsV4(db);
         }
       },
     );
@@ -43,6 +50,8 @@ class AppDatabase {
         record_key TEXT PRIMARY KEY,
         tag_number TEXT,
         animal_id TEXT,
+        animal_name TEXT,
+        animal_image_path TEXT,
         category TEXT,
         gender TEXT,
         stage TEXT,
@@ -66,6 +75,7 @@ class AppDatabase {
     ''');
     await _createHealthEventsTable(db);
     await _createVaccinationsTable(db);
+    await _createRevenuesTable(db);
   }
 
   Future<void> _createHealthEventsTable(Database db) async {
@@ -96,6 +106,27 @@ class AppDatabase {
         batch_number TEXT
       )
     ''');
+  }
+
+  Future<void> _createRevenuesTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS revenues (
+        id TEXT PRIMARY KEY,
+        animal_ref TEXT NOT NULL,
+        revenue_date TEXT NOT NULL,
+        revenue_type TEXT NOT NULL,
+        quantity REAL NOT NULL,
+        unit_price REAL NOT NULL,
+        commission REAL NOT NULL DEFAULT 0,
+        net_amount REAL NOT NULL,
+        notes TEXT
+      )
+    ''');
+  }
+
+  Future<void> _addHerdRecordColumnsV4(Database db) async {
+    await db.execute('ALTER TABLE herd_records ADD COLUMN animal_name TEXT');
+    await db.execute('ALTER TABLE herd_records ADD COLUMN animal_image_path TEXT');
   }
 
   Future<List<HerdInputModel>> fetchHerdRecords() async {
@@ -152,6 +183,47 @@ class AppDatabase {
       'vaccinations',
       record.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<RevenueRecord>?> fetchRevenues() async {
+    try {
+      final db = await database;
+      final rows = await db.query(
+        'revenues',
+        orderBy: 'revenue_date DESC',
+      );
+      return rows.map(RevenueRecord.fromMap).toList();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<void> insertRevenue(RevenueRecord record) async {
+    final db = await database;
+    await db.insert(
+      'revenues',
+      record.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> updateRevenue(RevenueRecord record) async {
+    final db = await database;
+    await db.update(
+      'revenues',
+      record.toMap(),
+      where: 'id = ?',
+      whereArgs: [record.id],
+    );
+  }
+
+  Future<void> deleteRevenue(String id) async {
+    final db = await database;
+    await db.delete(
+      'revenues',
+      where: 'id = ?',
+      whereArgs: [id],
     );
   }
 }

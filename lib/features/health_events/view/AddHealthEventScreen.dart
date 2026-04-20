@@ -11,7 +11,14 @@ import '../model/health_event_record.dart';
 import '../viewmodel/health_event_store.dart';
 
 class AddHealthEventScreen extends ConsumerStatefulWidget {
-  const AddHealthEventScreen({super.key});
+  const AddHealthEventScreen({
+    super.key,
+    this.initialAnimalRef,
+    this.nextScreenBuilder,
+  });
+
+  final String? initialAnimalRef;
+  final WidgetBuilder? nextScreenBuilder;
 
   @override
   ConsumerState<AddHealthEventScreen> createState() => _AddHealthEventScreenState();
@@ -27,6 +34,14 @@ class _AddHealthEventScreenState extends ConsumerState<AddHealthEventScreen> {
 
   DateTime? _eventDate;
   String? _eventType;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialAnimalRef != null && widget.initialAnimalRef!.isNotEmpty) {
+      _animalCtrl.text = widget.initialAnimalRef!;
+    }
+  }
 
   @override
   void dispose() {
@@ -178,12 +193,24 @@ class _AddHealthEventScreenState extends ConsumerState<AddHealthEventScreen> {
 
                       await ref.read(healthEventStoreProvider.notifier).add(record);
                       if (!context.mounted) return;
-                      Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Health event saved offline.'),
-                        ),
-                      );
+                      if (widget.nextScreenBuilder != null) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: widget.nextScreenBuilder!),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Health event saved.'),
+                          ),
+                        );
+                      } else {
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Health event saved offline.'),
+                          ),
+                        );
+                      }
                     },
                   ),
                   const SizedBox(height: sizes.defaultSpace),

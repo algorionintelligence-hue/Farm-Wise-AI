@@ -9,6 +9,7 @@ import '../../herd_form/viewmodel/herd_viewmodel.dart';
 import '../../herd_store/herd_store.dart';
 import '../../health_events/viewmodel/health_event_store.dart';
 import '../../vaccinations/viewmodel/vaccination_store.dart';
+import '../../revenue_form/viewmodel/revenue_store.dart';
 
 enum AnimalProfileSection {
   health,
@@ -17,15 +18,75 @@ enum AnimalProfileSection {
   milk,
 }
 
-class AnimalDirectoryScreen extends ConsumerWidget {
+class AnimalDirectoryScreen extends ConsumerStatefulWidget {
   const AnimalDirectoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AnimalDirectoryScreen> createState() => _AnimalDirectoryScreenState();
+}
+
+class _AnimalDirectoryScreenState extends ConsumerState<AnimalDirectoryScreen> {
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
+  String _selectedFilter = 'All';
+
+  static const _filters = [
+    'All',
+    'Cow',
+    'Buffalo',
+    'Goat',
+    'Lactating',
+    'Pregnant',
+    'Dry',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(() {
+      setState(() {
+        _searchQuery = _searchController.text.trim().toLowerCase();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<HerdInputModel> _filterAnimals(List<HerdInputModel> animals) {
+    return animals.where((animal) {
+      final searchText = '${animal.tagNumber ?? ''} ${animal.animalId ?? ''} ${animal.category ?? ''} ${animal.breed ?? ''} ${animal.stage ?? ''}'.toLowerCase();
+      final matchesSearch = _searchQuery.isEmpty || searchText.contains(_searchQuery);
+      final matchesFilter = _selectedFilter == 'All' || _filterMatches(animal, _selectedFilter);
+      return matchesSearch && matchesFilter;
+    }).toList();
+  }
+
+  bool _filterMatches(HerdInputModel animal, String filter) {
+    switch (filter) {
+      case 'Cow':
+      case 'Buffalo':
+      case 'Goat':
+        return animal.category?.toLowerCase() == filter.toLowerCase();
+      case 'Lactating':
+      case 'Pregnant':
+      case 'Dry':
+        return animal.stage?.toLowerCase() == filter.toLowerCase();
+      default:
+        return true;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final readyState = ref.watch(herdStoreReadyProvider);
     final animals = ref.watch(herdStoreProvider);
     final sortedAnimals = [...animals]
       ..sort((a, b) => _animalTitle(a).compareTo(_animalTitle(b)));
+    final filteredAnimals = _filterAnimals(sortedAnimals);
 
     return AppScaffoldBgBasic(
       showBackButton: true,
@@ -49,15 +110,79 @@ class AnimalDirectoryScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: sizes.defaultSpace),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(sizes.md),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(sizes.cardRadiusLg),
+              border: Border.all(color: UColors.borderPrimary),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.03),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search by tag, breed, stage...',
+                    prefixIcon: const Icon(Icons.search, color: UColors.colorPrimary),
+                    filled: true,
+                    fillColor: UColors.inputBg,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: sizes.sm,
+                      horizontal: sizes.md,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
+                      borderSide: BorderSide(color: UColors.borderPrimary.withOpacity(0.5)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
+                      borderSide: BorderSide(color: UColors.borderPrimary.withOpacity(0.5)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: sizes.sm),
+                Wrap(
+                  spacing: sizes.sm,
+                  runSpacing: sizes.sm,
+                  children: _filters.map((filter) {
+                    final selected = filter == _selectedFilter;
+                    return ChoiceChip(
+                      label: Text(filter),
+                      selected: selected,
+                      onSelected: (_) => setState(() => _selectedFilter = filter),
+                      selectedColor: UColors.colorPrimary,
+                      backgroundColor: UColors.inputBg,
+                      labelStyle: TextStyle(
+                        color: selected ? Colors.white : UColors.textPrimary,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(sizes.borderRadiusMd),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: sizes.defaultSpace),
           Expanded(
             child: readyState.when(
-              data: (_) => sortedAnimals.isEmpty
+              data: (_) => filteredAnimals.isEmpty
                   ? const _EmptyAnimalsState()
                   : ListView.separated(
-                      itemCount: sortedAnimals.length,
+                      itemCount: filteredAnimals.length,
                       separatorBuilder: (_, __) => const SizedBox(height: sizes.sm),
                       itemBuilder: (context, index) {
-                        final animal = sortedAnimals[index];
+                        final animal = filteredAnimals[index];
                         return _AnimalTile(
                           animal: animal,
                           onTap: () {
@@ -83,7 +208,7 @@ class AnimalDirectoryScreen extends ConsumerWidget {
   }
 }
 
-class AnimalProfileHomeScreen extends StatefulWidget {
+class AnimalProfileHomeScreen extends ConsumerStatefulWidget {
   const AnimalProfileHomeScreen({
     super.key,
     required this.animal,
@@ -92,10 +217,10 @@ class AnimalProfileHomeScreen extends StatefulWidget {
   final HerdInputModel animal;
 
   @override
-  State<AnimalProfileHomeScreen> createState() => _AnimalProfileHomeScreenState();
+  ConsumerState<AnimalProfileHomeScreen> createState() => _AnimalProfileHomeScreenState();
 }
 
-class _AnimalProfileHomeScreenState extends State<AnimalProfileHomeScreen> {
+class _AnimalProfileHomeScreenState extends ConsumerState<AnimalProfileHomeScreen> {
   AnimalProfileSection selectedSection = AnimalProfileSection.health;
 
   bool get _showBreedingButton =>
@@ -113,6 +238,14 @@ class _AnimalProfileHomeScreenState extends State<AnimalProfileHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final animal = widget.animal;
+    final healthItems = ref.watch(healthEventStoreProvider);
+    final vaccinationItems = ref.watch(vaccinationStoreProvider);
+    final revenueItems = ref.watch(revenueStoreProvider);
+    final animalHealth = healthItems.where((e) => _matchesAnimalRef(animal, e.animalRef)).toList();
+    final animalVaccinations = vaccinationItems.where((e) => _matchesAnimalRef(animal, e.animalRef)).toList();
+    final animalRevenues = revenueItems.where((e) => _matchesAnimalRef(animal, e.animalRef)).toList();
+    final totalMedicalCost = animalHealth.fold<double>(0, (sum, item) => sum + item.totalCost);
+    final totalRevenue = animalRevenues.fold<double>(0, (sum, item) => sum + item.netAmount);
 
     return AppScaffoldBgBasic(
       showBackButton: true,
@@ -138,6 +271,26 @@ class _AnimalProfileHomeScreenState extends State<AnimalProfileHomeScreen> {
           ),
           const SizedBox(height: sizes.md),
           _ProfileSummaryCard(animal: animal),
+          const SizedBox(height: sizes.sm),
+          Wrap(
+            spacing: sizes.sm,
+            runSpacing: sizes.sm,
+            children: [
+              _SummaryChip(
+                label: 'Medical cost',
+                value: 'PKR ${totalMedicalCost.toStringAsFixed(0)}',
+              ),
+              _SummaryChip(
+                label: 'Vaccinations',
+                value: '${animalVaccinations.length}',
+              ),
+              if (totalRevenue > 0)
+                _SummaryChip(
+                  label: 'Revenue generated',
+                  value: 'PKR ${totalRevenue.toStringAsFixed(0)}',
+                ),
+            ],
+          ),
           const SizedBox(height: sizes.defaultSpace),
           Wrap(
             spacing: sizes.sm,
@@ -205,6 +358,15 @@ class _AnimalTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final title = animal.animalName?.trim().isNotEmpty == true
+        ? animal.animalName!
+        : _animalTitle(animal);
+    final subtitleParts = [
+      if ((animal.tagNumber ?? '').trim().isNotEmpty) 'Tag: ${animal.tagNumber}',
+      if ((animal.animalId ?? '').trim().isNotEmpty) 'ID: ${animal.animalId}',
+    ];
+    final subtitle = subtitleParts.isNotEmpty ? subtitleParts.join(' | ') : _animalSubtitle(animal);
+
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(sizes.cardRadiusLg),
@@ -227,15 +389,16 @@ class _AnimalTile extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: 56,
+                height: 56,
                 decoration: BoxDecoration(
-                  color: UColors.colorPrimary.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(sizes.borderRadiusMd),
+                  color: UColors.colorPrimary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 child: const Icon(
                   Icons.pets_rounded,
                   color: UColors.colorPrimary,
+                  size: sizes.iconMdLg,
                 ),
               ),
               const SizedBox(width: sizes.md),
@@ -244,7 +407,7 @@ class _AnimalTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _animalTitle(animal),
+                      title,
                       style: const TextStyle(
                         fontSize: sizes.fontSizeMd,
                         fontWeight: FontWeight.bold,
@@ -253,11 +416,24 @@ class _AnimalTile extends StatelessWidget {
                     ),
                     const SizedBox(height: sizes.xs),
                     Text(
-                      _animalSubtitle(animal),
+                      subtitle,
                       style: const TextStyle(
                         fontSize: sizes.fontSizeSm,
                         color: UColors.textSecondary,
                       ),
+                    ),
+                    const SizedBox(height: sizes.sm),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
+                      children: [
+                        if (animal.category != null && animal.category!.isNotEmpty)
+                          _StatusChip(label: animal.category!),
+                        if (animal.stage != null && animal.stage!.isNotEmpty)
+                          _StatusChip(label: _pretty(animal.stage)),
+                        if (animal.breed != null && animal.breed!.isNotEmpty)
+                          _StatusChip(label: animal.breed!),
+                      ],
                     ),
                   ],
                 ),
@@ -535,6 +711,37 @@ class _SummaryChip extends StatelessWidget {
   }
 }
 
+class _StatusChip extends StatelessWidget {
+  const _StatusChip({
+    required this.label,
+  });
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 6,
+      ),
+      decoration: BoxDecoration(
+        color: UColors.colorPrimary.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: UColors.colorPrimary.withOpacity(0.2)),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: sizes.fontSizeSm,
+          color: UColors.colorPrimary,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+}
+
 class _EmptyAnimalsState extends StatelessWidget {
   const _EmptyAnimalsState();
 
@@ -610,6 +817,9 @@ class _LoadErrorState extends StatelessWidget {
 }
 
 String _animalTitle(HerdInputModel animal) {
+  final name = animal.animalName?.trim();
+  if (name != null && name.isNotEmpty) return name;
+
   final primary = animal.tagNumber?.trim();
   if (primary != null && primary.isNotEmpty) return primary;
 

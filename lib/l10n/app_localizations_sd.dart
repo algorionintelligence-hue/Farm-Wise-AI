@@ -824,4 +824,19 @@ class AppLocalizationsSd extends AppLocalizations {
 
   @override
   String get dashboardPromptSubtitle => 'Back to main screen';
+
+  @override
+  String get animalNameLabel => 'جانور جو نالو';
+
+  @override
+  String get animalNameHint => 'مثال: راڻي، موتي';
+
+  @override
+  String get animalPhotoLabel => 'جانور جي تصوير';
+
+  @override
+  String get tapToUploadPhoto => 'تصوير اپلوڊ ڪرڻ لاءِ ٽئپ ڪريو';
+
+  @override
+  String get changePhoto => 'تصوير بدلايو';
 }

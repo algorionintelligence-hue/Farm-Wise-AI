@@ -831,4 +831,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dashboardPromptSubtitle => 'Back to main screen';
+
+  @override
+  String get animalNameLabel => 'Animal Name';
+
+  @override
+  String get animalNameHint => 'e.g. Rani, Moti';
+
+  @override
+  String get animalPhotoLabel => 'Animal Photo';
+
+  @override
+  String get tapToUploadPhoto => 'Tap to upload photo';
+
+  @override
+  String get changePhoto => 'Change Photo';
 }

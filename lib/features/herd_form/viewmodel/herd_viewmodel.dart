@@ -24,6 +24,7 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
 
   final tagNumberController = TextEditingController();
   final animalIdController = TextEditingController();
+  final animalNameController = TextEditingController();
   final weightController = TextEditingController();
   final avgMilkController = TextEditingController();
   final milkPriceController = TextEditingController();
@@ -39,6 +40,7 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
   String? stage;
   String? breed;
   String? entryType;
+  String? animalImagePath;
 
   DateTime? dateOfBirth;
   DateTime? serviceDate;
@@ -164,6 +166,11 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
     state = state.copyWith(dateOfBirth: dateOfBirth);
   }
 
+  void setAnimalImagePath(String? path) {
+    animalImagePath = path;
+    state = state.copyWith(animalImagePath: animalImagePath);
+  }
+
   String? validateAnimalInfoStep() {
     if (category == null || category!.isEmpty) {
       return 'Please select category.';
@@ -208,9 +215,20 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
   }
 
   void save() {
+    final generatedKey = tagNumberController.text.trim().isNotEmpty
+        ? tagNumberController.text.trim()
+        : animalIdController.text.trim().isNotEmpty
+            ? animalIdController.text.trim()
+            : DateTime.now().microsecondsSinceEpoch.toString();
+
     state = HerdInputModel(
+      recordKey: generatedKey,
       tagNumber: tagNumberController.text,
       animalId: animalIdController.text,
+      animalName: animalNameController.text.trim().isEmpty
+          ? null
+          : animalNameController.text.trim(),
+      animalImagePath: animalImagePath,
       category: category,
       gender: gender,
       stage: stage,
@@ -254,6 +272,7 @@ class HerdViewModel extends StateNotifier<HerdInputModel> {
   void dispose() {
     tagNumberController.dispose();
     animalIdController.dispose();
+    animalNameController.dispose();
     weightController.dispose();
     avgMilkController.dispose();
     milkPriceController.dispose();

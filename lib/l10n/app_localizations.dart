@@ -1683,6 +1683,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back to main screen'**
   String get dashboardPromptSubtitle;
+
+  /// No description provided for @animalNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal Name'**
+  String get animalNameLabel;
+
+  /// No description provided for @animalNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Rani, Moti'**
+  String get animalNameHint;
+
+  /// No description provided for @animalPhotoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal Photo'**
+  String get animalPhotoLabel;
+
+  /// No description provided for @tapToUploadPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to upload photo'**
+  String get tapToUploadPhoto;
+
+  /// No description provided for @changePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Photo'**
+  String get changePhoto;
 }
 
 class _AppLocalizationsDelegate

@@ -259,5 +259,10 @@
   "selectMotherCow": "ماءُ / ڳئون چونڊيو",
   "searchByTagNumber": "ٽيگ نمبر سان ڳوليو",
   "serviceDateAfterDobError": "سروس تاريخ هميشه پيدائش جي تاريخ کان پوءِ هجڻ گهرجي.",
-  "noFemaleAnimalsAvailable": "ڪا به مادي جانور موجود ناهي. مهرباني ڪري پهريان مادي جانور شامل ڪريو."
+  "noFemaleAnimalsAvailable": "ڪا به مادي جانور موجود ناهي. مهرباني ڪري پهريان مادي جانور شامل ڪريو.",
+  "animalNameLabel": "جانور جو نالو",
+  "animalNameHint": "مثال: راڻي، موتي",
+  "animalPhotoLabel": "جانور جي تصوير",
+  "tapToUploadPhoto": "تصوير اپلوڊ ڪرڻ لاءِ ٽئپ ڪريو",
+  "changePhoto": "تصوير بدلايو"
 }

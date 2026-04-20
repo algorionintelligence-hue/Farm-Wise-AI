@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/themes/app_colors.dart';
@@ -64,18 +65,19 @@ class AnimalInfoStep extends ConsumerWidget {
       l10n.stageOpen,
     ];
 
-    final stage = vm.stage;
-    final bool showBreeding = stage == StageKey.youngBull ||
-        stage == StageKey.bull ||
-        stage == StageKey.heifer ||
-        stage == StageKey.lactating ||
-        stage == StageKey.pregnant ||
-        stage == StageKey.dry ||
-        stage == StageKey.open;
-    final bool showPregnancy =
-        stage == StageKey.pregnant || stage == StageKey.dry;
-    final bool showMilk = stage == StageKey.lactating;
-    final bool serviceOnly = showBreeding && !showPregnancy;
+
+
+    Future<void> pickImage() async {
+      // final picker = ImagePicker();
+      // final picked = await picker.pickImage(
+      //   source: ImageSource.gallery,
+      //   imageQuality: 80,
+      //   maxWidth: 800,
+      // );
+      // if (picked != null) {
+      //   vm.setAnimalImagePath(picked.path);
+      // }
+    }
 
     return Padding(
       padding: const EdgeInsets.only(top: sizes.md),
@@ -86,6 +88,106 @@ class AnimalInfoStep extends ConsumerWidget {
             icon: Icons.pets_rounded,
             title: l10n.animalInfoStepTitle,
             children: [
+              // ── Animal Photo Upload ──
+              Text(
+                l10n.animalPhotoLabel,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: UColors.colorPrimary,
+                ),
+              ),
+              const SizedBox(height: sizes.xs),
+              GestureDetector(
+                onTap: pickImage,
+                child: Container(
+                  height: 140,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: UColors.inputBg,
+                    borderRadius: BorderRadius.circular(sizes.inputFieldRadius),
+                    border: Border.all(
+                      color: vm.animalImagePath != null
+                          ? UColors.colorPrimary
+                          : UColors.borderPrimary,
+                      width: vm.animalImagePath != null ? 1.5 : 1.0,
+                    ),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: vm.animalImagePath != null
+                      ? Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.file(
+                              File(vm.animalImagePath!),
+                              fit: BoxFit.cover,
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 6, horizontal: 12),
+                                color: Colors.black.withOpacity(0.45),
+                                child: Text(
+                                  l10n.changePhoto,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: UColors.colorPrimary.withOpacity(0.08),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.add_a_photo_rounded,
+                                color: UColors.colorPrimary,
+                                size: 28,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              l10n.tapToUploadPhoto,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: UColors.darkGrey,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
+              ),
+              // ── Tag Number ──
+              // CustomInput(
+              //   label: l10n.tagNumberLabel,
+              //   hintText: l10n.tagNumberHint,
+              //   controller: vm.tagNumberController,
+              // ),ok
+
+              const SizedBox(height: sizes.sm),
+
+              // ── Animal Name ──
+              CustomInput(
+                label: l10n.animalNameLabel,
+                hintText: l10n.animalNameHint,
+                controller: vm.animalNameController,
+              ),
+
+              // ── Category & Gender ──
               Row(
                 children: [
                   Expanded(
@@ -228,7 +330,6 @@ class AnimalInfoStep extends ConsumerWidget {
               ],
             ],
           ),
-
         ],
       ),
     );

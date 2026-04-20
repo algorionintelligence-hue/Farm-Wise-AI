@@ -827,4 +827,19 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get dashboardPromptSubtitle => 'Back to main screen';
+
+  @override
+  String get animalNameLabel => 'جانور کا نام';
+
+  @override
+  String get animalNameHint => 'مثلاً رانی، موتی';
+
+  @override
+  String get animalPhotoLabel => 'جانور کی تصویر';
+
+  @override
+  String get tapToUploadPhoto => 'تصویر اپلوڈ کرنے کے لیے ٹیپ کریں';
+
+  @override
+  String get changePhoto => 'تصویر تبدیل کریں';
 }

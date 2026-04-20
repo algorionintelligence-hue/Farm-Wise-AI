@@ -1,6 +1,9 @@
 class HerdInputModel {
+  final String recordKey;
   final String? tagNumber;
   final String? animalId;
+  final String? animalName;
+  final String? animalImagePath;
   final String? category;
   final String? gender;
   final String? stage;
@@ -23,8 +26,11 @@ class HerdInputModel {
 
   // ✅ Empty constructor — HerdViewModel() : super(HerdInputModel()) ke liye
   HerdInputModel({
+    this.recordKey = '',
     this.tagNumber,
     this.animalId,
+    this.animalName,
+    this.animalImagePath,
     this.category,
     this.gender,
     this.stage,
@@ -48,8 +54,11 @@ class HerdInputModel {
 
   // ✅ copyWith — refreshDates() ke liye zaroori
   HerdInputModel copyWith({
+    String? recordKey,
     String? tagNumber,
     String? animalId,
+    String? animalName,
+    String? animalImagePath,
     String? category,
     String? gender,
     String? stage,
@@ -71,8 +80,11 @@ class HerdInputModel {
     double? purchasePrice,
   }) {
     return HerdInputModel(
+      recordKey: recordKey ?? this.recordKey,
       tagNumber: tagNumber ?? this.tagNumber,
       animalId: animalId ?? this.animalId,
+      animalName: animalName ?? this.animalName,
+      animalImagePath: animalImagePath ?? this.animalImagePath,
       category: category ?? this.category,
       gender: gender ?? this.gender,
       stage: stage ?? this.stage,
@@ -95,21 +107,13 @@ class HerdInputModel {
     );
   }
 
-  String get recordKey {
-    final id = animalId?.trim();
-    if (id != null && id.isNotEmpty) return id;
-
-    final tag = tagNumber?.trim();
-    if (tag != null && tag.isNotEmpty) return tag;
-
-    return '';
-  }
-
   Map<String, Object?> toMap() {
     return {
       'record_key': recordKey,
       'tag_number': _cleanText(tagNumber),
       'animal_id': _cleanText(animalId),
+      'animal_name': _cleanText(animalName),
+      'animal_image_path': _cleanText(animalImagePath),
       'category': _cleanText(category),
       'gender': _cleanText(gender),
       'stage': _cleanText(stage),
@@ -134,8 +138,11 @@ class HerdInputModel {
 
   factory HerdInputModel.fromMap(Map<String, Object?> map) {
     return HerdInputModel(
+      recordKey: map['record_key'] as String? ?? '',
       tagNumber: map['tag_number'] as String?,
       animalId: map['animal_id'] as String?,
+      animalName: map['animal_name'] as String?,
+      animalImagePath: map['animal_image_path'] as String?,
       category: map['category'] as String?,
       gender: map['gender'] as String?,
       stage: map['stage'] as String?,
