@@ -33,10 +33,6 @@ String addAnimalLabel(AppLocalizations l10n) => l10n.registerAnimal;
 String addToHerdLabel(AppLocalizations l10n) => l10n.addToHerd;
 String addRevenueLabel(AppLocalizations l10n) => l10n.addRevenue;
 String milkSalesLabel(AppLocalizations l10n) => l10n.milkSales;
-String addCostsLabel(AppLocalizations l10n) => l10n.addCosts;
-String feedVetLabel(AppLocalizations l10n) => l10n.feedVet;
-String workingCapitalLabel(AppLocalizations l10n) => l10n.workingCapital;
-String cashPayablesLabel(AppLocalizations l10n) => l10n.cashPayables;
 String financialLedgerLabel(AppLocalizations l10n) => 'Financial Ledger';
 String financialLedgerSubtitle(AppLocalizations l10n) => 'Income & expense entry';
 
