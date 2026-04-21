@@ -56,25 +56,11 @@ final options = <QuickAddOption>[
     screen: RevenueInputsScreen(),
   ),
   QuickAddOption(
-    label: addCostsLabel,
-    subtitle: feedVetLabel,
-    icon: Icons.receipt_long_rounded,
-    color: Color(0xFF7C3AED),
-    screen: CostInputsScreen(),
-  ),
-  QuickAddOption(
     label: financialLedgerLabel,
     subtitle: financialLedgerSubtitle,
     icon: Icons.account_balance_wallet_rounded,
     color: Color(0xFFB45309),
     screen: AddLedgerEntryScreen(),
-  ),
-  QuickAddOption(
-    label: workingCapitalLabel,
-    subtitle: cashPayablesLabel,
-    icon: Icons.account_balance_outlined,
-    color: Color(0xFF6A1B9A),
-    screen: WorkingCapitalScreen(),
   ),
 ];
 
