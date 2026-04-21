@@ -2,9 +2,7 @@ import 'package:farm_wise_ai/features/ai/view/AiQnaScreen.dart';
 import 'package:farm_wise_ai/features/animal_profile/view/AnimalDirectoryScreen.dart';
 import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
 import 'package:farm_wise_ai/features/asset_form/view/AssetInputsScreen.dart';
-import 'package:farm_wise_ai/features/cost_form/view/CostInputsScreen.dart';
 import 'package:farm_wise_ai/features/health_events/view/AddHealthEventScreen.dart';
-import 'package:farm_wise_ai/features/inventory_form/view/InventoryInputsScreen.dart';
 import 'package:farm_wise_ai/features/report_&_pdf_export/view/ReportPdfExportScreen.dart';
 import 'package:farm_wise_ai/features/revenue_form/view/RevenueInputsScreen.dart';
 import 'package:farm_wise_ai/features/vaccinations/view/AddVaccinationScreen.dart';
@@ -152,44 +150,7 @@ class SideDrawer extends ConsumerWidget {
                     );
                   },
                 ),
-                _DrawerItem(
-                  icon: Image.asset(
-                    'lib/core/assets/icons/cost.png',
-                    width: sizes.iconMdLg,
-                    height: sizes.iconMdLg,
-                  ),
-                  label: l10n.costInput,
-                  isSelected: selectedItem == l10n.costInput,
-                  onTap: () {
-                    ref.read(selectedDrawerItemProvider.notifier).state = l10n.costInput;
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CostInputsScreen(),
-                      ),
-                    );
-                  },
-                ),
-                _DrawerItem(
-                  icon: Image.asset(
-                    'lib/core/assets/icons/inventory.png',
-                    width: sizes.iconMdLg,
-                    height: sizes.iconMdLg,
-                  ),
-                  label: l10n.inventory,
-                  isSelected: selectedItem == l10n.inventory,
-                  onTap: () {
-                    ref.read(selectedDrawerItemProvider.notifier).state = l10n.inventory;
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const InventoryInputsScreen(),
-                      ),
-                    );
-                  },
-                ),
+
                 _DrawerItem(
                   icon: const Icon(
                     Icons.precision_manufacturing_rounded,

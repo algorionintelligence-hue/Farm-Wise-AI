@@ -6,7 +6,6 @@ import '../../../core/utils/sizes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../breeding_dashboard/view/BreedingDashboard.dart';
 
-import '../../cost_form/view/CostInputsScreen.dart';
 import '../../herd_form/view/HerdStepperScreen.dart';
 import '../../ledger/view/AddLedgerEntryScreen.dart';
 import '../../revenue_form/view/RevenueInputsScreen.dart';
