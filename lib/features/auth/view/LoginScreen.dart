@@ -1,4 +1,5 @@
 import 'package:farm_wise_ai/features/auth/view/signUpScreen.dart';
+import 'package:farm_wise_ai/features/auth/view/ForgotPasswordScreen.dart';
 import 'package:farm_wise_ai/features/bottom_navigation_bar/view/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,19 +70,60 @@ class LoginScreen extends ConsumerWidget {
                   return null;
                 },
               ),
+              const VSpace(sizes.sm),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ForgotPasswordScreen(
+                          initialEmail: _emailController.text.trim(),
+                        ),
+                      ),
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: sizes.sm,
+                      vertical: 0,
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      color: UColors.linkColor,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
               const VSpace(sizes.spaceBtwSections),
               PrimaryButton(
                 label: l10n.continueButton,
                 isLoading: isLoading,
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    ref.read(loginLoadingProvider.notifier).state = true;
-                    await Future.delayed(const Duration(seconds: 2));
-                    ref.read(loginLoadingProvider.notifier).state = false;
-                    if (context.mounted) {
+                    final success = await ref
+                        .read(authViewModelProvider)
+                        .login(
+                          _emailController.text.trim(),
+                          _passwordController.text.trim(),
+                        );
+
+                    if (success && context.mounted) {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (_) => const BottomNavigation()),
+                      );
+                    } else if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Unable to log in. Please try again.'),
+                        ),
                       );
                     }
                   }

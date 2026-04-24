@@ -24,4 +24,6 @@ final chatProvider = StateNotifierProvider<ChatNotifier, List<ChatMessage>>(
 
 final loginLoadingProvider = StateProvider<bool>((ref) => false);
 final signupLoadingProvider = StateProvider<bool>((ref) => false);
+final forgotPasswordLoadingProvider = StateProvider<bool>((ref) => false);
+final resetPasswordLoadingProvider = StateProvider<bool>((ref) => false);
 final passwordVisibilityProvider = StateProvider<bool>((ref) => false);
