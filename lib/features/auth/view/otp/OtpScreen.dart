@@ -1,6 +1,6 @@
-import 'package:farm_wise_ai/features/auth/view/otp/widgets/otp_btn.dart' hide PrimaryButton;
+import 'package:farm_wise_ai/features/auth/view/otp/widgets/otp_btn.dart'
+    hide PrimaryButton;
 import 'package:farm_wise_ai/features/auth/view/otp/widgets/otp_input.dart';
-import 'package:farm_wise_ai/features/bottom_navigation_bar/view/BottomNavigation.dart';
 import 'package:farm_wise_ai/features/farm_registration/view/FarmRegistrationScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,18 +8,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../../core/utils/sizes.dart';
 import '../../../../core/providers/auth_providers.dart';
 import '../../../../core/themes/app_colors.dart';
-import '../../model/OtpModel.dart';
-
+import '../../../../core/utils/sizes.dart';
 import '../../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../../core/widgets/PrimaryButton.dart';
-
+import '../../model/OtpModel.dart';
 
 class OtpScreen extends ConsumerWidget {
-  final String email;
   const OtpScreen({super.key, required this.email});
+
+  final String email;
 
   void _showSuccessDialog(BuildContext context) {
     showDialog(
@@ -30,7 +29,11 @@ class OtpScreen extends ConsumerWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.check_circle, color: UColors.plantaGreen, size: 64),
+            const Icon(
+              Icons.check_circle,
+              color: UColors.plantaGreen,
+              size: 64,
+            ),
             const SizedBox(height: 16),
             const Text(
               'Verified!',
@@ -42,7 +45,7 @@ class OtpScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Your account has been successfully verified.',
+              'Your account has been successfully verified. Continue to farm registration.',
               textAlign: TextAlign.center,
               style: TextStyle(color: UColors.textSecondary),
             ),
@@ -50,14 +53,11 @@ class OtpScreen extends ConsumerWidget {
             PrimaryButton(
               label: 'Continue',
               onPressed: () {
-                Navigator.pop(context); // dialog band karo
-                // ✅ BottomNavigation screen pe jao — purani history hata do
+                Navigator.pop(context);
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) =>  FarmRegistrationScreen(), // apna class name yahan
-                  ),
-                      (route) => false, // back press pe login pe wapas na jaye
+                  MaterialPageRoute(builder: (_) => FarmRegistrationScreen()),
+                  (route) => false,
                 );
               },
             ),
@@ -84,7 +84,6 @@ class OtpScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Animation ──
             Center(
               child: Lottie.asset(
                 'lib/core/assets/animations/otp.json',
@@ -93,8 +92,6 @@ class OtpScreen extends ConsumerWidget {
               ),
             ),
             const VSpace(sizes.defaultSpace),
-
-            // ── Title ──
             const Text(
               'Verify Your Email',
               style: TextStyle(
@@ -104,8 +101,6 @@ class OtpScreen extends ConsumerWidget {
               ),
             ),
             const VSpace(sizes.sm),
-
-            // ── Subtitle ──
             RichText(
               text: TextSpan(
                 style: const TextStyle(
@@ -127,8 +122,6 @@ class OtpScreen extends ConsumerWidget {
               ),
             ),
             VSpace(sizes.spaceBtwSections),
-
-            // ── OTP Boxes ──
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(6, (index) {
@@ -149,67 +142,70 @@ class OtpScreen extends ConsumerWidget {
                 );
               }),
             ),
-
-            // ── Error ──
             if (otpState.errorMessage != null) ...[
               const VSpace(sizes.sm),
               Row(
                 children: [
-                  const Icon(Icons.error_outline, color: UColors.error, size: 16),
+                  const Icon(
+                    Icons.error_outline,
+                    color: UColors.error,
+                    size: 16,
+                  ),
                   const SizedBox(width: 6),
                   Text(
                     otpState.errorMessage!,
-                    style: const TextStyle(color: UColors.error, fontSize: 13),
+                    style: const TextStyle(
+                      color: UColors.error,
+                      fontSize: 13,
+                    ),
                   ),
                 ],
               ),
             ],
             const VSpace(sizes.spaceBtwSections),
-
-            // ── Verify Button ──
             PrimaryButton(
               label: 'Verify',
               isLoading: otpState.isLoading,
               onPressed: () {
                 final fullOtp = vm.controllers.map((c) => c.text).join();
                 vm.onOtpChanged(fullOtp);
-                vm.verifyOtp();
+                vm.verifyOtp(email);
               },
             ),
             const VSpace(sizes.spaceBtwSections),
-
-            // ── Resend ──
-
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     "Didn't receive the code? ",
-                    style: TextStyle(color: UColors.textSecondary, fontSize: 14),
-                  ),
-                  otpState.resendCountdown > 0
-                  // ✅ Show countdown — not tappable
-                      ? Text(
-                    'Resend in ${otpState.resendCountdown}s',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: UColors.textSecondary,
                       fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  )
-                  // ✅ Show tappable Resend when countdown done
-                      : GestureDetector(
-                    onTap: otpState.isLoading ? null : vm.resendOtp,
-                    child: const Text(
-                      'Resend',
-                      style: TextStyle(
-                        color: UColors.linkColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
                     ),
                   ),
+                  otpState.resendCountdown > 0
+                      ? Text(
+                          'Resend in ${otpState.resendCountdown}s',
+                          style: const TextStyle(
+                            color: UColors.textSecondary,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: otpState.isLoading
+                              ? null
+                              : () => vm.resendOtp(email),
+                          child: const Text(
+                            'Resend',
+                            style: TextStyle(
+                              color: UColors.linkColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -220,4 +216,3 @@ class OtpScreen extends ConsumerWidget {
     );
   }
 }
-

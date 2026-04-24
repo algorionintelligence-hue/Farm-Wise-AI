@@ -1,4 +1,3 @@
-import 'package:farm_wise_ai/features/farm_registration/view/FarmRegistrationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -165,10 +164,6 @@ class SignUpScreen extends ConsumerWidget {
 
                     if (success && context.mounted) {
                       Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => FarmRegistrationScreen()),
-                      );
-                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) => OtpScreen(email: _emailController.text.trim()),

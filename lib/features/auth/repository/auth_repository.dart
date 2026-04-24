@@ -1,21 +1,24 @@
-import 'package:dio/dio.dart';
-
-import '../../../core/network/network.dart';
+import '../../../data/network/base_api_services.dart';
+import '../../../data/network/network_api_services.dart';
+import '../../../core/network/app_url.dart';
 import '../model/forgot_password_result.dart';
 
 class AuthRepository {
-  AuthRepository({Dio? dio}) : _dio = dio ?? ApiConfig.createDio();
+  AuthRepository({BaseApiServices? apiServices})
+      : _apiServices = apiServices ?? NetworkApiServices();
 
-  final Dio _dio;
+  final BaseApiServices _apiServices;
 
-  // Login Logic
+  // ── Login ──
   Future<bool> login(String email, String password) async {
-    // Yahan actual API call hogi (e.g. Firebase ya Node.js)
-    await Future.delayed(const Duration(seconds: 2)); // Simulating network
-    return true; // Agar success ho
+    await _apiServices.postApi(
+      {'email': email, 'password': password},
+      AppUrl.loginUrl,
+    );
+    return true;
   }
 
-  // SignUp Logic
+  // ── SignUp ──
   Future<bool> signUp({
     required String firstName,
     required String lastName,
@@ -23,47 +26,98 @@ class AuthRepository {
     required String phone,
     required String password,
   }) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await _apiServices.postApi(
+      {
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'phoneNumber': phone,
+        'password': password,
+        'agreeToTerms': true,
+      },
+      AppUrl.signupUrl,
+    );
     return true;
   }
 
-  Future<ForgotPasswordResult> forgotPassword(String email) async {
-    if (ApiConfig.baseUrl.isEmpty) {
-      await Future.delayed(const Duration(seconds: 1));
-      return ForgotPasswordResult(
-        message: 'Reset request created. Enter userId and token to continue.',
-      );
-    }
-
-    final response = await _dio.post(
-      '/api/UserAuth/forgot-password',
-      data: {'email': email},
+  // ── Verify OTP ──
+  Future<bool> verifyOtp({
+    required String email,
+    required String otpCode,
+  }) async {
+    await _apiServices.postApi(
+      {'email': email, 'otpCode': otpCode},
+      AppUrl.verifyOtpUrl,
     );
-
-    return ForgotPasswordResult.fromResponse(response.data);
+    return true;
   }
 
+  // ── Resend OTP ──
+  Future<bool> resendOtp(String email) async {
+    await _apiServices.postApi(
+      {'email': email},
+      AppUrl.resendOtpUrl,
+    );
+    return true;
+  }
+
+  // ── Refresh Token ──
+  Future<bool> refreshToken(String token) async {
+    await _apiServices.postApi(
+      {'refreshToken': token},
+      AppUrl.refreshTokenUrl,
+    );
+    return true;
+  }
+
+  // ── Forgot Password ──
+  Future<ForgotPasswordResult> forgotPassword(String email) async {
+    final response = await _apiServices.postApi(
+      {'email': email},
+      AppUrl.forgotPasswordUrl,
+    );
+    return ForgotPasswordResult.fromResponse(response);
+  }
+
+  // ── Reset Password ──
   Future<bool> resetPassword({
     required String userId,
     required String token,
     required String newPassword,
     required String confirmPassword,
   }) async {
-    if (ApiConfig.baseUrl.isEmpty) {
-      await Future.delayed(const Duration(seconds: 1));
-      return true;
-    }
-
-    await _dio.post(
-      '/api/UserAuth/reset-password',
-      data: {
+    await _apiServices.postApi(
+      {
         'userId': userId,
         'token': token,
         'newPassword': newPassword,
         'confirmPassword': confirmPassword,
       },
+      AppUrl.resetPasswordUrl,
     );
+    return true;
+  }
 
+  // ── Change Password ──
+  Future<bool> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    await _apiServices.postApi(
+      {
+        'currentPassword': currentPassword,
+        'newPassword': newPassword,
+        'confirmPassword': confirmPassword,
+      },
+      AppUrl.changePasswordUrl,
+    );
+    return true;
+  }
+
+  // ── Logout ──
+  Future<bool> logout() async {
+    await _apiServices.postApi({}, AppUrl.logoutUrl);
     return true;
   }
 }

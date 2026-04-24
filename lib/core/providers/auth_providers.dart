@@ -15,7 +15,7 @@ final herdStepProvider = StateProvider<int>((ref) => 0);
 
 final authViewModelProvider = Provider((ref) => AuthViewModel(ref));
 final otpProvider = StateNotifierProvider<OtpViewModel, OtpModel>(
-  (ref) => OtpViewModel(),
+  (ref) => OtpViewModel(ref), // ✅ ref pass kiya — real API calls ke liye
 );
 
 final chatProvider = StateNotifierProvider<ChatNotifier, List<ChatMessage>>(

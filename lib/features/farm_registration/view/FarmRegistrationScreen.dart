@@ -1,7 +1,7 @@
 import 'package:farm_wise_ai/core/widgets/AddBtn.dart';
 import 'package:farm_wise_ai/core/widgets/DatePickerField.dart';
 import 'package:farm_wise_ai/core/widgets/DropDownField.dart';
-import 'package:farm_wise_ai/features/bottom_navigation_bar/view/BottomNavigation.dart';
+import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -171,10 +171,9 @@ class FarmRegistrationScreen extends ConsumerWidget {
               PrimaryButton(
                 label: l10n.registerFarm,
                 onPressed: () {
-                  Navigator.pop(context);
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (_) =>  const BottomNavigation()),
+                    MaterialPageRoute(builder: (_) => LoginScreen()),
                     (route) => false,
                   );
                 },
