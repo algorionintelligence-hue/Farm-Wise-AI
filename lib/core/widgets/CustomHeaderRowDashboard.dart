@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../../l10n/AppLocalizations.dart';
 import '../utils/sizes.dart';
 import '../themes/app_colors.dart';
 import 'language_switcher.dart';

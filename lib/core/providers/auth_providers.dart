@@ -1,13 +1,12 @@
-// lib/providers/auth_providers.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/ai/model/message_model.dart';
-import '../../features/ai/view/ChatNotifier.dart';
-import '../../features/auth/model/OtpModel.dart';
-import '../../features/auth/repository/auth_repository.dart';
-import '../../features/auth/viewmodel/otp_viewmodel.dart';
-import '../../features/auth/viewmodel/viewmodel.dart';
+import '../../features/Ai/model/ChatMessage.dart';
+import '../../features/Ai/view/ChatNotifier.dart';
+import '../../features/Auth/model/OtpModel.dart';
+import '../../features/Auth/repository/AuthRepository.dart';
+import '../../features/Auth/viewmodel/OtpViewmodel.dart';
+import '../../features/Auth/viewmodel/ViewModel.dart';
 
 final authRepositoryProvider = Provider((ref) => AuthRepository());
 final termsAcceptedProvider = StateProvider<bool>((ref) => false);

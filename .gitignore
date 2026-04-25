@@ -43,5 +43,5 @@ app.*.map.json
 /android/app/release
 
 # Ignore local herd form widgets
-lib/features/herd_form/widgets/FormDropdownField.dart
-lib/features/herd_form/widgets/FormSectionCard.dart
+lib/features/HerdForm/widgets/FormDropdownField.dart
+lib/features/HerdForm/widgets/FormSectionCard.dart

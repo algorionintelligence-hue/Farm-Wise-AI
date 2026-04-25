@@ -1,19 +1,20 @@
 import 'package:farm_wise_ai/features/ai/view/AiQnaScreen.dart';
-import 'package:farm_wise_ai/features/animal_profile/view/AnimalDirectoryScreen.dart';
 import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
-import 'package:farm_wise_ai/features/asset_form/view/AssetInputsScreen.dart';
-import 'package:farm_wise_ai/features/health_events/view/AddHealthEventScreen.dart';
-import 'package:farm_wise_ai/features/inventory_form/view/InventoryInputsScreen.dart';
-import 'package:farm_wise_ai/features/report_&_pdf_export/view/ReportPdfExportScreen.dart';
-import 'package:farm_wise_ai/features/revenue_form/view/RevenueInputsScreen.dart';
+
 import 'package:farm_wise_ai/features/vaccinations/view/AddVaccinationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/themes/app_colors.dart';
 import '../../../core/utils/sizes.dart';
-import '../../../l10n/app_localizations.dart';
-import '../../senario_simulator/view/SenarioSimulatorScreen.dart';
+import '../../../l10n/AppLocalizations.dart';
+import '../../AnimalProfile/view/AnimalDirectoryScreen.dart';
+import '../../AssetInputsScreen/view/AssetInputsScreen.dart';
+import '../../HealthEvents/view/AddHealthEventScreen.dart';
+import '../../InventoryForm/view/InventoryInputsScreen.dart';
+import '../../ReportPdfExport/view/ReportPdfExportScreen.dart';
+import '../../RevenueForm/view/RevenueInputsScreen.dart';
+import '../../SenarioSimulator/view/SenarioSimulatorScreen.dart';
 
 final selectedDrawerItemProvider = StateProvider<String?>((ref) => null);
 

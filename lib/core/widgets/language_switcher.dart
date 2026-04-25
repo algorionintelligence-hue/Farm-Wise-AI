@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../l10n/app_localizations.dart';
+import '../../l10n/AppLocalizations.dart';
 import '../providers/locale_provider.dart';
 import '../themes/app_colors.dart';
 import '../utils/sizes.dart';
