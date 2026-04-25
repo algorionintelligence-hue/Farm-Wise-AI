@@ -13,7 +13,7 @@ class AuthRepository {
   Future<bool> login(String email, String password) async {
     await _apiServices.postApi(
       {'email': email, 'password': password},
-      AppUrl.loginUrl,
+      AppUrl.LOGIN_URL,
     );
     return true;
   }
@@ -35,7 +35,7 @@ class AuthRepository {
         'password': password,
         'agreeToTerms': true,
       },
-      AppUrl.signupUrl,
+      AppUrl.SIGNUP_URL,
     );
     return true;
   }
@@ -47,7 +47,7 @@ class AuthRepository {
   }) async {
     await _apiServices.postApi(
       {'email': email, 'otpCode': otpCode},
-      AppUrl.verifyOtpUrl,
+      AppUrl.VERIFY_OTP_URL,
     );
     return true;
   }
@@ -56,7 +56,7 @@ class AuthRepository {
   Future<bool> resendOtp(String email) async {
     await _apiServices.postApi(
       {'email': email},
-      AppUrl.resendOtpUrl,
+      AppUrl.RESEND_OTP_URL,
     );
     return true;
   }
@@ -65,7 +65,7 @@ class AuthRepository {
   Future<bool> refreshToken(String token) async {
     await _apiServices.postApi(
       {'refreshToken': token},
-      AppUrl.refreshTokenUrl,
+      AppUrl.REFRESH_TOKEN_URL,
     );
     return true;
   }
@@ -74,7 +74,7 @@ class AuthRepository {
   Future<ForgotPasswordResult> forgotPassword(String email) async {
     final response = await _apiServices.postApi(
       {'email': email},
-      AppUrl.forgotPasswordUrl,
+      AppUrl.FORGOT_PASSWORD_URL,
     );
     return ForgotPasswordResult.fromResponse(response);
   }
@@ -93,7 +93,7 @@ class AuthRepository {
         'newPassword': newPassword,
         'confirmPassword': confirmPassword,
       },
-      AppUrl.resetPasswordUrl,
+      AppUrl.RESET_PASSWORD_URL,
     );
     return true;
   }
@@ -110,14 +110,14 @@ class AuthRepository {
         'newPassword': newPassword,
         'confirmPassword': confirmPassword,
       },
-      AppUrl.changePasswordUrl,
+      AppUrl.CHANGE_PASSWORD_URL,
     );
     return true;
   }
 
   // ── Logout ──
   Future<bool> logout() async {
-    await _apiServices.postApi({}, AppUrl.logoutUrl);
+    await _apiServices.postApi({}, AppUrl.LOGOUT_URL);
     return true;
   }
 }

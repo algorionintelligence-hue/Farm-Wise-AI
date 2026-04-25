@@ -5,47 +5,44 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
+import 'JwtTokenService.dart';
 import 'app_exceptions.dart';
 import 'base_api_services.dart';
 
 class NetworkApiServices extends BaseApiServices {
   static const Duration _timeout = Duration(seconds: 10);
 
-  @override
-  Future<dynamic> getApi(String url) async {
-    if (kDebugMode) {
-      print('GET: $url');
-    }
 
-    try {
-      final response = await http.get(Uri.parse(url)).timeout(_timeout);
-      return _returnResponse(response);
-    } on SocketException {
-      throw InternetException();
-    } on TimeoutException {
-      throw RequestTimeOut();
-    } on FormatException {
-      throw InvalidUrlException();
-    }
+  Map<String, String> _authHeaders() {
+    final token = JwtTokenService.getToken();
+
+    return {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
   }
 
+  // ─────────────────────────────
+  // PUBLIC HEADERS (NO JWT)
+  // ─────────────────────────────
+  Map<String, String> _publicHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+  }
+
+  // ─────────────────────────────
+  // GET (AUTH REQUIRED)
+  // ─────────────────────────────
   @override
-  Future<dynamic> postApi(dynamic data, String url) async {
-    if (kDebugMode) {
-      print('POST: $url');
-      print('BODY: ${jsonEncode(data)}');
-    }
+  Future<dynamic> getApi(String url) async {
+    if (kDebugMode) print('GET: $url');
 
     try {
       final response = await http
-          .post(
-            Uri.parse(url),
-            headers: const {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-            body: jsonEncode(data),
-          )
+          .get(Uri.parse(url), headers: _authHeaders())
           .timeout(_timeout);
 
       return _returnResponse(response);
@@ -58,20 +55,24 @@ class NetworkApiServices extends BaseApiServices {
     }
   }
 
+  // ─────────────────────────────
+  // POST (AUTH REQUIRED)
+  // ─────────────────────────────
   @override
-  Future<dynamic> deleteApi(String url) async {
+  Future<dynamic> postApi(dynamic data, String url) async {
     if (kDebugMode) {
-      print('DELETE: $url');
+      print('POST (AUTH): $url');
+      print('BODY: ${jsonEncode(data)}');
     }
 
     try {
-      final response = await http.delete(
+      final response = await http
+          .post(
         Uri.parse(url),
-        headers: const {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      ).timeout(_timeout);
+        headers: _authHeaders(),
+        body: jsonEncode(data),
+      )
+          .timeout(_timeout);
 
       return _returnResponse(response);
     } on SocketException {
@@ -83,35 +84,118 @@ class NetworkApiServices extends BaseApiServices {
     }
   }
 
+  // ─────────────────────────────
+  // PUBLIC POST (🔥 SIGNUP / LOGIN)
+  // ─────────────────────────────
+  Future<dynamic> postPublicApi(dynamic data, String url) async {
+    if (kDebugMode) {
+      print('POST (PUBLIC): $url');
+      print('BODY: ${jsonEncode(data)}');
+    }
+
+    try {
+      final response = await http
+          .post(
+        Uri.parse(url),
+        headers: _publicHeaders(),
+        body: jsonEncode(data),
+      )
+          .timeout(_timeout);
+
+      return _returnResponse(response);
+    } on SocketException {
+      throw InternetException();
+    } on TimeoutException {
+      throw RequestTimeOut();
+    } on FormatException {
+      throw InvalidUrlException();
+    }
+  }
+
+  // ─────────────────────────────
+  // DELETE (AUTH REQUIRED)
+  // ─────────────────────────────
+  @override
+  Future<dynamic> deleteApi(String url) async {
+    if (kDebugMode) print('DELETE: $url');
+
+    try {
+      final response = await http
+          .delete(Uri.parse(url), headers: _authHeaders())
+          .timeout(_timeout);
+
+      return _returnResponse(response);
+    } on SocketException {
+      throw InternetException();
+    } on TimeoutException {
+      throw RequestTimeOut();
+    } on FormatException {
+      throw InvalidUrlException();
+    }
+  }
+
+  // ─────────────────────────────
+  // RESPONSE HANDLER
+  // ─────────────────────────────
   dynamic _returnResponse(http.Response response) {
-    final responseBody = _decodeBody(response.body);
+    final body = _decodeBody(response.body);
 
     switch (response.statusCode) {
       case 200:
       case 201:
-        return responseBody;
+        return body;
+
       case 400:
       case 401:
       case 404:
-        return responseBody;
+        return body;
+
       case 500:
         throw ServerException();
+
       default:
         throw FetchDataException(
-          'Error occurred while communicating with server. Status code: ${response.statusCode}',
+          'Server error: ${response.statusCode}',
         );
     }
   }
 
+  // ─────────────────────────────
+  // SAFE JSON DECODER
+  // ─────────────────────────────
   dynamic _decodeBody(String body) {
-    if (body.isEmpty) {
-      return null;
-    }
+    if (body.isEmpty) return null;
 
     try {
       return jsonDecode(body);
     } catch (_) {
       return body;
+    }
+  }
+
+  @override
+  Future<dynamic> updateApi(data, String url) async {
+    if (kDebugMode) {
+      print('PUT: $url');
+      print('BODY: ${jsonEncode(data)}');
+    }
+
+    try {
+      final response = await http
+          .put(
+        Uri.parse(url),
+        headers: _authHeaders(),
+        body: jsonEncode(data),
+      )
+          .timeout(_timeout);
+
+      return _returnResponse(response);
+    } on SocketException {
+      throw InternetException();
+    } on TimeoutException {
+      throw RequestTimeOut();
+    } on FormatException {
+      throw InvalidUrlException();
     }
   }
 }

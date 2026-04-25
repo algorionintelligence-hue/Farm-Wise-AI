@@ -1,16 +1,19 @@
 class AppUrl {
   AppUrl._();
 
-  static const String baseUrl = 'http://farmwiseai.tech';
+  static const String BASE_URL = 'http://farmwiseai.tech';
 
   // ── Auth ──
-  static const String signupUrl         = '$baseUrl/api/UserAuth/signup';
-  static const String verifyOtpUrl      = '$baseUrl/api/UserAuth/VerifyOTP';
-  static const String resendOtpUrl      = '$baseUrl/api/UserAuth/resend-otp';
-  static const String loginUrl          = '$baseUrl/api/UserAuth/login';
-  static const String refreshTokenUrl   = '$baseUrl/api/UserAuth/refresh-token';
-  static const String forgotPasswordUrl = '$baseUrl/api/UserAuth/forgot-password';
-  static const String resetPasswordUrl  = '$baseUrl/api/UserAuth/reset-password';
-  static const String changePasswordUrl = '$baseUrl/api/UserAuth/change-password';
-  static const String logoutUrl         = '$baseUrl/api/UserAuth/logout';
+  static const String SIGNUP_URL         = '$BASE_URL/api/UserAuth/signup';
+  static const String VERIFY_OTP_URL      = '$BASE_URL/api/UserAuth/VerifyOTP';
+  static const String RESEND_OTP_URL      = '$BASE_URL/api/UserAuth/resend-otp';
+  static const String LOGIN_URL          = '$BASE_URL/api/UserAuth/login';
+  static const String REFRESH_TOKEN_URL   = '$BASE_URL/api/UserAuth/refresh-token';
+  static const String FORGOT_PASSWORD_URL = '$BASE_URL/api/UserAuth/forgot-password';
+  static const String RESET_PASSWORD_URL  = '$BASE_URL/api/UserAuth/reset-password';
+  static const String CHANGE_PASSWORD_URL = '$BASE_URL/api/UserAuth/change-password';
+  static const String LOGOUT_URL         = '$BASE_URL/api/UserAuth/logout';
+
+  static const String FARM_REGISTRATION_URL         = '$BASE_URL/api/FarmRegistration/FarmRegister';
+
 }
