@@ -1,5 +1,5 @@
-import '../../../data/network/base_api_services.dart';
-import '../../../data/network/network_api_services.dart';
+import '../../../core/network/base_api_services.dart';
+import '../../../core/network/network_api_services.dart';
 import '../../../core/network/app_url.dart';
 import '../model/forgot_password_result.dart';
 
