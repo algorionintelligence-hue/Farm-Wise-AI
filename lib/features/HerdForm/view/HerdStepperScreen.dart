@@ -9,7 +9,7 @@ import '../../../core/widgets/PrimaryButton.dart';
 import '../../BreedingForm/view/BreedingEntryScreen.dart';
 import '../../HealthEvents/view/AddHealthEventScreen.dart';
 import '../../HerdStore/HerdStore.dart';
-import '../../vaccinations/view/AddVaccinationScreen.dart';
+import '../../Vaccinations/view/AddVaccinationScreen.dart';
 import '../viewmodel/herd_viewmodel.dart';
 import '../widgets/AnimalInfoStep.dart';
 

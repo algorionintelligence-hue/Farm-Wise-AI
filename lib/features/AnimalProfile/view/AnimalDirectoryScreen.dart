@@ -10,7 +10,7 @@ import '../../HerdForm/model/herd.dart';
 import '../../HerdForm/viewmodel/herd_viewmodel.dart';
 import '../../HerdStore/HerdStore.dart';
 import '../../RevenueForm/viewmodel/revenue_store.dart';
-import '../../vaccinations/viewmodel/VaccinationRecordsNotifier.dart';
+import '../../Vaccinations/viewmodel/VaccinationRecordsNotifier.dart';
 
 enum AnimalProfileSection {
   health,

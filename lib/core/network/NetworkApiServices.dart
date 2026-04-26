@@ -6,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'JwtTokenService.dart';
-import 'app_exceptions.dart';
-import 'base_api_services.dart';
+import 'AppExceptions.dart';
+import 'BaseApiServices.dart';
 
 class NetworkApiServices extends BaseApiServices {
   static const Duration _timeout = Duration(seconds: 10);

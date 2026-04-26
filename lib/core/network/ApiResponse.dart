@@ -1,4 +1,4 @@
-import 'status.dart';
+import 'Status.dart';
 
 class ApiResponse<T> {
   ApiResponse(this.status, this.data, this.message);

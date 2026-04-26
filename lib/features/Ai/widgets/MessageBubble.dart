@@ -2,7 +2,7 @@
 // Message Bubble
 // ═══════════════════════════════════════════════
 
-import 'package:farm_wise_ai/features/ai/widgets/TypingIndicator.dart';
+import 'package:farm_wise_ai/features/Ai/widgets/TypingIndicator.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/sizes.dart';

@@ -31,14 +31,14 @@ class AppDatabase {
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
-          await _createHealthEventsTable(db);
-          await _createVaccinationsTable(db);
+          await createHealthEventsTable(db);
+          await createVaccinationsTable(db);
         }
         if (oldVersion < 3) {
-          await _createRevenuesTable(db);
+          await createRevenuesTable(db);
         }
         if (oldVersion < 4) {
-          await _addHerdRecordColumnsV4(db);
+          await addHerdRecordColumnsV4(db);
         }
       },
     );
@@ -73,12 +73,12 @@ class AppDatabase {
         purchase_price REAL
       )
     ''');
-    await _createHealthEventsTable(db);
-    await _createVaccinationsTable(db);
-    await _createRevenuesTable(db);
+    await createHealthEventsTable(db);
+    await createVaccinationsTable(db);
+    await createRevenuesTable(db);
   }
 
-  Future<void> _createHealthEventsTable(Database db) async {
+  Future<void> createHealthEventsTable(Database db) async {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS HealthEvents (
         id TEXT PRIMARY KEY,
@@ -94,7 +94,7 @@ class AppDatabase {
     ''');
   }
 
-  Future<void> _createVaccinationsTable(Database db) async {
+  Future<void> createVaccinationsTable(Database db) async {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS Vaccinations (
         id TEXT PRIMARY KEY,
@@ -108,7 +108,7 @@ class AppDatabase {
     ''');
   }
 
-  Future<void> _createRevenuesTable(Database db) async {
+  Future<void> createRevenuesTable(Database db) async {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS revenues (
         id TEXT PRIMARY KEY,
@@ -124,7 +124,7 @@ class AppDatabase {
     ''');
   }
 
-  Future<void> _addHerdRecordColumnsV4(Database db) async {
+  Future<void> addHerdRecordColumnsV4(Database db) async {
     await db.execute('ALTER TABLE herd_records ADD COLUMN animal_name TEXT');
     await db.execute('ALTER TABLE herd_records ADD COLUMN animal_image_path TEXT');
   }

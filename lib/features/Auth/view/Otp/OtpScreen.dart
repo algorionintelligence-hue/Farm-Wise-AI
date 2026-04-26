@@ -1,5 +1,5 @@
 
-import 'package:farm_wise_ai/features/auth/view/otp/widgets/OtpInputBox.dart';
+import 'package:farm_wise_ai/features/Auth/view/Otp/widgets/OtpInputBox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,7 +83,7 @@ class OtpScreen extends ConsumerWidget {
           children: [
             Center(
               child: Lottie.asset(
-                'lib/core/assets/animations/Otp.json',
+                'lib/core/assets/animations/otp.json',
                 height: 200,
                 fit: BoxFit.contain,
               ),

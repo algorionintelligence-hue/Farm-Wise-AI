@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
+import 'package:farm_wise_ai/features/Auth/view/LoginScreen.dart';
+import 'package:farm_wise_ai/features/BottomNavigationBar/view/BottomNavigation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/network/JwtTokenService.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../../l10n/AppLocalizations.dart';
 
@@ -72,19 +74,25 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) _textController.forward();
     });
 
-    Timer(const Duration(milliseconds: 3300), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) => LoginScreen(),
-            transitionsBuilder: (_, anim, __, child) =>
-                FadeTransition(opacity: anim, child: child),
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-        );
-      }
-    });
+    _routeAfterSplash();
+  }
+
+  Future<void> _routeAfterSplash() async {
+    await Future.delayed(const Duration(milliseconds: 3300));
+    final isLoggedIn = await JwtTokenService.hydrateSession();
+
+    if (!mounted) return;
+
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) =>
+            isLoggedIn ? const BottomNavigation() : LoginScreen(),
+        transitionsBuilder: (_, anim, __, child) =>
+            FadeTransition(opacity: anim, child: child),
+        transitionDuration: const Duration(milliseconds: 500),
+      ),
+    );
   }
 
   @override

@@ -153,8 +153,10 @@ class SignUpScreen extends ConsumerWidget {
                 label: l10n.createAccount,
                 isLoading: isLoading,
                 onPressed: () async {
+                  if (isLoading) return;
+
                   if (_formKey.currentState!.validate()) {
-                    final success = await ref.read(authViewModelProvider).signUp(
+                    final response = await ref.read(authViewModelProvider).signUp(
                           fName: _firstNameController.text.trim(),
                           lName: _lastNameController.text.trim(),
                           email: _emailController.text.trim(),
@@ -162,11 +164,21 @@ class SignUpScreen extends ConsumerWidget {
                           password: _passwordController.text.trim(),
                         );
 
-                    if (success && context.mounted) {
+                    if (response.success && context.mounted) {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (_) => OtpScreen(email: _emailController.text.trim()),
+                        ),
+                      );
+                    } else if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            response.message?.trim().isNotEmpty == true
+                                ? response.message!
+                                : 'Account create nahi hua ya OTP send nahi hua. Dobara try karein.',
+                          ),
                         ),
                       );
                     }

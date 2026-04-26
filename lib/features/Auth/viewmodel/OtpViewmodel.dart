@@ -4,6 +4,8 @@ import 'dart:async';
 
 import '../../../core/providers/auth_providers.dart';
 import '../model/OtpModel.dart';
+import '../model/VerifyOtpModel.dart';
+import '../model/ResendOtpModel.dart';
 
 class OtpViewModel extends StateNotifier<OtpModel> {
   OtpViewModel(this.ref) : super(const OtpModel()) {
@@ -53,11 +55,17 @@ class OtpViewModel extends StateNotifier<OtpModel> {
   }
 
   void clearBoxes() {
-    for (final c in controllers) c.clear();
+    for (final c in controllers) {
+      c.clear();
+    }
   }
 
-  // ── Verify OTP (Real API) ──
+  // ── Verify OTP ──
   Future<bool> verifyOtp(String email) async {
+    if (state.isLoading) {
+      return false;
+    }
+
     if (state.otp.length < 6) {
       state = state.copyWith(errorMessage: 'Please enter complete 6-digit OTP');
       return false;
@@ -67,12 +75,21 @@ class OtpViewModel extends StateNotifier<OtpModel> {
 
     try {
       final repository = ref.read(authRepositoryProvider);
-      final success = await repository.verifyOtp(
-        email: email,
-        otpCode: state.otp,
+      final response = await repository.verifyOtp(
+        VerifyOtpModel(email: email, otpCode: state.otp),
       );
-      state = state.copyWith(isLoading: false, isSuccess: success);
-      return success;
+
+      if (!response.success) {
+        state = state.copyWith(
+          isLoading: false,
+          isSuccess: false,
+          errorMessage: response.message ?? 'Invalid OTP. Please try again.',
+        );
+        return false;
+      }
+
+      state = state.copyWith(isLoading: false, isSuccess: response.success);
+      return response.success;
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
@@ -82,30 +99,47 @@ class OtpViewModel extends StateNotifier<OtpModel> {
     }
   }
 
-  // ── Resend OTP (Real API) ──
+  // ── Resend OTP ──
   Future<void> resendOtp(String email) async {
+    if (state.isLoading) {
+      return;
+    }
+
     clearBoxes();
     state = state.copyWith(isLoading: true, errorMessage: null, otp: '');
 
     try {
       final repository = ref.read(authRepositoryProvider);
-      await repository.resendOtp(email);
+      final response = await repository.resendOtp(ResendOtpModel(email: email));
+
+      if (!response.success) {
+        state = state.copyWith(
+          isLoading: false,
+          errorMessage: response.message ?? 'Failed to resend OTP. Please try again.',
+        );
+        return;
+      }
+
+      print('Resend OTP success: ${response.message}');
       state = state.copyWith(isLoading: false);
+      _startCountdown();
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
         errorMessage: 'Failed to resend OTP. Please try again.',
       );
     }
-
-    _startCountdown();
   }
 
   @override
   void dispose() {
     _timer?.cancel();
-    for (final c in controllers) c.dispose();
-    for (final f in focusNodes) f.dispose();
+    for (final c in controllers) {
+      c.dispose();
+    }
+    for (final f in focusNodes) {
+      f.dispose();
+    }
     super.dispose();
   }
 }

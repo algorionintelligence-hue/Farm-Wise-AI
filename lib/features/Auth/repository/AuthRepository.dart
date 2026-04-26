@@ -1,7 +1,15 @@
-import '../../../core/network/base_api_services.dart';
-import '../../../core/network/network_api_services.dart';
-import '../../../core/network/app_url.dart';
-import '../model/ForgotPasswordResult.dart';
+import '../../../core/network/BaseApiServices.dart';
+import '../../../core/network/NetworkApiServices.dart';
+import '../../../core/network/AppUrl.dart';
+import '../model/LoginModel.dart';
+import '../model/SignupModel.dart';
+import '../model/VerifyOtpModel.dart';
+import '../model/ResendOtpModel.dart';
+import '../model/RefreshTokenModel.dart';
+import '../model/ForgotPasswordModel.dart';
+import '../model/ResetPasswordModel.dart';
+import '../model/ChangePasswordModel.dart';
+import '../model/LogoutModel.dart';
 
 class AuthRepository {
   AuthRepository({BaseApiServices? apiServices})
@@ -9,115 +17,88 @@ class AuthRepository {
 
   final BaseApiServices _apiServices;
 
+  Future<dynamic> _postPublic(dynamic data, String url) async {
+    if (_apiServices is NetworkApiServices) {
+      return (_apiServices as NetworkApiServices).postPublicApi(data, url);
+    }
+    return _apiServices.postApi(data, url);
+  }
+
   // ── Login ──
-  Future<bool> login(String email, String password) async {
-    await _apiServices.postApi(
-      {'email': email, 'password': password},
-      AppUrl.LOGIN_URL,
-    );
-    return true;
+  Future<LoginResponse> login(LoginModel request) async {
+    final response = await _postPublic(request.toJson(), AppUrl.loginUrl);
+    return LoginResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── SignUp ──
-  Future<bool> signUp({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String phone,
-    required String password,
-  }) async {
-    await _apiServices.postApi(
-      {
-        'firstName': firstName,
-        'lastName': lastName,
-        'email': email,
-        'phoneNumber': phone,
-        'password': password,
-        'agreeToTerms': true,
-      },
-      AppUrl.SIGNUP_URL,
+  Future<SignupResponse> signUp(SignupModel request) async {
+    final response = await _postPublic(
+      request.toJson(),
+      AppUrl.signupUrl,
     );
-    return true;
+    return SignupResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Verify OTP ──
-  Future<bool> verifyOtp({
-    required String email,
-    required String otpCode,
-  }) async {
-    await _apiServices.postApi(
-      {'email': email, 'otpCode': otpCode},
-      AppUrl.VERIFY_OTP_URL,
+  Future<VerifyOtpResponse> verifyOtp(VerifyOtpModel request) async {
+    final response = await _postPublic(
+      request.toJson(),
+      AppUrl.verifyOtpUrl,
     );
-    return true;
+    return VerifyOtpResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Resend OTP ──
-  Future<bool> resendOtp(String email) async {
-    await _apiServices.postApi(
-      {'email': email},
-      AppUrl.RESEND_OTP_URL,
+  Future<ResendOtpResponse> resendOtp(ResendOtpModel request) async {
+    final response = await _postPublic(
+      request.toJson(),
+      AppUrl.resendOtpUrl,
     );
-    return true;
+    return ResendOtpResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Refresh Token ──
-  Future<bool> refreshToken(String token) async {
-    await _apiServices.postApi(
-      {'refreshToken': token},
-      AppUrl.REFRESH_TOKEN_URL,
+  Future<RefreshTokenResponse> refreshToken(RefreshTokenModel request) async {
+    final response = await _apiServices.postApi(
+      request.toJson(),
+      AppUrl.refreshTokenUrl,
     );
-    return true;
+    return RefreshTokenResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Forgot Password ──
-  Future<ForgotPasswordResult> forgotPassword(String email) async {
-    final response = await _apiServices.postApi(
-      {'email': email},
-      AppUrl.FORGOT_PASSWORD_URL,
+  Future<ForgotPasswordResponse> forgotPassword(ForgotPasswordModel request) async {
+    final response = await _postPublic(
+      request.toJson(),
+      AppUrl.forgotPasswordUrl,
     );
-    return ForgotPasswordResult.fromResponse(response);
+    return ForgotPasswordResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Reset Password ──
-  Future<bool> resetPassword({
-    required String userId,
-    required String token,
-    required String newPassword,
-    required String confirmPassword,
-  }) async {
-    await _apiServices.postApi(
-      {
-        'userId': userId,
-        'token': token,
-        'newPassword': newPassword,
-        'confirmPassword': confirmPassword,
-      },
-      AppUrl.RESET_PASSWORD_URL,
+  Future<ResetPasswordResponse> resetPassword(ResetPasswordModel request) async {
+    final response = await _postPublic(
+      request.toJson(),
+      AppUrl.resetPasswordUrl,
     );
-    return true;
+    return ResetPasswordResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Change Password ──
-  Future<bool> changePassword({
-    required String currentPassword,
-    required String newPassword,
-    required String confirmPassword,
-  }) async {
-    await _apiServices.postApi(
-      {
-        'currentPassword': currentPassword,
-        'newPassword': newPassword,
-        'confirmPassword': confirmPassword,
-      },
-      AppUrl.CHANGE_PASSWORD_URL,
+  Future<ChangePasswordResponse> changePassword(ChangePasswordModel request) async {
+    final response = await _apiServices.postApi(
+      request.toJson(),
+      AppUrl.changePasswordUrl,
     );
-    return true;
+    return ChangePasswordResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Logout ──
-  Future<bool> logout() async {
-    await _apiServices.postApi({}, AppUrl.LOGOUT_URL);
-    return true;
+  Future<LogoutResponse> logout(LogoutModel request) async {
+    final response = await _apiServices.postApi(
+      request.toJson(),
+      AppUrl.logoutUrl,
+    );
+    return LogoutResponse.fromJson(response as Map<String, dynamic>);
   }
 }

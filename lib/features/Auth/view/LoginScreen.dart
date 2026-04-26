@@ -1,5 +1,5 @@
-import 'package:farm_wise_ai/features/auth/view/signUpScreen.dart';
-import 'package:farm_wise_ai/features/auth/view/ForgotPasswordScreen.dart';
+import 'package:farm_wise_ai/features/Auth/view/signUpScreen.dart';
+import 'package:farm_wise_ai/features/Auth/view/ForgotPasswordScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -106,6 +106,8 @@ class LoginScreen extends ConsumerWidget {
                 label: l10n.continueButton,
                 isLoading: isLoading,
                 onPressed: () async {
+                  if (isLoading) return;
+
                   if (_formKey.currentState!.validate()) {
                     final success = await ref
                         .read(authViewModelProvider)

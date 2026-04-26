@@ -1,10 +1,13 @@
-import 'package:farm_wise_ai/features/ai/view/AiQnaScreen.dart';
-import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
+import 'dart:async';
 
-import 'package:farm_wise_ai/features/vaccinations/view/AddVaccinationScreen.dart';
+import 'package:farm_wise_ai/features/Ai/view/AiQnaScreen.dart';
+import 'package:farm_wise_ai/features/Auth/view/LoginScreen.dart';
+
+import 'package:farm_wise_ai/features/Vaccinations/view/AddVaccinationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/providers/auth_providers.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../../core/utils/sizes.dart';
 import '../../../l10n/AppLocalizations.dart';
@@ -218,14 +221,17 @@ class SideDrawer extends ConsumerWidget {
                   ),
                   label: l10n.logout,
                   isSelected: selectedItem == l10n.logout,
-                  onTap: () {
+                  onTap: () async {
                     ref.read(selectedDrawerItemProvider.notifier).state = l10n.logout;
                     Navigator.pop(context);
-                    Navigator.push(
+                    await ref.read(authViewModelProvider).logout();
+                    if (!context.mounted) return;
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                         builder: (context) => LoginScreen(),
                       ),
+                      (route) => false,
                     );
                   },
                 ),
@@ -292,7 +298,7 @@ class _DrawerItem extends StatelessWidget {
   final String label;
   final bool isSelected;
   final bool hasNotification;
-  final VoidCallback onTap;
+  final FutureOr<void> Function() onTap;
 
   const _DrawerItem({
     required this.icon,
@@ -311,7 +317,9 @@ class _DrawerItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(sizes.borderRadiusSm),
       ),
       child: ListTile(
-        onTap: onTap,
+        onTap: () {
+          onTap();
+        },
         leading: Stack(
           children: [
             icon,

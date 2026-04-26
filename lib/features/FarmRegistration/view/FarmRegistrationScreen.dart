@@ -1,7 +1,7 @@
 import 'package:farm_wise_ai/core/widgets/AddBtn.dart';
 import 'package:farm_wise_ai/core/widgets/DatePickerField.dart';
 import 'package:farm_wise_ai/core/widgets/DropDownField.dart';
-import 'package:farm_wise_ai/features/auth/view/LoginScreen.dart';
+import 'package:farm_wise_ai/features/Auth/view/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
