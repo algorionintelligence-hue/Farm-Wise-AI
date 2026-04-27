@@ -13,6 +13,7 @@ import '../../../core/widgets/PrimaryButton.dart';
 import '../../../core/widgets/SocialButton.dart';
 import '../../../l10n/AppLocalizations.dart';
 import '../../BottomNavigationBar/view/BottomNavigation.dart';
+import '../../FarmRegistration/view/FarmRegistrationScreen.dart';
 
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
@@ -119,7 +120,7 @@ class LoginScreen extends ConsumerWidget {
                     if (success && context.mounted) {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (_) => const BottomNavigation()),
+                        MaterialPageRoute(builder: (_) =>  FarmRegistrationScreen()),
                       );
                     } else if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(

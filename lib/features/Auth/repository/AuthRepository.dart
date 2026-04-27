@@ -26,7 +26,7 @@ class AuthRepository {
 
   // ── Login ──
   Future<LoginResponse> login(LoginModel request) async {
-    final response = await _postPublic(request.toJson(), AppUrl.loginUrl);
+    final response = await _postPublic(request.toJson(), AppUrl.LOGIN_URL);
     return LoginResponse.fromJson(response as Map<String, dynamic>);
   }
 
@@ -34,7 +34,7 @@ class AuthRepository {
   Future<SignupResponse> signUp(SignupModel request) async {
     final response = await _postPublic(
       request.toJson(),
-      AppUrl.signupUrl,
+      AppUrl.SIGNUP_URL,
     );
     return SignupResponse.fromJson(response as Map<String, dynamic>);
   }
@@ -43,7 +43,7 @@ class AuthRepository {
   Future<VerifyOtpResponse> verifyOtp(VerifyOtpModel request) async {
     final response = await _postPublic(
       request.toJson(),
-      AppUrl.verifyOtpUrl,
+      AppUrl.VERIFY_OTP_URL,
     );
     return VerifyOtpResponse.fromJson(response as Map<String, dynamic>);
   }
@@ -52,7 +52,7 @@ class AuthRepository {
   Future<ResendOtpResponse> resendOtp(ResendOtpModel request) async {
     final response = await _postPublic(
       request.toJson(),
-      AppUrl.resendOtpUrl,
+      AppUrl.RESEND_OTP_URL,
     );
     return ResendOtpResponse.fromJson(response as Map<String, dynamic>);
   }
@@ -61,7 +61,7 @@ class AuthRepository {
   Future<RefreshTokenResponse> refreshToken(RefreshTokenModel request) async {
     final response = await _apiServices.postApi(
       request.toJson(),
-      AppUrl.refreshTokenUrl,
+      AppUrl.REFRESH_TOKEN_URL,
     );
     return RefreshTokenResponse.fromJson(response as Map<String, dynamic>);
   }
@@ -70,7 +70,7 @@ class AuthRepository {
   Future<ForgotPasswordResponse> forgotPassword(ForgotPasswordModel request) async {
     final response = await _postPublic(
       request.toJson(),
-      AppUrl.forgotPasswordUrl,
+      AppUrl.FORGOT_PASSWORD_URL,
     );
     return ForgotPasswordResponse.fromJson(response as Map<String, dynamic>);
   }
@@ -79,7 +79,7 @@ class AuthRepository {
   Future<ResetPasswordResponse> resetPassword(ResetPasswordModel request) async {
     final response = await _postPublic(
       request.toJson(),
-      AppUrl.resetPasswordUrl,
+      AppUrl.RESET_PASSWORD_URL,
     );
     return ResetPasswordResponse.fromJson(response as Map<String, dynamic>);
   }
@@ -88,7 +88,7 @@ class AuthRepository {
   Future<ChangePasswordResponse> changePassword(ChangePasswordModel request) async {
     final response = await _apiServices.postApi(
       request.toJson(),
-      AppUrl.changePasswordUrl,
+      AppUrl.CHANGE_PASSWORD_URL,
     );
     return ChangePasswordResponse.fromJson(response as Map<String, dynamic>);
   }
@@ -97,7 +97,7 @@ class AuthRepository {
   Future<LogoutResponse> logout(LogoutModel request) async {
     final response = await _apiServices.postApi(
       request.toJson(),
-      AppUrl.logoutUrl,
+      AppUrl.LOGOUT_URL,
     );
     return LogoutResponse.fromJson(response as Map<String, dynamic>);
   }
