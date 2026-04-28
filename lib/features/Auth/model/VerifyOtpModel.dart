@@ -13,8 +13,15 @@ class VerifyOtpModel {
 class VerifyOtpResponse {
   final bool success;
   final String? message;
+  final String? userId;
+  final String? token;
 
-  const VerifyOtpResponse({required this.success, this.message});
+  const VerifyOtpResponse({
+    required this.success,
+    this.message,
+    this.userId,
+    this.token,
+  });
 
   factory VerifyOtpResponse.fromJson(Map<String, dynamic> json) {
     final payload = _asMap(json['data']) ?? _asMap(json['result']) ?? json;
@@ -24,6 +31,8 @@ class VerifyOtpResponse {
     return VerifyOtpResponse(
       success: _readBool(json, payload, message),
       message: message,
+      userId: _read(payload, ['userId', 'userID', 'UserId', 'UserID']),
+      token: _read(payload, ['token', 'Token', 'resetToken', 'ResetToken']),
     );
   }
 
@@ -63,5 +72,15 @@ class VerifyOtpResponse {
     return normalized.contains('verified') ||
         normalized.contains('successfully verified') ||
         normalized.contains('otp verified');
+  }
+
+  static String? _read(Map<String, dynamic> data, List<String> keys) {
+    for (final key in keys) {
+      final value = data[key];
+      if (value != null && value.toString().trim().isNotEmpty) {
+        return value.toString();
+      }
+    }
+    return null;
   }
 }

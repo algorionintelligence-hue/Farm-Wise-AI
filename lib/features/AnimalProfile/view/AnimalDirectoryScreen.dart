@@ -7,9 +7,9 @@ import '../../../core/widgets/AppScaffoldBgBasic.dart';
 
 import '../../HealthEvents/viewmodel/health_event_store.dart';
 import '../../HerdForm/model/herd.dart';
-import '../../HerdForm/viewmodel/herd_viewmodel.dart';
+import '../../HerdForm/viewmodel/HerdViewmodel.dart';
 import '../../HerdStore/HerdStore.dart';
-import '../../RevenueForm/viewmodel/revenue_store.dart';
+import '../../RevenueForm/viewmodel/RevenueStore.dart';
 import '../../Vaccinations/viewmodel/VaccinationRecordsNotifier.dart';
 
 enum AnimalProfileSection {

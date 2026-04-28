@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/providers/auth_providers.dart';
+import '../model/ForgotPasswordModel.dart';
 import '../model/OtpModel.dart';
-import '../model/VerifyOtpModel.dart';
 import '../model/ResendOtpModel.dart';
+import '../model/VerifyOtpModel.dart';
 
 class OtpViewModel extends StateNotifier<OtpModel> {
   OtpViewModel(this.ref) : super(const OtpModel()) {
@@ -20,7 +22,6 @@ class OtpViewModel extends StateNotifier<OtpModel> {
 
   Timer? _timer;
 
-  // ── Countdown ──
   void _startCountdown() {
     _timer?.cancel();
     state = state.copyWith(resendCountdown: 60);
@@ -31,6 +32,16 @@ class OtpViewModel extends StateNotifier<OtpModel> {
         state = state.copyWith(resendCountdown: state.resendCountdown - 1);
       }
     });
+  }
+
+  void resetState() {
+    _timer?.cancel();
+    clearBoxes();
+    state = const OtpModel();
+    _startCountdown();
+    if (focusNodes.isNotEmpty) {
+      focusNodes.first.requestFocus();
+    }
   }
 
   void onDigitEntered(int index, String value) {
@@ -51,79 +62,138 @@ class OtpViewModel extends StateNotifier<OtpModel> {
   }
 
   void onOtpChanged(String value) {
-    state = state.copyWith(otp: value, errorMessage: null);
+    state = state.copyWith(
+      otp: value,
+      errorMessage: null,
+      isSuccess: false,
+      userId: null,
+      token: null,
+    );
   }
 
   void clearBoxes() {
-    for (final c in controllers) {
-      c.clear();
+    for (final controller in controllers) {
+      controller.clear();
     }
   }
 
-  // ── Verify OTP ──
-  Future<bool> verifyOtp(String email) async {
+  Future<VerifyOtpResponse> verifyOtp({
+    required String email,
+    bool isPasswordResetFlow = false,
+  }) async {
     if (state.isLoading) {
-      return false;
+      return const VerifyOtpResponse(success: false);
     }
 
     if (state.otp.length < 6) {
-      state = state.copyWith(errorMessage: 'Please enter complete 6-digit OTP');
-      return false;
+      const message = 'Please enter complete 6-digit OTP';
+      state = state.copyWith(
+        isSuccess: false,
+        errorMessage: message,
+        userId: null,
+        token: null,
+      );
+      return const VerifyOtpResponse(success: false, message: message);
     }
 
-    state = state.copyWith(isLoading: true, errorMessage: null);
+    state = state.copyWith(
+      isLoading: true,
+      errorMessage: null,
+      isSuccess: false,
+      userId: null,
+      token: null,
+    );
 
     try {
       final repository = ref.read(authRepositoryProvider);
-      final response = await repository.verifyOtp(
-        VerifyOtpModel(email: email, otpCode: state.otp),
-      );
+      final request = VerifyOtpModel(email: email, otpCode: state.otp);
+      final response = isPasswordResetFlow
+          ? await repository.verifyResetOtp(request)
+          : await repository.verifyOtp(request);
 
       if (!response.success) {
         state = state.copyWith(
           isLoading: false,
           isSuccess: false,
           errorMessage: response.message ?? 'Invalid OTP. Please try again.',
+          userId: null,
+          token: null,
         );
-        return false;
+        return response;
       }
 
-      state = state.copyWith(isLoading: false, isSuccess: response.success);
-      return response.success;
-    } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        errorMessage: 'Invalid OTP. Please try again.',
+        isSuccess: true,
+        errorMessage: null,
+        userId: response.userId,
+        token: response.token,
       );
-      return false;
+      return response;
+    } catch (_) {
+      const message = 'Invalid OTP. Please try again.';
+      state = state.copyWith(
+        isLoading: false,
+        isSuccess: false,
+        errorMessage: message,
+        userId: null,
+        token: null,
+      );
+      return const VerifyOtpResponse(success: false, message: message);
     }
   }
 
-  // ── Resend OTP ──
-  Future<void> resendOtp(String email) async {
+  Future<void> resendOtp({
+    required String email,
+    bool isPasswordResetFlow = false,
+  }) async {
     if (state.isLoading) {
       return;
     }
 
     clearBoxes();
-    state = state.copyWith(isLoading: true, errorMessage: null, otp: '');
+    state = state.copyWith(
+      isLoading: true,
+      errorMessage: null,
+      otp: '',
+      isSuccess: false,
+      userId: null,
+      token: null,
+    );
 
     try {
       final repository = ref.read(authRepositoryProvider);
-      final response = await repository.resendOtp(ResendOtpModel(email: email));
+      late final bool isSuccess;
+      late final String? message;
 
-      if (!response.success) {
+      if (isPasswordResetFlow) {
+        final response = await repository.forgotPassword(
+          ForgotPasswordModel(email: email),
+        );
+        isSuccess = response.success;
+        message = response.message;
+      } else {
+        final response = await repository.resendOtp(
+          ResendOtpModel(email: email),
+        );
+        isSuccess = response.success;
+        message = response.message;
+      }
+
+      if (!isSuccess) {
         state = state.copyWith(
           isLoading: false,
-          errorMessage: response.message ?? 'Failed to resend OTP. Please try again.',
+          errorMessage: message ?? 'Failed to resend OTP. Please try again.',
         );
         return;
       }
 
-      print('Resend OTP success: ${response.message}');
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(isLoading: false, errorMessage: null);
       _startCountdown();
-    } catch (e) {
+      if (focusNodes.isNotEmpty) {
+        focusNodes.first.requestFocus();
+      }
+    } catch (_) {
       state = state.copyWith(
         isLoading: false,
         errorMessage: 'Failed to resend OTP. Please try again.',
@@ -134,11 +204,11 @@ class OtpViewModel extends StateNotifier<OtpModel> {
   @override
   void dispose() {
     _timer?.cancel();
-    for (final c in controllers) {
-      c.dispose();
+    for (final controller in controllers) {
+      controller.dispose();
     }
-    for (final f in focusNodes) {
-      f.dispose();
+    for (final focusNode in focusNodes) {
+      focusNode.dispose();
     }
     super.dispose();
   }

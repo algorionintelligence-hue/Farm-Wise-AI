@@ -83,11 +83,12 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (!mounted) return;
 
+    final destination = isLoggedIn ? const BottomNavigation() : LoginScreen();
+
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) =>
-            isLoggedIn ? const BottomNavigation() : LoginScreen(),
+        pageBuilder: (_, __, ___) => destination,
         transitionsBuilder: (_, anim, __, child) =>
             FadeTransition(opacity: anim, child: child),
         transitionDuration: const Duration(milliseconds: 500),

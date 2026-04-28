@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../features/HealthEvents/model/health_event_record.dart';
 import '../../features/HerdForm/model/herd.dart';
-import '../../features/RevenueForm/model/revenue_record.dart';
+import '../../features/RevenueForm/model/RevenueRecord.dart';
 import '../../features/Vaccinations/model/vaccination_record.dart';
 
 class AppDatabase {

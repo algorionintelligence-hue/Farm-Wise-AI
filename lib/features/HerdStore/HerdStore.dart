@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/database/AppDatabase.dart';
 import '../HerdForm/model/herd.dart';
-import '../HerdForm/viewmodel/herd_viewmodel.dart';
+import '../HerdForm/viewmodel/HerdViewmodel.dart';
 
 
 class HerdStore extends StateNotifier<List<HerdInputModel>> {

@@ -10,8 +10,8 @@ import '../../../l10n/AppLocalizations.dart';
 
 import '../../HerdForm/widgets/CustomInput.dart';
 import '../../HerdForm/widgets/DatePickerTile.dart';
-import '../model/revenue_record.dart';
-import '../viewmodel/revenue_store.dart';
+import '../model/RevenueRecord.dart';
+import '../viewmodel/RevenueStore.dart';
 
 class RevenueInputsScreen extends ConsumerStatefulWidget {
   const RevenueInputsScreen({super.key});

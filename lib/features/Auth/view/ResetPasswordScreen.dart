@@ -8,6 +8,7 @@ import '../../../core/utils/utils.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/FTextField.dart';
 import '../../../core/widgets/PrimaryButton.dart';
+import 'ForgotPasswordScreen.dart';
 import 'LoginScreen.dart';
 
 class ResetPasswordScreen extends ConsumerStatefulWidget {
@@ -50,132 +51,170 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(resetPasswordLoadingProvider);
+    final hasResetCredentials =
+        (widget.initialUserId ?? '').trim().isNotEmpty &&
+        (widget.initialToken ?? '').trim().isNotEmpty;
 
     return AppScaffoldBgBasic(
       showBackButton: true,
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Reset Password',
-                style: TextStyle(
-                  fontSize: sizes.fontSizeHeadings,
-                  fontWeight: FontWeight.bold,
-                  color: UColors.colorPrimary,
-                ),
-              ),
-              const VSpace(sizes.spaceBtwInputFields),
-              FTextField(
-                labelText: 'New Password',
-                hintText: 'Create a strong password',
-                controller: _newPasswordController,
-                obscureText: !_showNewPassword,
-                validator: validatePassword,
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _showNewPassword = !_showNewPassword;
-                    });
-                  },
-                  icon: Icon(
-                    _showNewPassword
-                        ? Icons.visibility_outlined
-                        : Icons.visibility_off_outlined,
-                    size: sizes.iconSm,
-                    color: UColors.colorPrimary,
-                  ),
-                ),
-              ),
-              const VSpace(sizes.spaceBtwInputFields),
-              FTextField(
-                labelText: 'Confirm Password',
-                hintText: 'Re-enter your new password',
-                controller: _confirmPasswordController,
-                obscureText: !_showConfirmPassword,
-                validator: (value) {
-                  final validation = validatePassword(value);
-                  if (validation != null) {
-                    return validation;
-                  }
-                  if (value != _newPasswordController.text.trim()) {
-                    return 'Passwords do not match';
-                  }
-                  return null;
-                },
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _showConfirmPassword = !_showConfirmPassword;
-                    });
-                  },
-                  icon: Icon(
-                    _showConfirmPassword
-                        ? Icons.visibility_outlined
-                        : Icons.visibility_off_outlined,
-                    size: sizes.iconSm,
-                    color: UColors.colorPrimary,
-                  ),
-                ),
-              ),
-              const VSpace(sizes.spaceBtwSections),
-              PrimaryButton(
-                label: 'Reset Password',
-                isLoading: isLoading,
-                onPressed: () async {
-                  if (!_formKey.currentState!.validate()) {
-                    return;
-                  }
-
-                  try {
-                    final success = await ref
-                        .read(authViewModelProvider)
-                        .resetPassword(
-                          userId: widget.initialUserId?.trim() ?? '',
-                          token: widget.initialToken?.trim() ?? '',
-                          newPassword: _newPasswordController.text.trim(),
-                          confirmPassword:
-                              _confirmPasswordController.text.trim(),
-                        );
-
-                    if (!mounted || !success) {
-                      return;
-                    }
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Password reset successful. Please log in.',
+      child: hasResetCredentials
+          ? SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Reset Password',
+                      style: TextStyle(
+                        fontSize: sizes.fontSizeHeadings,
+                        fontWeight: FontWeight.bold,
+                        color: UColors.colorPrimary,
+                      ),
+                    ),
+                    const VSpace(sizes.spaceBtwInputFields),
+                    FTextField(
+                      labelText: 'New Password',
+                      hintText: 'Create a strong password',
+                      controller: _newPasswordController,
+                      obscureText: !_showNewPassword,
+                      validator: validatePassword,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showNewPassword = !_showNewPassword;
+                          });
+                        },
+                        icon: Icon(
+                          _showNewPassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          size: sizes.iconSm,
+                          color: UColors.colorPrimary,
                         ),
                       ),
-                    );
+                    ),
+                    const VSpace(sizes.spaceBtwInputFields),
+                    FTextField(
+                      labelText: 'Confirm Password',
+                      hintText: 'Re-enter your new password',
+                      controller: _confirmPasswordController,
+                      obscureText: !_showConfirmPassword,
+                      validator: (value) {
+                        final validation = validatePassword(value);
+                        if (validation != null) {
+                          return validation;
+                        }
+                        if (value != _newPasswordController.text.trim()) {
+                          return 'Passwords do not match';
+                        }
+                        return null;
+                      },
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showConfirmPassword = !_showConfirmPassword;
+                          });
+                        },
+                        icon: Icon(
+                          _showConfirmPassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          size: sizes.iconSm,
+                          color: UColors.colorPrimary,
+                        ),
+                      ),
+                    ),
+                    const VSpace(sizes.spaceBtwSections),
+                    PrimaryButton(
+                      label: 'Reset Password',
+                      isLoading: isLoading,
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
 
-                    Navigator.pushAndRemoveUntil(
+                        try {
+                          final success = await ref
+                              .read(authViewModelProvider)
+                              .resetPassword(
+                                userId: widget.initialUserId?.trim() ?? '',
+                                token: widget.initialToken?.trim() ?? '',
+                                newPassword: _newPasswordController.text.trim(),
+                                confirmPassword:
+                                    _confirmPasswordController.text.trim(),
+                              );
+
+                          if (!mounted || !success) {
+                            return;
+                          }
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Password reset successful. Please log in.',
+                              ),
+                            ),
+                          );
+
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()),
+                            (route) => false,
+                          );
+                        } catch (error) {
+                          if (!mounted) {
+                            return;
+                          }
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                error.toString().replaceFirst('Exception: ', ''),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Reset Password',
+                  style: TextStyle(
+                    fontSize: sizes.fontSizeHeadings,
+                    fontWeight: FontWeight.bold,
+                    color: UColors.colorPrimary,
+                  ),
+                ),
+                const VSpace(sizes.spaceBtwItems),
+                const Text(
+                  'Your password reset session is missing required details or has expired. Please request a fresh OTP and try again.',
+                  style: TextStyle(
+                    fontSize: sizes.fontSizeMd,
+                    color: UColors.textSecondary,
+                    height: 1.6,
+                  ),
+                ),
+                const VSpace(sizes.spaceBtwSections),
+                PrimaryButton(
+                  label: 'Request New OTP',
+                  onPressed: () {
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => LoginScreen()),
-                      (route) => false,
-                    );
-                  } catch (error) {
-                    if (!mounted) {
-                      return;
-                    }
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          error.toString().replaceFirst('Exception: ', ''),
-                        ),
+                      MaterialPageRoute(
+                        builder: (_) => const ForgotPasswordScreen(),
                       ),
                     );
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+                  },
+                ),
+              ],
+            ),
     );
   }
 }

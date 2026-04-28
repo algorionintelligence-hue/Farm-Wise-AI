@@ -105,12 +105,19 @@ class AuthViewModel {
     try {
       ref.read(resetPasswordLoadingProvider.notifier).state = true;
       final repository = ref.read(authRepositoryProvider);
-      await repository.resetPassword(ResetPasswordModel(
+      final response = await repository.resetPassword(ResetPasswordModel(
         userId: userId,
         token: token,
         newPassword: newPassword,
         confirmPassword: confirmPassword,
       ));
+      if (!response.success) {
+        throw Exception(
+          (response.message ?? '').trim().isNotEmpty
+              ? response.message!.trim()
+              : 'Unable to reset password. Please try again.',
+        );
+      }
       return true;
     } catch (_) {
       rethrow;

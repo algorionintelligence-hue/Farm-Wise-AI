@@ -19,13 +19,23 @@ class ForgotPasswordResponse {
     this.token,
   });
 
-  factory ForgotPasswordResponse.fromJson(Map<String, dynamic> json) =>
-      ForgotPasswordResponse(
-        success: json['success'] as bool? ?? true,
-        message: json['message'] as String?,
-        userId: _read(json, ['userId', 'userID', 'UserId', 'UserID']),
-        token: _read(json, ['token', 'Token', 'resetToken', 'ResetToken']),
-      );
+  factory ForgotPasswordResponse.fromJson(Map<String, dynamic> json) {
+    final payload = _asMap(json['data']) ?? _asMap(json['result']) ?? json;
+    final message =
+        json['message'] as String? ?? payload['message'] as String?;
+
+    return ForgotPasswordResponse(
+      success: _readBool(json, payload, message),
+      message: message,
+      userId: _read(payload, ['userId', 'userID', 'UserId', 'UserID']),
+      token: _read(payload, ['token', 'Token', 'resetToken', 'ResetToken']),
+    );
+  }
+
+  static Map<String, dynamic>? _asMap(dynamic value) {
+    if (value is Map<String, dynamic>) return value;
+    return null;
+  }
 
   static String? _read(Map<String, dynamic> data, List<String> keys) {
     for (final key in keys) {
@@ -35,5 +45,42 @@ class ForgotPasswordResponse {
       }
     }
     return null;
+  }
+
+  static bool _readBool(
+    Map<String, dynamic> root,
+    Map<String, dynamic> payload,
+    String? message,
+  ) {
+    final rootValue = root['success'] ?? root['isSuccess'] ?? root['status'];
+    final payloadValue =
+        payload['success'] ?? payload['isSuccess'] ?? payload['status'];
+
+    if (rootValue is bool) return rootValue;
+    if (payloadValue is bool) return payloadValue;
+    if (rootValue is String) return _isTruthy(rootValue);
+    if (payloadValue is String) return _isTruthy(payloadValue);
+    if (_looksLikeForgotPasswordSuccess(message)) return true;
+    return false;
+  }
+
+  static bool _isTruthy(String value) {
+    final normalized = value.trim().toLowerCase();
+    return normalized == 'true' ||
+        normalized == 'success' ||
+        normalized == 'succeeded' ||
+        normalized == 'ok';
+  }
+
+  static bool _looksLikeForgotPasswordSuccess(String? message) {
+    if (message == null) return false;
+    final normalized = message.trim().toLowerCase();
+    return normalized.contains('otp sent') ||
+        normalized.contains('otp has been sent') ||
+        normalized.contains('reset otp') ||
+        normalized.contains('verification code') ||
+        normalized.contains('reset code') ||
+        normalized.contains('password reset email') ||
+        normalized.contains('reset link');
   }
 }

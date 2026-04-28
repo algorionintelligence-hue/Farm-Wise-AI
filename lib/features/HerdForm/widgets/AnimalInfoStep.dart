@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../../core/utils/sizes.dart';
 import '../../../l10n/AppLocalizations.dart';
-import '../viewmodel/herd_viewmodel.dart';
+import '../viewmodel/HerdViewmodel.dart';
 import '../widgets/CustomInput.dart';
 import '../widgets/DatePickerTile.dart';
 import '../widgets/FormDropdownField.dart';

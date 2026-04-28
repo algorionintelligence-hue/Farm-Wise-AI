@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/AppDatabase.dart';
-import '../model/revenue_record.dart';
+import '../model/RevenueRecord.dart';
 
 class RevenueStore extends StateNotifier<List<RevenueRecord>> {
   RevenueStore() : super(const []) {

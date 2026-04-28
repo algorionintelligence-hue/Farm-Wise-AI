@@ -6,7 +6,7 @@ import '../../../core/utils/sizes.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/PrimaryButton.dart';
 import '../../../l10n/AppLocalizations.dart';
-import '../../HerdForm/viewmodel/herd_viewmodel.dart';
+import '../../HerdForm/viewmodel/HerdViewmodel.dart';
 import '../../HerdForm/widgets/CustomInput.dart';
 import '../../HerdForm/widgets/SectionCard.dart';
 import '../../HerdStore/HerdStore.dart';

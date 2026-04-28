@@ -1,23 +1,50 @@
-
 import 'package:farm_wise_ai/features/Auth/view/Otp/widgets/OtpInputBox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
+
 import '../../../../core/providers/auth_providers.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../../../../core/utils/sizes.dart';
 import '../../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../../core/widgets/PrimaryButton.dart';
 import '../../../FarmRegistration/view/FarmRegistrationScreen.dart';
-import '../../model/OtpModel.dart';
+import '../ResetPasswordScreen.dart';
 
-class OtpScreen extends ConsumerWidget {
-  const OtpScreen({super.key, required this.email});
+enum OtpFlow { signup, passwordReset }
+
+class OtpScreen extends ConsumerStatefulWidget {
+  const OtpScreen({
+    super.key,
+    required this.email,
+    this.flow = OtpFlow.signup,
+    this.initialUserId,
+    this.initialToken,
+  });
 
   final String email;
+  final OtpFlow flow;
+  final String? initialUserId;
+  final String? initialToken;
 
-  void _showSuccessDialog(BuildContext context) {
+  @override
+  ConsumerState<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends ConsumerState<OtpScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      ref.read(otpProvider.notifier).resetState();
+    });
+  }
+
+  void _showSignupSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -64,16 +91,56 @@ class OtpScreen extends ConsumerWidget {
     );
   }
 
+  Future<void> _handleVerify() async {
+    final vm = ref.read(otpProvider.notifier);
+    final fullOtp = vm.controllers.map((controller) => controller.text).join();
+    vm.onOtpChanged(fullOtp);
+    final isPasswordResetFlow = widget.flow == OtpFlow.passwordReset;
+
+    final response = await vm.verifyOtp(
+      email: widget.email,
+      isPasswordResetFlow: isPasswordResetFlow,
+    );
+    if (!mounted || !response.success) {
+      return;
+    }
+
+    if (!isPasswordResetFlow) {
+      _showSignupSuccessDialog(context);
+      return;
+    }
+
+    final resolvedUserId =
+        (response.userId ?? widget.initialUserId ?? '').trim();
+    final resolvedToken = (response.token ?? widget.initialToken ?? '').trim();
+
+    if (resolvedUserId.isEmpty || resolvedToken.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'OTP verified, but reset details are missing. Please request a new OTP and try again.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ResetPasswordScreen(
+          initialUserId: resolvedUserId,
+          initialToken: resolvedToken,
+        ),
+      ),
+    );
+  }
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final otpState = ref.watch(otpProvider);
     final vm = ref.read(otpProvider.notifier);
-
-    ref.listen<OtpModel>(otpProvider, (prev, next) {
-      if (next.isSuccess && !(prev?.isSuccess ?? false)) {
-        _showSuccessDialog(context);
-      }
-    });
+    final isPasswordResetFlow = widget.flow == OtpFlow.passwordReset;
 
     return AppScaffoldBgBasic(
       showBackButton: Navigator.canPop(context),
@@ -89,9 +156,9 @@ class OtpScreen extends ConsumerWidget {
               ),
             ),
             const VSpace(sizes.defaultSpace),
-            const Text(
-              'Verify Your Email',
-              style: TextStyle(
+            Text(
+              isPasswordResetFlow ? 'Verify OTP' : 'Verify Your Email',
+              style: const TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
                 color: UColors.colorPrimary,
@@ -106,19 +173,27 @@ class OtpScreen extends ConsumerWidget {
                   height: 1.5,
                 ),
                 children: [
-                  const TextSpan(text: 'We sent a 6-digit code to '),
                   TextSpan(
-                    text: email,
+                    text: isPasswordResetFlow
+                        ? 'We sent a 6-digit reset code to '
+                        : 'We sent a 6-digit code to ',
+                  ),
+                  TextSpan(
+                    text: widget.email,
                     style: const TextStyle(
                       color: UColors.colorPrimary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const TextSpan(text: '. Enter it below to continue.'),
+                  TextSpan(
+                    text: isPasswordResetFlow
+                        ? '. Enter it below to continue resetting your password.'
+                        : '. Enter it below to continue.',
+                  ),
                 ],
               ),
             ),
-            VSpace(sizes.spaceBtwSections),
+            const VSpace(sizes.spaceBtwSections),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(6, (index) {
@@ -134,7 +209,7 @@ class OtpScreen extends ConsumerWidget {
                     controller: vm.controllers[index],
                     focusNode: vm.focusNodes[index],
                     hasError: otpState.errorMessage != null,
-                    onChanged: (val) => vm.onDigitEntered(index, val),
+                    onChanged: (value) => vm.onDigitEntered(index, value),
                   ),
                 );
               }),
@@ -149,11 +224,13 @@ class OtpScreen extends ConsumerWidget {
                     size: 16,
                   ),
                   const SizedBox(width: 6),
-                  Text(
-                    otpState.errorMessage!,
-                    style: const TextStyle(
-                      color: UColors.error,
-                      fontSize: 13,
+                  Expanded(
+                    child: Text(
+                      otpState.errorMessage!,
+                      style: const TextStyle(
+                        color: UColors.error,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                 ],
@@ -161,13 +238,9 @@ class OtpScreen extends ConsumerWidget {
             ],
             const VSpace(sizes.spaceBtwSections),
             PrimaryButton(
-              label: 'Verify',
+              label: isPasswordResetFlow ? 'Continue' : 'Verify',
               isLoading: otpState.isLoading,
-              onPressed: () {
-                final fullOtp = vm.controllers.map((c) => c.text).join();
-                vm.onOtpChanged(fullOtp);
-                vm.verifyOtp(email);
-              },
+              onPressed: _handleVerify,
             ),
             const VSpace(sizes.spaceBtwSections),
             Center(
@@ -193,7 +266,10 @@ class OtpScreen extends ConsumerWidget {
                       : GestureDetector(
                           onTap: otpState.isLoading
                               ? null
-                              : () => vm.resendOtp(email),
+                              : () => vm.resendOtp(
+                                    email: widget.email,
+                                    isPasswordResetFlow: isPasswordResetFlow,
+                                  ),
                           child: const Text(
                             'Resend',
                             style: TextStyle(

@@ -1,4 +1,3 @@
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/Ai/model/ChatMessage.dart';
@@ -13,8 +12,8 @@ final termsAcceptedProvider = StateProvider<bool>((ref) => false);
 final herdStepProvider = StateProvider<int>((ref) => 0);
 
 final authViewModelProvider = Provider((ref) => AuthViewModel(ref));
-final otpProvider = StateNotifierProvider<OtpViewModel, OtpModel>(
-  (ref) => OtpViewModel(ref), // ✅ ref pass kiya — real API calls ke liye
+final otpProvider = StateNotifierProvider.autoDispose<OtpViewModel, OtpModel>(
+  (ref) => OtpViewModel(ref),
 );
 
 final chatProvider = StateNotifierProvider<ChatNotifier, List<ChatMessage>>(

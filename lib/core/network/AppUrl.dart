@@ -10,6 +10,7 @@ class AppUrl {
   static const String loginUrl          = '$baseUrl/api/UserAuth/login';
   static const String refreshTokenUrl   = '$baseUrl/api/UserAuth/refresh-token';
   static const String forgotPasswordUrl = '$baseUrl/api/UserAuth/forgot-password';
+  static const String verifyResetOtpUrl = '$baseUrl/api/UserAuth/verify-reset-otp';
   static const String resetPasswordUrl  = '$baseUrl/api/UserAuth/reset-password';
   static const String changePasswordUrl = '$baseUrl/api/UserAuth/change-password';
   static const String logoutUrl         = '$baseUrl/api/UserAuth/logout';

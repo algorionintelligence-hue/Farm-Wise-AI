@@ -10,7 +10,7 @@ import '../../BreedingForm/view/BreedingEntryScreen.dart';
 import '../../HealthEvents/view/AddHealthEventScreen.dart';
 import '../../HerdStore/HerdStore.dart';
 import '../../Vaccinations/view/AddVaccinationScreen.dart';
-import '../viewmodel/herd_viewmodel.dart';
+import '../viewmodel/HerdViewmodel.dart';
 import '../widgets/AnimalInfoStep.dart';
 
 class HerdStepperScreen extends ConsumerWidget {
