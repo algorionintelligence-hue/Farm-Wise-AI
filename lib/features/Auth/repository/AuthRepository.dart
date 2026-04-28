@@ -51,7 +51,7 @@ class AuthRepository {
   Future<VerifyOtpResponse> verifyResetOtp(VerifyOtpModel request) async {
     final response = await _postPublic(
       request.toJson(),
-      AppUrl.verifyResetOtpUrl,
+      AppUrl.VERIFY_OTP_URL,
     );
     return VerifyOtpResponse.fromJson(response as Map<String, dynamic>);
   }
