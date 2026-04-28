@@ -1,7 +1,12 @@
-// viewmodels/farm_registration_viewmodel.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/network/AppUrl.dart';
+import '../../../core/network/NetworkApiServices.dart';
+import '../model/BreedDetailModel.dart';
+import '../model/FarmRegistrationLookupModels.dart';
 import '../model/FarmRegistrationModel.dart';
+
+
 
 final farmRegistrationProvider =
 ChangeNotifierProvider<FarmRegistrationViewModel>((ref) {
@@ -9,52 +14,123 @@ ChangeNotifierProvider<FarmRegistrationViewModel>((ref) {
 });
 
 class FarmRegistrationViewModel extends ChangeNotifier {
-  // Immutable Farm instance
-  FarmRegistrationModel farm = const FarmRegistrationModel();
+  final _api = NetworkApiServices();
 
-  // Text controllers
+  // ─────────────────────────────
+  // LOADING STATES
+  // ─────────────────────────────
+  bool isLoading = false;
+  bool isSubmitting = false;
+
+  // ─────────────────────────────
+  // LOOKUPS
+  // ─────────────────────────────
+  List<CurrencyModel> currencies = [];
+  List<BusinessTypeModel> businessTypes = [];
+
+  int? selectedCurrencyId;
+  int? selectedBusinessTypeId;
+
+  // ─────────────────────────────
+  // FARM STATE
+  // ─────────────────────────────
+  FarmRegistrationModel farm = FarmRegistrationModel(
+    farmName: '',
+    city: '',
+    area: '',
+    businessType: 0,
+    maxBreed: 0,
+    currency: 0,
+    monthStartDay: 0,
+    breeds: [],
+  );
+
+  // ─────────────────────────────
+  // CONTROLLERS
+  // ─────────────────────────────
   final farmNameController = TextEditingController();
   final locationController = TextEditingController();
-  final businessTypeController = TextEditingController();
   final animalCountController = TextEditingController();
-  final currencyController = TextEditingController();
+  final areaController = TextEditingController();
 
-  // Dynamic breed fields
+  void updateArea(String value) {
+    farm = farm.copyWith(area: value);
+    notifyListeners();
+  }
+  // ─────────────────────────────
+  // BREEDS
+  // ─────────────────────────────
   List<BreedField> breedFields = [];
 
-  // Update individual fields using copyWith
-  void updateFarmName(String name) {
-    farm = farm.copyWith(farmName: name);
+  // ─────────────────────────────
+  // INIT (CALL LOOKUPS ON SCREEN OPEN)
+  // ─────────────────────────────
+  Future<void> initLookups() async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final currencyRes =
+      await _api.getApi(AppUrl.LOOKUP_CURRENCY_URL);
+
+      final businessRes =
+      await _api.getApi(AppUrl.LOOKUP_BUSINESSTYPE_URL);
+
+      currencies = (currencyRes as List)
+          .map((e) => CurrencyModel.fromJson(e))
+          .toList();
+
+      businessTypes = (businessRes as List)
+          .map((e) => BusinessTypeModel.fromJson(e))
+          .toList();
+
+    } catch (e) {
+      debugPrint("Lookup error: $e");
+    }
+
+    isLoading = false;
     notifyListeners();
   }
 
-  void updateLocation(String location) {
-    farm = farm.copyWith(location: location);
+  // ─────────────────────────────
+  // FIELD UPDATES
+  // ─────────────────────────────
+  void updateFarmName(String value) {
+    farm = farm.copyWith(farmName: value);
     notifyListeners();
   }
 
-  void updateBusinessType(String businessType) {
-    farm = farm.copyWith(businessType: businessType);
+  void updateLocation(String value) {
+    farm = farm.copyWith(city: value);
     notifyListeners();
   }
 
-  void updateAnimalCount(String count) {
-    final qty = int.tryParse(count) ?? 0;
-    farm = farm.copyWith(animalCount: qty);
+  void updateAnimalCount(String value) {
+    final qty = int.tryParse(value) ?? 0;
+    farm = farm.copyWith(maxBreed: qty);
     notifyListeners();
   }
 
-  void updateCurrency(String currency) {
-    farm = farm.copyWith(currency: currency);
+  void updateCurrency(int id) {
+    selectedCurrencyId = id;
+    farm = farm.copyWith(currency: id);
+    notifyListeners();
+  }
+
+  void updateBusinessType(int id) {
+    selectedBusinessTypeId = id;
+    farm = farm.copyWith(businessType: id);
     notifyListeners();
   }
 
   void updateDate(DateTime date) {
-    farm = farm.copyWith(registrationDate: date);
+    farm = farm.copyWith(monthStartDay: date.day);
     notifyListeners();
   }
 
-  // Dynamic breed handling
+  // ─────────────────────────────
+  // BREED HANDLING
+  // ─────────────────────────────
   void addBreedField() {
     breedFields.add(BreedField());
     notifyListeners();
@@ -62,34 +138,44 @@ class FarmRegistrationViewModel extends ChangeNotifier {
 
   void updateBreed(int index, String name, String quantity) {
     if (index >= breedFields.length) return;
+
     final qty = int.tryParse(quantity) ?? 0;
 
-    // Update field controllers
     breedFields[index].nameController.text = name;
     breedFields[index].quantityController.text = quantity;
 
-    // Update farm breeds immutably
-    final updatedBreeds = [...farm.breeds];
-    if (index < updatedBreeds.length) {
-      updatedBreeds[index] = Breed(name: name, quantity: qty);
+    final updated = [...?farm.breeds];
+
+    if (index < updated.length) {
+      updated[index] = BreedDetailModel(
+        breedName: name,
+        quantity: qty,
+      );
     } else {
-      updatedBreeds.add(Breed(name: name, quantity: qty));
+      updated.add(
+        BreedDetailModel(
+          breedName: name,
+          quantity: qty,
+        ),
+      );
     }
 
-    farm = farm.copyWith(breeds: updatedBreeds);
+    farm = farm.copyWith(breeds: updated);
     notifyListeners();
   }
 
   void removeBreed(int index) {
     if (index >= breedFields.length) return;
+
     breedFields.removeAt(index);
 
-    final updatedBreeds = [...farm.breeds];
-    if (index < updatedBreeds.length) {
-      updatedBreeds.removeAt(index);
-      farm = farm.copyWith(breeds: updatedBreeds);
-      notifyListeners();
+    final updated = [...?farm.breeds];
+
+    if (index < updated.length) {
+      updated.removeAt(index);
     }
+
+    farm = farm.copyWith(breeds: updated);
     notifyListeners();
   }
 
@@ -97,25 +183,50 @@ class FarmRegistrationViewModel extends ChangeNotifier {
     return formKey.currentState?.validate() ?? false;
   }
 
-  void submitForm() {
+  // ─────────────────────────────
+  // SUBMIT API (FARM REGISTER)
+  // ─────────────────────────────
+  Future<bool> submitForm() async {
+    isSubmitting = true;
+    notifyListeners();
 
+    try {
+      final response = await _api.postApi(
+        farm.toJson(),
+        AppUrl.FARM_REGISTRATION_URL,
+      );
+
+      isSubmitting = false;
+      notifyListeners();
+
+      return true;
+    } catch (e) {
+      isSubmitting = false;
+      notifyListeners();
+
+      debugPrint("Farm register error: $e");
+      return false;
+    }
   }
 
+  // ─────────────────────────────
   @override
   void dispose() {
     farmNameController.dispose();
     locationController.dispose();
-    businessTypeController.dispose();
     animalCountController.dispose();
-    currencyController.dispose();
-    for (var bf in breedFields) {
-      bf.dispose();
+
+    for (var b in breedFields) {
+      b.dispose();
     }
+
     super.dispose();
   }
 }
 
-// Helper class for dynamic breed input
+// ─────────────────────────────
+// BREED FIELD
+// ─────────────────────────────
 class BreedField {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();

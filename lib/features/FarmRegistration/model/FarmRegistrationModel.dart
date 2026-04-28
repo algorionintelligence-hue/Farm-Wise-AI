@@ -1,94 +1,81 @@
-class Breed {
-  final String name;
-  final int quantity;
 
-  const Breed({
-    required this.name,
-    required this.quantity,
-  });
-
-  Breed copyWith({
-    String? name,
-    int? quantity,
-  }) {
-    return Breed(
-      name: name ?? this.name,
-      quantity: quantity ?? this.quantity,
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-    'name': name,
-    'quantity': quantity,
-  };
-
-  factory Breed.fromJson(Map<String, dynamic> json) => Breed(
-    name: json['name'] ?? '',
-    quantity: json['quantity'] ?? 0,
-  );
-}
+import 'BreedDetailModel.dart';
 
 class FarmRegistrationModel {
   final String farmName;
-  final String location;
-  final String businessType;
-  final int animalCount;
-  final String currency;
-  final DateTime? registrationDate;
-  final List<Breed> breeds;
+  final String city;
+  final String area;
+  final int businessType;
+  final int maxBreed;
+  final int currency;
+  final int monthStartDay;
+  final List<BreedDetailModel>? breeds;
 
   const FarmRegistrationModel({
-    this.farmName = '',
-    this.location = '',
-    this.businessType = '',
-    this.animalCount = 0,
-    this.currency = '',
-    this.registrationDate,
-    this.breeds = const [],
+    required this.farmName,
+    required this.city,
+    required this.area,
+    required this.businessType,
+    required this.maxBreed,
+    required this.currency,
+    required this.monthStartDay,
+    this.breeds,
   });
 
+  // ─────────────────────────────
+  // COPY WITH (IMPORTANT FIX)
+  // ─────────────────────────────
   FarmRegistrationModel copyWith({
     String? farmName,
-    String? location,
-    String? businessType,
-    int? animalCount,
-    String? currency,
-    DateTime? registrationDate,
-    List<Breed>? breeds,
+    String? city,
+    String? area,
+    int? businessType,
+    int? maxBreed,
+    int? currency,
+    int? monthStartDay,
+    List<BreedDetailModel>? breeds,
   }) {
     return FarmRegistrationModel(
       farmName: farmName ?? this.farmName,
-      location: location ?? this.location,
+      city: city ?? this.city,
+      area: area ?? this.area,
       businessType: businessType ?? this.businessType,
-      animalCount: animalCount ?? this.animalCount,
+      maxBreed: maxBreed ?? this.maxBreed,
       currency: currency ?? this.currency,
-      registrationDate: registrationDate ?? this.registrationDate,
+      monthStartDay: monthStartDay ?? this.monthStartDay,
       breeds: breeds ?? this.breeds,
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'farmName': farmName,
-    'location': location,
-    'businessType': businessType,
-    'animalCount': animalCount,
-    'currency': currency,
-    'registrationDate': registrationDate?.toIso8601String(),
-    'breeds': breeds.map((b) => b.toJson()).toList(),
-  };
-
-  factory FarmRegistrationModel.fromJson(Map<String, dynamic> json) => FarmRegistrationModel(
-    farmName: json['farmName'] ?? '',
-    location: json['location'] ?? '',
-    businessType: json['businessType'] ?? '',
-    animalCount: json['animalCount'] ?? 0,
-    currency: json['currency'] ?? '',
-    registrationDate: json['registrationDate'] != null
-        ? DateTime.parse(json['registrationDate'])
-        : null,
-    breeds: json['breeds'] != null
-        ? List<Breed>.from(
-        (json['breeds'] as List).map((b) => Breed.fromJson(b)))
-        : [],
-  );
+  // TO JSON (API REQUEST)
+  // ─────────────────────────────
+  Map<String, dynamic> toJson() {
+    return {
+      "farmName": farmName,
+      "city": city,
+      "area": area,
+      "businessType": businessType,
+      "maxBreed": maxBreed,
+      "currency": currency,
+      "monthStartDay": monthStartDay,
+      "breeds": breeds?.map((e) => e.toJson()).toList(),
+    };
+  }
+  // ─────────────────────────────
+  // FROM JSON (API RESPONSE)
+  // ─────────────────────────────
+  factory FarmRegistrationModel.fromJson(Map<String, dynamic> json) {
+    return FarmRegistrationModel(
+      farmName: json["farmName"] ?? '',
+      city: json["city"] ?? '',
+      area: json["area"] ?? '',
+      businessType: json["businessType"],
+      maxBreed: json["maxBreed"],
+      currency: json["currency"],
+      monthStartDay: json["monthStartDay"],
+      breeds: (json["breeds"] as List<dynamic>? ?? [])
+          .map((e) => BreedDetailModel.fromJson(e))
+          .toList(),
+    );
+  }
 }
