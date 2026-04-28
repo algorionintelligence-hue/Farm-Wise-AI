@@ -167,9 +167,18 @@ class NetworkApiServices extends BaseApiServices {
     if (body.isEmpty) return null;
 
     try {
-      return jsonDecode(body);
-    } catch (_) {
-      return body;
+      final decoded = jsonDecode(body);
+
+      // ensure it's valid JSON object
+      if (decoded is Map || decoded is List) {
+        return decoded;
+      }
+
+      return null;
+    } catch (e) {
+      debugPrint("JSON decode error: $e");
+      debugPrint("RAW BODY: $body");
+      return null;
     }
   }
 

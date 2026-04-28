@@ -15,5 +15,6 @@ class AppUrl {
   static const String LOGOUT_URL          = '$BASE_URL/api/UserAuth/logout';
   static const String LOOKUP_CURRENCY_URL  = '$BASE_URL/api/lookups/currencies';
   static const String LOOKUP_BUSINESSTYPE_URL  = '$BASE_URL/api/lookups/business-types';
-  static const String FARM_REGISTRATION_URL  = '$BASE_URL/api/FarmRegistration/FarmRegister';
-}
+  static const String FARM_REGISTRATION_URL  = '$BASE_URL/api/farm';
+  static const String FARM_BASE = '$BASE_URL/api/farm';
+  static String addBreedUrl(String farmId) => '$FARM_BASE/$farmId/breeds';}

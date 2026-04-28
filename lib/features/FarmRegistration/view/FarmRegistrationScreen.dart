@@ -30,7 +30,6 @@ class _FarmRegistrationScreenState
   void initState() {
     super.initState();
 
-    // 🔥 ONLY FIX: CALL API WHEN SCREEN OPENS
     Future.microtask(() {
       ref.read(farmRegistrationProvider).initLookups();
     });
@@ -55,6 +54,7 @@ class _FarmRegistrationScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               Text(
                 l10n.farmRegistrationTitle,
                 style: const TextStyle(
@@ -77,37 +77,46 @@ class _FarmRegistrationScreenState
 
               const SizedBox(height: sizes.defaultSpace),
 
-              // FARM NAME
+              // ================= FARM NAME =================
               FTextField(
                 labelText: l10n.farmName,
                 hintText: l10n.farmNameHint,
                 controller: viewModel.farmNameController,
                 onChanged: viewModel.updateFarmName,
               ),
+              if (viewModel.farm.farmName.isEmpty)
+                const Text("Farm name is required",
+                    style: TextStyle(color: Colors.red, fontSize: 12)),
 
               const SizedBox(height: sizes.spaceBtwInputFields),
 
-              // CITY
+              // ================= CITY =================
               FTextField(
                 labelText: "City",
                 hintText: "Enter city",
                 controller: viewModel.locationController,
                 onChanged: viewModel.updateLocation,
               ),
+              if (viewModel.farm.city.isEmpty)
+                const Text("City is required",
+                    style: TextStyle(color: Colors.red, fontSize: 12)),
 
               const SizedBox(height: sizes.spaceBtwInputFields),
 
-              // AREA
+              // ================= AREA =================
               FTextField(
                 labelText: "Area",
                 hintText: "Enter area",
                 controller: viewModel.areaController,
                 onChanged: viewModel.updateArea,
               ),
+              if (viewModel.farm.area.isEmpty)
+                const Text("Area is required",
+                    style: TextStyle(color: Colors.red, fontSize: 12)),
 
               const SizedBox(height: sizes.spaceBtwInputFields),
 
-              // BUSINESS TYPE
+              // ================= BUSINESS TYPE =================
               DropDown(
                 labelText: l10n.businessType,
                 hint: l10n.selectBusinessType,
@@ -124,10 +133,13 @@ class _FarmRegistrationScreenState
                   viewModel.updateBusinessType(selected.id);
                 },
               ),
+              if (viewModel.farm.businessType == 0)
+                const Text("Business type is required",
+                    style: TextStyle(color: Colors.red, fontSize: 12)),
 
               const SizedBox(height: sizes.spaceBtwInputFields),
 
-              // TOTAL ANIMALS
+              // ================= TOTAL ANIMALS =================
               FTextField(
                 labelText: l10n.totalAnimals,
                 hintText: l10n.totalAnimalsHint,
@@ -135,9 +147,13 @@ class _FarmRegistrationScreenState
                 keyboardType: TextInputType.number,
                 onChanged: viewModel.updateAnimalCount,
               ),
+              if (viewModel.farm.maxBreed <= 0)
+                const Text("Max breed must be greater than 0",
+                    style: TextStyle(color: Colors.red, fontSize: 12)),
 
               const SizedBox(height: sizes.spaceBtwInputFields),
 
+              // ================= ADD BREED =================
               if (viewModel.farm.maxBreed > 0)
                 Align(
                   alignment: Alignment.centerRight,
@@ -148,7 +164,7 @@ class _FarmRegistrationScreenState
 
               const SizedBox(height: sizes.spaceBtwInputFields),
 
-              // BREEDS
+              // ================= BREEDS =================
               ...List.generate(viewModel.breedFields.length, (index) {
                 final breed = viewModel.breedFields[index];
 
@@ -162,11 +178,6 @@ class _FarmRegistrationScreenState
                             labelText: l10n.breedName,
                             controller: breed.nameController,
                             hintText: 'Normande',
-                            onChanged: (v) => viewModel.updateBreed(
-                              index,
-                              v,
-                              breed.quantityController.text,
-                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -177,33 +188,12 @@ class _FarmRegistrationScreenState
                             controller: breed.quantityController,
                             keyboardType: TextInputType.number,
                             hintText: '5',
-                            onChanged: (v) => viewModel.updateBreed(
-                              index,
-                              breed.nameController.text,
-                              v,
-                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Column(
-                          children: [
-                            const Text(
-                              '0%',
-                              style: TextStyle(
-                                color: UColors.colorPrimary,
-                                fontSize: sizes.fontSizeSm,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
-                              onPressed: () =>
-                                  viewModel.removeBreed(index),
-                            ),
-                          ],
+                        IconButton(
+                          icon: const Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => viewModel.removeBreed(index),
                         ),
                       ],
                     ),
@@ -212,7 +202,7 @@ class _FarmRegistrationScreenState
                 );
               }),
 
-              // CURRENCY
+              // ================= CURRENCY =================
               DropDown(
                 labelText: l10n.currency,
                 hint: l10n.selectCurrency,
@@ -229,10 +219,13 @@ class _FarmRegistrationScreenState
                   viewModel.updateCurrency(selected.id);
                 },
               ),
+              if (viewModel.farm.currency == 0)
+                const Text("Currency is required",
+                    style: TextStyle(color: Colors.red, fontSize: 12)),
 
               const SizedBox(height: sizes.spaceBtwInputFields),
 
-              // DATE
+              // ================= DATE =================
               DatePickerField(
                 selectedDate: DateTime(
                   2024,
@@ -247,7 +240,7 @@ class _FarmRegistrationScreenState
 
               const SizedBox(height: sizes.spaceBtwSections),
 
-              // SUBMIT
+              // ================= SUBMIT =================
               PrimaryButton(
                 label: l10n.registerFarm,
                 onPressed: () async {
