@@ -51,6 +51,7 @@ dependencies:
   path: ^1.9.0
   sqflite: ^2.4.2
   shared_preferences: ^2.5.5
+  app_links: ^6.3.4
 #  image_picker:
 
 dev_dependencies:
@@ -72,7 +73,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-  generate: true            # yeh add karein
+  generate: false
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

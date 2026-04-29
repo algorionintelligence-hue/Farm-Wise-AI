@@ -7,7 +7,7 @@ import '../../../core/utils/sizes.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/FTextField.dart';
 import '../../../core/widgets/PrimaryButton.dart';
-import 'Otp/OtpScreen.dart';
+import 'ResetPasswordScreen.dart';
 
 class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({
@@ -76,44 +76,34 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
               ),
               const VSpace(sizes.spaceBtwSections),
               PrimaryButton(
-                label: 'Send OTP',
+                label: 'Continue to Reset',
                 isLoading: isLoading,
                 onPressed: () async {
                   if (!_formKey.currentState!.validate()) {
                     return;
                   }
 
-                  final email = _emailController.text.trim();
-
                   try {
-                    final result =
-                        await ref.read(authViewModelProvider).forgotPassword(
-                              email,
-                            );
+                    final result = await ref
+                        .read(authViewModelProvider)
+                        .forgotPassword(_emailController.text.trim());
 
                     if (!mounted) {
                       return;
                     }
 
-                    if (!result.success) {
+                    if ((result?.message ?? '').isNotEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            (result.message ?? '').trim().isNotEmpty
-                                ? result.message!.trim()
-                                : 'Unable to send reset OTP. Please try again.',
-                          ),
-                        ),
+                        SnackBar(content: Text(result!.message!)),
                       );
-                      return;
                     }
 
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => OtpScreen(
-                          email: email,
-                          flow: OtpFlow.passwordReset,
+                        builder: (_) => ResetPasswordScreen(
+                          initialUserId: result?.userId,
+                          initialToken: result?.token,
                         ),
                       ),
                     );

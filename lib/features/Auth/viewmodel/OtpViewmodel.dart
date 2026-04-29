@@ -66,8 +66,8 @@ class OtpViewModel extends StateNotifier<OtpModel> {
       otp: value,
       errorMessage: null,
       isSuccess: false,
-      userId: null,
-      token: null,
+      verifiedUserId: null,
+      verifiedToken: null,
     );
   }
 
@@ -90,8 +90,8 @@ class OtpViewModel extends StateNotifier<OtpModel> {
       state = state.copyWith(
         isSuccess: false,
         errorMessage: message,
-        userId: null,
-        token: null,
+        verifiedUserId: null,
+        verifiedToken: null,
       );
       return const VerifyOtpResponse(success: false, message: message);
     }
@@ -100,8 +100,8 @@ class OtpViewModel extends StateNotifier<OtpModel> {
       isLoading: true,
       errorMessage: null,
       isSuccess: false,
-      userId: null,
-      token: null,
+      verifiedUserId: null,
+      verifiedToken: null,
     );
 
     try {
@@ -116,8 +116,8 @@ class OtpViewModel extends StateNotifier<OtpModel> {
           isLoading: false,
           isSuccess: false,
           errorMessage: response.message ?? 'Invalid OTP. Please try again.',
-          userId: null,
-          token: null,
+          verifiedUserId: null,
+          verifiedToken: null,
         );
         return response;
       }
@@ -126,8 +126,8 @@ class OtpViewModel extends StateNotifier<OtpModel> {
         isLoading: false,
         isSuccess: true,
         errorMessage: null,
-        userId: response.userId,
-        token: response.token,
+        verifiedUserId: response.userId,
+        verifiedToken: response.token,
       );
       return response;
     } catch (_) {
@@ -136,8 +136,8 @@ class OtpViewModel extends StateNotifier<OtpModel> {
         isLoading: false,
         isSuccess: false,
         errorMessage: message,
-        userId: null,
-        token: null,
+        verifiedUserId: null,
+        verifiedToken: null,
       );
       return const VerifyOtpResponse(success: false, message: message);
     }
@@ -157,8 +157,8 @@ class OtpViewModel extends StateNotifier<OtpModel> {
       errorMessage: null,
       otp: '',
       isSuccess: false,
-      userId: null,
-      token: null,
+      verifiedUserId: null,
+      verifiedToken: null,
     );
 
     try {
