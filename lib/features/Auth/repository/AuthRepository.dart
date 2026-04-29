@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import '../../../core/network/BaseApiServices.dart';
 import '../../../core/network/NetworkApiServices.dart';
 import '../../../core/network/AppUrl.dart';
@@ -32,55 +34,91 @@ class AuthRepository {
 
   // ── SignUp ──
   Future<SignupResponse> signUp(SignupModel request) async {
-    final response = await _postPublic(request.toJson(), AppUrl.SIGNUP_URL);
+    final response = await _postPublic(
+      request.toJson(),
+      AppUrl.SIGNUP_URL,
+    );
     return SignupResponse.fromJson(response as Map<String, dynamic>);
   }
 
-  // ── Verify OTP (signup) ──
+  // ── Verify OTP ──
   Future<VerifyOtpResponse> verifyOtp(VerifyOtpModel request) async {
-    final response = await _postPublic(request.toJson(), AppUrl.VERIFY_OTP_URL);
+    final response = await _postPublic(
+      request.toJson(),
+      AppUrl.VERIFY_OTP_URL,
+    );
     return VerifyOtpResponse.fromJson(response as Map<String, dynamic>);
   }
 
-  // ── Verify Reset OTP (forgot password) ──
-  Future<VerifyOtpResponse> verifyResetOtp(VerifyOtpModel request) async {
-    final response = await _postPublic(request.toJson(), AppUrl.VERIFY_RESET_OTP_URL);
-    return VerifyOtpResponse.fromDynamic(response);
-  }
-
+ Future<VerifyOtpResponse> verifyResetOtp(VerifyOtpModel request) async {
+  final response = await _postPublic(
+    request.toJson(),
+    AppUrl.VERIFY_OTP_URL,
+  );
+  
+  // ADD THIS 👇
+  debugPrint('=== VERIFY RESET OTP RAW RESPONSE ===');
+  debugPrint(response.toString());
+  debugPrint('=====================================');
+  
+  return VerifyOtpResponse.fromJson(response as Map<String, dynamic>);
+}
   // ── Resend OTP ──
   Future<ResendOtpResponse> resendOtp(ResendOtpModel request) async {
-    final response = await _postPublic(request.toJson(), AppUrl.RESEND_OTP_URL);
+    final response = await _postPublic(
+      request.toJson(),
+      AppUrl.RESEND_OTP_URL,
+    );
     return ResendOtpResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Refresh Token ──
   Future<RefreshTokenResponse> refreshToken(RefreshTokenModel request) async {
-    final response = await _apiServices.postApi(request.toJson(), AppUrl.REFRESH_TOKEN_URL);
+    final response = await _apiServices.postApi(
+      request.toJson(),
+      AppUrl.REFRESH_TOKEN_URL,
+    );
     return RefreshTokenResponse.fromJson(response as Map<String, dynamic>);
   }
 
-  // ── Forgot Password ──
-  Future<ForgotPasswordResponse> forgotPassword(ForgotPasswordModel request) async {
-    final response = await _postPublic(request.toJson(), AppUrl.FORGOT_PASSWORD_URL);
-    return ForgotPasswordResponse.fromJson(response as Map<String, dynamic>);
-  }
+ Future<ForgotPasswordResponse> forgotPassword(ForgotPasswordModel request) async {
+  final response = await _postPublic(
+    request.toJson(),
+    AppUrl.FORGOT_PASSWORD_URL,
+  );
+  
+  // ADD THIS 👇
+  debugPrint('=== FORGOT PASSWORD RAW RESPONSE ===');
+  debugPrint(response.toString());
+  debugPrint('=====================================');
+  
+  return ForgotPasswordResponse.fromJson(response as Map<String, dynamic>);
+}
 
   // ── Reset Password ──
   Future<ResetPasswordResponse> resetPassword(ResetPasswordModel request) async {
-    final response = await _postPublic(request.toJson(), AppUrl.RESET_PASSWORD_URL);
-    return ResetPasswordResponse.fromDynamic(response);
+    final response = await _postPublic(
+      request.toJson(),
+      AppUrl.RESET_PASSWORD_URL,
+    );
+    return ResetPasswordResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Change Password ──
   Future<ChangePasswordResponse> changePassword(ChangePasswordModel request) async {
-    final response = await _apiServices.postApi(request.toJson(), AppUrl.CHANGE_PASSWORD_URL);
+    final response = await _apiServices.postApi(
+      request.toJson(),
+      AppUrl.CHANGE_PASSWORD_URL,
+    );
     return ChangePasswordResponse.fromJson(response as Map<String, dynamic>);
   }
 
   // ── Logout ──
   Future<LogoutResponse> logout(LogoutModel request) async {
-    final response = await _apiServices.postApi(request.toJson(), AppUrl.LOGOUT_URL);
+    final response = await _apiServices.postApi(
+      request.toJson(),
+      AppUrl.LOGOUT_URL,
+    );
     return LogoutResponse.fromJson(response as Map<String, dynamic>);
   }
 }

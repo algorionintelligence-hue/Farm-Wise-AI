@@ -16,10 +16,13 @@ import '../../BottomNavigationBar/view/BottomNavigation.dart';
 import '../../FarmRegistration/view/FarmRegistrationScreen.dart';
 
 class LoginScreen extends ConsumerWidget {
-  LoginScreen({super.key});
+  LoginScreen({
+    super.key,
+    String? initialEmail,
+  }) : _emailController = TextEditingController(text: initialEmail ?? '');
 
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final TextEditingController _emailController;
   final _passwordController = TextEditingController();
 
   @override
@@ -120,7 +123,9 @@ class LoginScreen extends ConsumerWidget {
                     if (success && context.mounted) {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (_) =>  FarmRegistrationScreen()),
+                        MaterialPageRoute(
+                          builder: (_) => FarmRegistrationScreen(),
+                        ),
                       );
                     } else if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(

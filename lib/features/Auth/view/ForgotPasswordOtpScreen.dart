@@ -36,6 +36,7 @@ class ForgotPasswordOtpScreen extends ConsumerWidget {
             builder: (_) => ResetPasswordScreen(
               initialUserId: next.verifiedUserId ?? userId ?? '',
               initialToken: next.verifiedToken ?? otp,
+              initialEmail: email,
             ),
           ),
           (route) => route.isFirst,

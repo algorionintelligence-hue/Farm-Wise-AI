@@ -140,6 +140,11 @@ class NetworkApiServices extends BaseApiServices {
   dynamic _returnResponse(http.Response response) {
     final body = _decodeBody(response.body);
 
+    if (kDebugMode) {
+      print('STATUS: ${response.statusCode}');
+      print('RESPONSE: ${response.body}');
+    }
+
     switch (response.statusCode) {
       case 200:
       case 201:

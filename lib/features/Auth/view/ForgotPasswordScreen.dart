@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/providers/auth_providers.dart';
@@ -7,7 +8,7 @@ import '../../../core/utils/sizes.dart';
 import '../../../core/widgets/AppScaffoldBgBasic.dart';
 import '../../../core/widgets/FTextField.dart';
 import '../../../core/widgets/PrimaryButton.dart';
-import 'ResetPasswordScreen.dart';
+import 'Otp/OtpScreen.dart';
 
 class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({
@@ -76,34 +77,47 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
               ),
               const VSpace(sizes.spaceBtwSections),
               PrimaryButton(
-                label: 'Continue to Reset',
+                label: 'Send OTP',
                 isLoading: isLoading,
                 onPressed: () async {
                   if (!_formKey.currentState!.validate()) {
                     return;
                   }
 
+                  final email = _emailController.text.trim();
+
                   try {
                     final result = await ref
                         .read(authViewModelProvider)
-                        .forgotPassword(_emailController.text.trim());
+                        .forgotPassword(email);
 
                     if (!mounted) {
                       return;
                     }
 
-                    if ((result?.message ?? '').isNotEmpty) {
+                    if (kDebugMode) {
+                      print('FORGOT USER ID: ${result.userId ?? ''}');
+                      print('FORGOT TOKEN: ${result.token ?? ''}');
+                    }
+
+                    if ((result.message ?? '').isNotEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(result!.message!)),
+                        SnackBar(content: Text(result.message!)),
                       );
+                    }
+
+                    if (!result.success) {
+                      return;
                     }
 
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => ResetPasswordScreen(
-                          initialUserId: result?.userId,
-                          initialToken: result?.token,
+                        builder: (_) => OtpScreen(
+                          email: email,
+                          flow: OtpFlow.passwordReset,
+                          initialUserId: result.userId,
+                          initialToken: result.token,
                         ),
                       ),
                     );

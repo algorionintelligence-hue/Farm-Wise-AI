@@ -1,4 +1,5 @@
 import 'package:farm_wise_ai/features/Auth/view/Otp/widgets/OtpInputBox.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -112,13 +113,19 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
 
     final resolvedUserId =
         (response.userId ?? widget.initialUserId ?? '').trim();
-    final resolvedToken = (response.token ?? widget.initialToken ?? '').trim();
+    final resolvedToken =
+        (response.token ?? widget.initialToken ?? fullOtp).trim();
+
+    if (kDebugMode) {
+      print('RESET USER ID: $resolvedUserId');
+      print('RESET TOKEN: $resolvedToken');
+    }
 
     if (resolvedUserId.isEmpty || resolvedToken.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'OTP verified, but reset details are missing. Please request a new OTP and try again.',
+            'OTP verified, but UserId is missing from the server response. Please check the forgot-password and VerifyOTP response logs.',
           ),
         ),
       );
@@ -131,6 +138,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
         builder: (_) => ResetPasswordScreen(
           initialUserId: resolvedUserId,
           initialToken: resolvedToken,
+          initialEmail: widget.email,
         ),
       ),
     );

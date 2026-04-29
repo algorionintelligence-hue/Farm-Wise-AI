@@ -27,8 +27,14 @@ class ForgotPasswordResponse {
     return ForgotPasswordResponse(
       success: _readBool(json, payload, message),
       message: message,
-      userId: _read(payload, ['userId', 'userID', 'UserId', 'UserID']),
-      token: _read(payload, ['token', 'Token', 'resetToken', 'ResetToken']),
+      userId: _readDeep(
+        json,
+        ['userId', 'userID', 'UserId', 'UserID', 'id', 'Id', 'user_id'],
+      ),
+      token: _readDeep(
+        json,
+        ['token', 'Token', 'resetToken', 'ResetToken', 'otpToken', 'OtpToken'],
+      ),
     );
   }
 
@@ -44,6 +50,35 @@ class ForgotPasswordResponse {
         return value.toString();
       }
     }
+    return null;
+  }
+
+  static String? _readDeep(dynamic value, List<String> keys) {
+    if (value is Map) {
+      for (final key in keys) {
+        final field = value[key];
+        if (field != null && field.toString().trim().isNotEmpty) {
+          return field.toString();
+        }
+      }
+
+      for (final child in value.values) {
+        final nested = _readDeep(child, keys);
+        if (nested != null) {
+          return nested;
+        }
+      }
+    }
+
+    if (value is List) {
+      for (final child in value) {
+        final nested = _readDeep(child, keys);
+        if (nested != null) {
+          return nested;
+        }
+      }
+    }
+
     return null;
   }
 

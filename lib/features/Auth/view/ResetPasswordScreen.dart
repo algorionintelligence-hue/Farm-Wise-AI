@@ -16,10 +16,12 @@ class ResetPasswordScreen extends ConsumerStatefulWidget {
     super.key,
     this.initialUserId,
     this.initialToken,
+    this.initialEmail,
   });
 
   final String? initialUserId;
   final String? initialToken;
+  final String? initialEmail;
 
   @override
   ConsumerState<ResetPasswordScreen> createState() =>
@@ -139,6 +141,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                               .read(authViewModelProvider)
                               .resetPassword(
                                 userId: widget.initialUserId?.trim() ?? '',
+                                email: widget.initialEmail?.trim() ?? '',
                                 token: widget.initialToken?.trim() ?? '',
                                 newPassword: _newPasswordController.text.trim(),
                                 confirmPassword:
@@ -159,7 +162,11 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
 
                           Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()),
+                            MaterialPageRoute(
+                              builder: (_) => LoginScreen(
+                                initialEmail: widget.initialEmail,
+                              ),
+                            ),
                             (route) => false,
                           );
                         } catch (error) {
@@ -194,7 +201,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                 ),
                 const VSpace(sizes.spaceBtwItems),
                 const Text(
-                  'Your password reset session is missing required details or has expired. Please request a fresh OTP and try again.',
+                  'Your password reset session is missing the required UserId. Please request a fresh OTP and check the forgot-password and VerifyOTP response logs.',
                   style: TextStyle(
                     fontSize: sizes.fontSizeMd,
                     color: UColors.textSecondary,
@@ -208,7 +215,9 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => const ForgotPasswordScreen(),
+                        builder: (_) => ForgotPasswordScreen(
+                          initialEmail: widget.initialEmail,
+                        ),
                       ),
                     );
                   },

@@ -13,8 +13,15 @@ class VerifyOtpModel {
 class VerifyOtpResponse {
   final bool success;
   final String? message;
+  final String? userId;
+  final String? token;
 
-  const VerifyOtpResponse({required this.success, this.message});
+  const VerifyOtpResponse({
+    required this.success,
+    this.message,
+    this.userId,
+    this.token,
+  });
 
   factory VerifyOtpResponse.fromJson(Map<String, dynamic> json) {
     final payload = _asMap(json['data']) ?? _asMap(json['result']) ?? json;
@@ -24,6 +31,14 @@ class VerifyOtpResponse {
     return VerifyOtpResponse(
       success: _readBool(json, payload, message),
       message: message,
+      userId: _readStringDeep(
+        json,
+        ['userId', 'UserId', 'userID', 'UserID', 'id', 'Id', 'user_id'],
+      ),
+      token: _readStringDeep(
+        json,
+        ['token', 'Token', 'resetToken', 'ResetToken', 'otpToken', 'OtpToken'],
+      ),
     );
   }
 
@@ -47,6 +62,38 @@ class VerifyOtpResponse {
     if (payloadValue is String) return _isTruthy(payloadValue);
     if (_looksLikeVerifySuccess(message)) return true;
     return false;
+  }
+
+  static String? _readStringDeep(dynamic value, List<String> keys) {
+    if (value is Map) {
+      for (final key in keys) {
+        final field = value[key];
+        if (field is String && field.trim().isNotEmpty) {
+          return field;
+        }
+        if (field is num) {
+          return field.toString();
+        }
+      }
+
+      for (final child in value.values) {
+        final nested = _readStringDeep(child, keys);
+        if (nested != null) {
+          return nested;
+        }
+      }
+    }
+
+    if (value is List) {
+      for (final child in value) {
+        final nested = _readStringDeep(child, keys);
+        if (nested != null) {
+          return nested;
+        }
+      }
+    }
+
+    return null;
   }
 
   static bool _isTruthy(String value) {

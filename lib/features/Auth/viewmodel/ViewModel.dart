@@ -97,7 +97,8 @@ class AuthViewModel {
 
   // ── Reset Password ──
   Future<bool> resetPassword({
-    required String userId,
+    String userId = '',
+    String email = '',
     required String token,
     required String newPassword,
     required String confirmPassword,
@@ -107,6 +108,7 @@ class AuthViewModel {
       final repository = ref.read(authRepositoryProvider);
       final response = await repository.resetPassword(ResetPasswordModel(
         userId: userId,
+        email: email,
         token: token,
         newPassword: newPassword,
         confirmPassword: confirmPassword,

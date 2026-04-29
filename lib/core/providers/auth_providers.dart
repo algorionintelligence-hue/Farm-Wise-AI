@@ -17,6 +17,10 @@ final otpProvider = StateNotifierProvider<OtpViewModel, OtpModel>(
   (ref) => OtpViewModel(ref), // ✅ ref pass kiya — real API calls ke liye
 );
 
+final forgotPasswordOtpProvider = StateNotifierProvider<OtpViewModel, OtpModel>(
+  (ref) => OtpViewModel(ref),
+);
+
 final chatProvider = StateNotifierProvider<ChatNotifier, List<ChatMessage>>(
   (ref) => ChatNotifier(ref),
 );
